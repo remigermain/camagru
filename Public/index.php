@@ -11,7 +11,6 @@ else
 
 ob_start();
 
-require '../Pages/templates/header.php';
 if ($page === 'home')
     require '../Pages/home.php';
 else if ($page === 'login')
@@ -32,7 +31,6 @@ else if ($page === 'image')
     require '../Pages/image.php';
 else
     require '../Pages/error.php';
-require '../Pages/templates/footer.php';
 
 $content = ob_get_clean();
 
