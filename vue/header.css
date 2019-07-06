@@ -13,3 +13,24 @@
     opacity: 1;
 
 }
+
+.test
+{
+    background-color: grey;
+}
+
+.profil_mask
+{
+    vertical-align: middle;
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profil
+{
+    vertical-align: middle;
+    max-width: 100%;
+}

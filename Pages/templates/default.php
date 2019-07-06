@@ -1,2 +1,2 @@
-<?php print $content; ?>
+<?php print $content;2 ?>
   

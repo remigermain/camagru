@@ -4,9 +4,8 @@
     <nav class="tabs">
       <div class="container">
         <ul>
-          <li class="is-active"><a>Overview</a></li>
-          <li><a>Modifiers</a></li>
-          <li><a>add image</a></li>
+          <li class="is-active"><a>Image</a></li>
+          <li><a>Edit</a></li>
         </ul>
       </div>
     </nav>

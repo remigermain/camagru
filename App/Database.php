@@ -9,7 +9,7 @@ class	Database
 	private $db_info
 	private $pdo;
 
-	public function __construct($db_name, $db_user = 'root', $db_pass = 'rootpass', $db_host = '172.18.0.2')
+	Public function __construct($db_name, $db_user = 'root', $db_pass = 'rootpass', $db_host = '172.18.0.2')
 	{
 		$this->db_name = $db_name;
 		$this->db_user = $db_user;
@@ -27,14 +27,14 @@ class	Database
 		return ($this->pdo);
 	}
 
-	public function query($statement, $class_name)
+	Public function query($statement, $class_name)
 	{
 		$req = $this->getPDO()->query($statement);
 		$datas = $req->fetchall(PDO::FETCH_CLASS, $class_name);
 		return ($datas);
 	}
 
-	public function prepare($statement, $attributes, $class_name, $one = false)
+	Public function prepare($statement, $attributes, $class_name, $one = false)
 	{
 		$req = $this->getPDO()->prepare($statement);
 		$req->execute($attributes);
