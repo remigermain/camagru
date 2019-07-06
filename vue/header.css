@@ -1,19 +1,15 @@
-
-.div_principal
+.logo_text
 {
-    border: 1ch;
+    font-family: 'Montserrat',sans-serif;
+    text-rendering: optimizeLegibility;
+    text-transform: uppercase !important;
+    color: black;
 }
-
 .logo
 {
-    max-width: 15%;
-    height: auto;
+    vertical-align: middle;
+    position: relative;
+    max-width: 50px;
     opacity: 1;
 
-}
-
-.test
-{
-    color: blue;
-    text-align: center;
 }

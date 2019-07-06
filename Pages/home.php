@@ -1,4 +1,12 @@
 <?php
 ?>
-
-<h1> home page </h1>
+<div class="hero-foot">
+    <nav class="tabs">
+      <div class="container">
+        <ul>
+          <li class="is-active"><a>sort</a></li>
+          <li><a>Modifiers</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
