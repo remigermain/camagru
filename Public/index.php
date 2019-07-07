@@ -9,6 +9,7 @@ if (isset($_GET['p']))
 else
     $page = 'home';
 
+$title = NULL;
 ob_start();
 
 if ($page === 'home')
@@ -17,20 +18,27 @@ else if ($page === 'login')
     require '../Pages/login.php';
 else if ($page === 'account')
     require '../Pages/user/account.php';
-else if ($page === 'account_images')
-    require '../Pages/user/account_images.php';
-else if ($page === 'account_home')
-    require '../Pages/user/account_home.php';
+else if ($page === 'user_images')
+    require '../Pages/user/user_images.php';
+else if ($page === 'user_home')
+    require '../Pages/user/user_home.php';
 else if ($page === 'admin_account')
     require '../Pages/admin/admin_account.php';
 else if ($page === 'admin_tools')
     require '../Pages/admin/admin_tools.php';
 else if ($page === 'admin_home')
     require '../Pages/admin/admin_home.php';
+else if ($page === 'notification')
+    require '../Pages/user/user_notification.php';
 else if ($page === 'image')
     require '../Pages/image.php';
 else
+{
     require '../Pages/error.php';
+    $title = "error";
+}
+if ($title === NULL)
+    $title =  $_GET['p'];
 
 $content = ob_get_clean();
 

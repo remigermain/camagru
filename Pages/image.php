@@ -5,21 +5,22 @@
 <div class="card">
   <div class="card-image">
     <figure class="image is-4by3">
-      <img src="../vue/img/image.png" alt="Placeholder image">
+      <img src="https://www.voyages-interieurs.com/wp-content/uploads/feng-shui-3.jpg" alt="Placeholder image">
     </figure>
   </div>
   <div class="card-content">
     <div class="media">
       <div class="media-left">
         <figure class="image is-48x48">
-          <img src="../vue/img/image2.png" alt="Placeholder image">
+          <img class="is-rounded" src="../vue/img/profil.jpg" alt="Placeholder image">
         </figure>
       </div>
       <div class="content">
-        <p class="title is-6"><a href="../Public/index.php?p=account_home">John Smith</a></p>
+        <p class="title is-6"><a href="../Public/index.php?p=account_home">Rgermain</a></p>
         <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
       </div>
     </div>
+        <a class="button is-link">Like 9999</a>
   </div>
 </div>
 </div>
@@ -30,7 +31,7 @@
 <article class="media">
   <figure class="media-left">
     <p class="image is-64x64">
-      <img src="https://bulma.io/images/placeholders/128x128.png">
+      <img src="../vue/ing/image.png">
     </p>
   </figure>
   <div class="media-content">
@@ -47,7 +48,7 @@
     <article class="media">
       <figure class="media-left">
         <p class="image is-48x48">
-          <img src="../vue/img/image2.png">
+          <img class="is-rounded" src="../vue/img/profil.jpg">
         </p>
       </figure>
       <div class="media-content">
@@ -74,7 +75,7 @@
     <article class="media">
       <figure class="media-left">
         <p class="image is-48x48">
-          <img src="../vue/img/image2.png">
+          <img class="is-rounded" src="../vue/img/profil.jpg">
         </p>
       </figure>
       <div class="media-content">
@@ -94,7 +95,7 @@
 <article class="media">
   <figure class="media-left">
     <p class="image is-64x64">
-      <img src="https://bulma.io/images/placeholders/128x128.png">
+      <img src="../vue/ing/image.png">
     </p>
   </figure>
   <div class="media-content">

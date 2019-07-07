@@ -4,7 +4,7 @@ namespace App;
 
 class App
 {
-	const DB_NAME = 'blog';
+	const DB_NAME = 'camagru';
 	const DB_USER = 'root';
 	const DB_PASS = 'rootpass';
 	const DB_HOST = '172.18.0.2';
