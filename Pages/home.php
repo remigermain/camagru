@@ -1,42 +1,38 @@
-<?php
-?>
 <div class="hero-foot">
-    <nav class="tabs">
-      <div class="container">
-        <ul>
-          <li class="is-active"><a>sort</a></li>
-          <li><a>Modifiers</a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-
-<div class="container">
-<div class="columns is-multiline">
-
-<div class="column is-3">
-  <div class="card">
-    <div class="card-image">
-      <figure class="image is-4by3"><a href="../Public/index.php?p=image">
-        <img src="https://www.couleurvoyage.com/wp-content/uploads/2017/02/10-sites-pour-organiser-le-meilleur-des-voyages.jpg" alt="Placeholder image"></a>
-      </figure>
+  <nav class="tabs">
+    <div class="container">
+      <ul>
+        <li class="is-active"><a>sort</a></li>
+        <li><a>Modifiers</a></li>
+      </ul>
     </div>
-    <div class="card-content">
-      <div class="media">
-        <div class="media-left">
-          <figure class="image is-48x48">
-            <img class="is-rounded" src="../vue/img/profil.jpg" alt="Placeholder image">
+  </nav>
+</div>
+<div class="container">
+  <div class="columns is-multiline">
+    <div class="column is-3">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-4by3"><a href="../Public/index.php?p=image">
+            <img src="https://www.couleurvoyage.com/wp-content/uploads/2017/02/10-sites-pour-organiser-le-meilleur-des-voyages.jpg" alt="Placeholder image"></a>
           </figure>
         </div>
-        <div class="content">
-          <p class="title is-6"><a href="../Public/index.php?p=user_home">Rgermain</a></p>
-          <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img class="is-rounded" src="../vue/img/profil.jpg" alt="Placeholder image">
+              </figure>
+            </div>
+            <div class="content">
+              <p class="title is-6"><a href="../Public/index.php?p=user_home">Rgermain</a></p>
+              <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+            </div>
+            <a class="button is-link">Like</a>
+          </div>
         </div>
-          <a class="button is-link">Like</a>
       </div>
     </div>
-    </div>
-</div>
 
 <div class="column is-3">
   <div class="card">

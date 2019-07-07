@@ -1,6 +1,3 @@
-<?php
-use App\App;
-?>
 <body class="Site">
   <head>
           <meta charset="utf-8">
