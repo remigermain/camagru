@@ -27,10 +27,14 @@
     overflow: hidden;
 }
 
-.profil
+.Site
 {
-    width: 40px;
-    height: auto;
-    border-radius: 50%;
-    overflow: hidden;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+  
+.Site-content
+{
+    flex: 1;
 }
