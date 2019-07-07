@@ -9,7 +9,6 @@ use App\App;
           <link rel="stylesheet" href="../vue/header.css">
           <link rel="stylesheet" href="../vue/bluma.css">
           <link rel="stylesheet" href="../vue/material.css">
-          <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     </head>
     <header>
       <section class="home">
@@ -17,9 +16,10 @@ use App\App;
               <div class="navbar-brand">
                   <a href="../Public/index.php?p=home"><img src="../vue/img/logo.png" class="logo" /><span class="logo_text">camagru</span></a>
                   <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                  <span aria-hidden="true"></span>
-                  <span aria-hidden="true"></span>
-                  <span aria-hidden="true"></span></a>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                  </a>
               </div>
               <div class="navbar-menu">
                   <div class="navbar-start" style="flex-grow: 1; justify-content: center;" >
@@ -40,6 +40,7 @@ use App\App;
       </section>
   </header>
   <main class="Site-content">
+    <!-- print previous content -->
     <?= $content ?>
   </main>
   <footer class="footer">
