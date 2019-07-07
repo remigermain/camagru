@@ -1,6 +1,7 @@
-# Camagru
+# Camagru  WIP
 
-
+<img src="/readme_img/img.png" />
+<img src="/readme_img/img1.png" />
 
 ## [1]  Partie commune
 
