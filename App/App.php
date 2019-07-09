@@ -21,10 +21,19 @@ class App
 		return (self::$database);
 	}
 
-	Public static function notFound()
+	Public static function session()
 	{
-		header ('HTTP/1.0 404 Not Found');
-		header ('Location:index.php?=404');
+		if (session_id() == '' || !isset($_SESSION))
+			session_start();
+	}
+
+	Public static function sessionExist()
+	{
+		static::session();
+		if (isset($_SESSION) && isset($_SESSION['login']))
+			return (true);
+		else
+			return (false);
 	}
 
 	Public static function getTitle()

@@ -19,7 +19,7 @@ class Connection
     {
         if (static::find_user($_POST['email'], hash('whirlpool', $_POST['password'])))
         {
-            session_start();
+            App::session();
             $_SESSION['login'] = $_POST['email'];
             header('Location:/Public/index.php');
         }
@@ -29,7 +29,7 @@ class Connection
     
     public static function logout()
     {
-        session_start();
+        App::session();
         unset($_SESSION['login']);
         session_destroy();
         header('Location:/Public/index.php?p=home');

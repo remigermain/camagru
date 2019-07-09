@@ -33,7 +33,6 @@ class	Database
 	{
 		var_dump($statement);
 		$req = $this->getPDO()->query($statement);
-	//	$datas = $req->fetchall(PDO::FETCH_CLASS, $class_name);
 		die(var_dump($req));
 
 		return ($datas);
@@ -44,7 +43,6 @@ class	Database
 		$req = $this->getPDO()->prepare($statement);
 		var_dump($req);
 		$req->execute($attributes);
-		//$req->setFetchMode(PDO::FETCH_CLASS, $class_name);
 		if ($one)
 			$datas = $req->fetch();
 		else

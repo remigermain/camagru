@@ -1,3 +1,9 @@
+<?php
+use App\App;
+use App\Error;
+if (!App::sessionExist())
+    Error::notAccess();
+?>
 <div class="hero-foot">
     <nav class="tabs">
       <div class="container">
@@ -8,31 +14,66 @@
       </div>
     </nav>
   </div>
-
   <div class="container" id="formupload">
     <section class="section">
       <div class="container">
         <h1 class="title">Image</h1>
-        <h2 class="subtitle">Upload opr take picture from camera images !</h2>
+        <h2 class="subtitle">Upload or take picture from camera images !</h2>
       </div>
-    </section>
-    <form action="/Server/upload.php" method="post" enctype="multipart/form-data">
-    Select image to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload" required>
-    <input type="submit" value="Upload Image" name="submit">
-  </form>
+    </section>    
+    <div class="box">
+      <form class="container" action="/Server/upload.php" method="post" enctype="multipart/form-data">
+        <div class="buttons is-centered"><h3 class="title">Load image form local.</h3></div>
+        <div class="file is-warning is-boxed is-centered">
+          <label class="file-label">
+            <input class="file-input" type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg,image/png"required>
+              <span class="file-cta"><span class="file-icon">
+              <i class="material-icons">cloud_upload</i></span>
+            <span class="file-label">Open file...</span>
+          </label>
+        </div>
+        <br />
+        <div class="file is-warning is-boxed is-centered">
+          <label class="file-label">
+            <input class="file-input" type="submit" name="submit" value="submit" id="fileToUpload">
+              <span class="file-cta"><span class="file-icon">
+              <i class="material-icons">cloud_upload</i></span>
+            <span class="file-label">send</span>
+          </label>
+        </div>
+      </form>
+    </div>
+    <div class="box">
+      <video class="video" id="video" width="640" height="480" autoplay></video>
+      <canvas id="canvas" width="20" height="20"></canvas>
+      <div class="file is-warning is-boxed is-centered">
+        <label class="file-label">
+          <input class="file-input" type="file" name="fileToUpload" id="fileToUpload">
+            <span class="file-cta"><span class="file-icon">
+            <i class="material-icons">monochrome_photos</i></span>
+          <span class="file-label">Take photos..</span>
+        </label>
+      </div>
+      <br />
+      <div class="file is-warning is-boxed is-centered">
+          <label class="file-label">
+            <input class="file-input" type="submit" name="submit" value="submit" id="fileToUpload">
+              <span class="file-cta"><span class="file-icon">
+              <i class="material-icons">cloud_upload</i></span>
+            <span class="file-label">send</span>
+          </label>
+        </div>
+    </div>
+  </div>
 </div>
-<div class="container" id="formedit" style="display: none">
+  <!--    edit mode -->
+  <div class="container is-center" id="formedit" style="display: none">
     <section class="section">
-      <div class="container">
+      <div class="container is-center">
         <h1 class="title">Edit</h1>
         <h2 class="subtitle">Edit, modify images !</h2>
       </div>
     </section>
-    <form action="/Server/upload.php" method="post" enctype="multipart/form-data">
-      Select image to upload:
-     <input type="file" name="fileToUpload" id="fileToUpload" required>
-    <input type="submit" value="Upload Image" name="submit">
-  </form>
+  </div>
 </div>
-<script src="../script/image.js">< </script>
+<script src="../script/image.js"></script>

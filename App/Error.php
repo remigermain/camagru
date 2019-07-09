@@ -24,7 +24,12 @@ class Error
 	public static function user_notvalid()
 	{
 		$str = "User dosen't exist or , you need to valid mail before login";
-		//die($str);
+		header ('Location:/Public/index.php?p=error&error=' . $str);
+	}
+
+	public static function notAccess()
+	{
+		$str = "you not have access to this page";
 		header ('Location:/Public/index.php?p=error&error=' . $str);
 	}
 }

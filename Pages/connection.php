@@ -1,9 +1,12 @@
+<?php
+use App\App;
+?>
 <!--  menu style -->
 <div class="hero-foot">
   <nav class="tabs">
     <div class="container">
       <ul>
-        <?php if (isset($_SESSION) && isset($_SESSION['login'])){ ?>
+        <?php if (App::sessionExist()){ ?>
             <li class="is-active"><a>logout</a></li>
         <?php } else { ?>
           <li id="login_active"><a onclick="displayLogin()">Login</a></li>
@@ -105,7 +108,7 @@
   </form>
 </div>
 <!--  launch scirpt to change login/register pages whitout refresh -->
-<?php if (isset($_SESSION) && isset($_SESSION['login'])) {?>
+<?php if (App::sessionExist()) {?>
   <script src="../script/logout.js">< </script>
 <?php } else { ?>
   <script src="../script/login.js">< </script>

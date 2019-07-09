@@ -1,9 +1,10 @@
 <?php
 require '../App/Autoloader.php';
 use     App\Autoloader;
+use     App\App;
 Autoloader::register();
-//if (!isset($_SESSION))
-session_start();
+App::session();
+
 
 if (isset($_GET['p']))
     $page = $_GET['p'];
