@@ -10,9 +10,9 @@ class Connection
     private static function find_user($email, $pass = null, $pseudo = null)
     {
         if ($pseudo)
-            return (APP::getDB()->getprepare("SELECT email, pseudo FROM user WHERE email LIKE ? OR pseudo LIKE ?", array($email, $pseudo), get_called_class(), true));
+            return (APP::getDB()->getprepare("SELECT email, pseudo FROM user WHERE email LIKE ? OR pseudo LIKE ?", array($email, $pseudo), true));
         else
-            return (APP::getDB()->getprepare("SELECT email, pass FROM user WHERE email LIKE ? AND pass LIKE ?", array($email, $pass), get_called_class(), true));
+            return (APP::getDB()->getprepare("SELECT email, pass FROM user WHERE email LIKE ? AND pass LIKE ?", array($email, $pass), true));
     }
     
     public static function login()

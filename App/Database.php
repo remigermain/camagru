@@ -29,22 +29,22 @@ class	Database
 		return ($this->pdo);
 	}
 
-	public function getquery($statement, $class_name)
+	public function getquery($statement)
 	{
 		var_dump($statement);
 		$req = $this->getPDO()->query($statement);
-		$datas = $req->fetchall(PDO::FETCH_CLASS, $class_name);
+	//	$datas = $req->fetchall(PDO::FETCH_CLASS, $class_name);
 		die(var_dump($req));
 
 		return ($datas);
 	}
 
-	public function getprepare($statement, $attributes, $class_name, $one = false)
+	public function getprepare($statement, $attributes, $one = false)
 	{
 		$req = $this->getPDO()->prepare($statement);
 		var_dump($req);
 		$req->execute($attributes);
-		$req->setFetchMode(PDO::FETCH_CLASS, $class_name);
+		//$req->setFetchMode(PDO::FETCH_CLASS, $class_name);
 		if ($one)
 			$datas = $req->fetch();
 		else

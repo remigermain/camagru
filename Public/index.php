@@ -43,6 +43,6 @@ if ($title === NULL)
 
 $content = ob_get_clean();
 
-require '../Pages/templates/default.php'
+require '../Pages/templates/default.php';
 
 ?>

@@ -6,7 +6,7 @@ Autoloader::register();
 //include 'require.php';
 use App\App;
 use App\Error;
- use App\Database;
+use App\Database;
 use App\Connection;
 
 if (isset($_POST) && isset($_POST['submit']))
