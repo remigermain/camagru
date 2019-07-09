@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\Databse;
 
 class App
 {
@@ -31,6 +32,14 @@ class App
 	{
 		static::session();
 		if (isset($_SESSION) && isset($_SESSION['login']))
+			return (true);
+		else
+			return (false);
+	}
+
+	public static function userExist($pseudo)
+	{
+		if (APP::getDB()->getprepare("SELECT pseudo FROM user WHERE pseudo LIKE ?", [$pseudo]))
 			return (true);
 		else
 			return (false);

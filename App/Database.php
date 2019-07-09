@@ -29,19 +29,19 @@ class	Database
 		return ($this->pdo);
 	}
 
-	public function getquery($statement)
+	public function getquery($statement, $one = false)
 	{
-		var_dump($statement);
 		$req = $this->getPDO()->query($statement);
-		die(var_dump($req));
-
+		if ($one)
+			$datas = $req->fetch();
+		else
+			$datas = $req->fetchAll();
 		return ($datas);
 	}
 
 	public function getprepare($statement, $attributes, $one = false)
 	{
 		$req = $this->getPDO()->prepare($statement);
-		var_dump($req);
 		$req->execute($attributes);
 		if ($one)
 			$datas = $req->fetch();
