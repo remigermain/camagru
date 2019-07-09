@@ -24,13 +24,15 @@
                           <input class="input is-rounded " type="text" placeholder="search">
                       </div>
                   </div>
-                  <!-- if $_session is co -->
                   <div class="navbar-end">
-                      <a class="navbar-item" href="../Public/index.php?p=user_images"><i class="material-icons">add_a_photo</i></a>
-                      <a class="navbar-item" href="../Public/index.php?p=user_home"><i class="material-icons">home</i></a>
-                      <a class="navbar-item" href="../Public/index.php?p=notification"><i class="material-icons">notifications</i></a>
-                      <a class="navbar-item" href="../Public/index.php?p=account"><i class="material-icons">account_circle</i></a>
-                      <a class="navbar-item" href="../Public/index.php?p=login"><i class="material-icons">settings</i></a>
+                  <?php
+                        if (isset($_SESSION) && isset($_SESSION['login'])) {?>
+                        <a class="navbar-item" href="../Public/index.php?p=user_images"><i class="material-icons">add_a_photo</i></a>
+                        <a class="navbar-item" href="../Public/index.php?p=user_home"><i class="material-icons">home</i></a>
+                        <a class="navbar-item" href="../Public/index.php?p=notification"><i class="material-icons">notifications</i></a>
+                        <a class="navbar-item" href="../Public/index.php?p=account"><i class="material-icons">account_circle</i></a>
+                        <?php }?>
+                        <a class="navbar-item" href="../Public/index.php?p=connection"><i class="material-icons">settings</i></a>
                   </div>
               </div>
           </nav>

@@ -2,7 +2,8 @@
 require '../App/Autoloader.php';
 use     App\Autoloader;
 Autoloader::register();
-
+//if (!isset($_SESSION))
+session_start();
 
 if (isset($_GET['p']))
     $page = $_GET['p'];
@@ -14,8 +15,8 @@ ob_start();
 
 if ($page === 'home')
     require '../Pages/home.php';
-else if ($page === 'login')
-    require '../Pages/login.php';
+else if ($page === 'connection')
+    require '../Pages/connection.php';
 else if ($page === 'account')
     require '../Pages/user/account.php';
 else if ($page === 'user_images')

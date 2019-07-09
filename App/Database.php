@@ -5,10 +5,13 @@ use \PDO;
 
 class	Database
 {
-	private $db_info
+	private $db_name;
+	private $db_user;
+	private $db_pass;
+	private $db_host;
 	private $pdo;
 
-	Public function __construct($db_name, $db_user = 'root', $db_pass = 'rootpass', $db_host = '172.18.0.2')
+	public function __construct($db_name, $db_user = 'root', $db_pass = 'rootpass', $db_host = '172.18.0.2')
 	{
 		$this->db_name = $db_name;
 		$this->db_user = $db_user;
@@ -26,16 +29,20 @@ class	Database
 		return ($this->pdo);
 	}
 
-	Public function query($statement, $class_name)
+	public function getquery($statement, $class_name)
 	{
+		var_dump($statement);
 		$req = $this->getPDO()->query($statement);
 		$datas = $req->fetchall(PDO::FETCH_CLASS, $class_name);
+		die(var_dump($req));
+
 		return ($datas);
 	}
 
-	Public function prepare($statement, $attributes, $class_name, $one = false)
+	public function getprepare($statement, $attributes, $class_name, $one = false)
 	{
 		$req = $this->getPDO()->prepare($statement);
+		var_dump($req);
 		$req->execute($attributes);
 		$req->setFetchMode(PDO::FETCH_CLASS, $class_name);
 		if ($one)
@@ -44,6 +51,17 @@ class	Database
 			$datas = $req->fetchAll();
 		return ($datas);
 
+	}
+
+	public function setquery($statement)
+	{
+		$req = $this->getPDO()->query($statement);
+	}
+
+	public function setprepare($statement, $attributes)
+	{
+		$req = $this->getPDO()->prepare($statement);
+		$req->execute($attributes);
 	}
 }
 
