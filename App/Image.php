@@ -19,7 +19,7 @@ class Image
     
     public static function getImgId($id)
     {
-      return (App::getDb()->getprepare("SELECT user.id, image.user_id, image.image, image.date, image.id as image_id, user.email, user.pseudo FROM image INNER JOIN `user` ON user.id = image.user_id WHERE image.id LIKE ? ", [$id]));
+      return (App::getDb()->getprepare("SELECT user.id, image.user_id, image.image, image.date, image.id as image_id, image.synopsis, user.email, user.pseudo FROM image INNER JOIN `user` ON user.id = image.user_id WHERE image.id LIKE ? ", [$id]));
     }
 
     public static function getUserImg($pseudo, $order = NULL)
@@ -33,7 +33,17 @@ class Image
     {
       if (!$order)
         $order = "ORDER BY image.id DESC";
-      return (App::getDb()->getquery("SELECT user.id, image.user_id, image.image, image.date, image.id as image_id, user.email, user.pseudo FROM image INNER JOIN `user` WHERE user.id LIKE image.user_id ". $order));
+      return (App::getDb()->getquery("SELECT user.id, user.email, user.pseudo, image.user_id, image.image, image.date, image.id as image_id, image.title, image.synopsis  FROM image INNER JOIN `user` WHERE user.id LIKE image.user_id ". $order));
+    }
+
+    public static function synopsis($sys)
+    {
+      $str = substr($sys, 0, 90);
+      if (strlen($sys) > 90)
+        $str .= "...";
+      else if (substr($sys, -1) != '.')
+        $str .= ".";
+      return ($str);
     }
 }
 ?>

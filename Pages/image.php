@@ -23,11 +23,14 @@ $val = Image::getImgId($_GET['id'])[0];
               </figure>
             </div>
             <div class="content">
-              <p class="title is-6"><a href="../Public/index.php?p=user_home&user=<?= $val['pseudo'] ?>"><?= $val['pseudo'] ?></a></p>
+              <p class="title is-6"><a href="../Public/index.php?p=user_home&user=<?= $val['pseudo'] ?>">@<?= $val['pseudo'] ?></a></p>
+              <?= $val['synopsis'] ?><br>
               <time datetime="2016-1-1"><?= $val['date'] ?></time>
             </div>
+              <a class=""><i class="material-icons">favorite</i>Like</a>
+              </div>
+            </div>
           </div>
-          <a class="button is-link">Like 9999</a>
         </div>
       </div>
 <!--    print comment  -->
@@ -38,10 +41,11 @@ $val = Image::getImgId($_GET['id'])[0];
         </figure>
         <div class="media-content">
           <div class="content">
-            <p><strong>Barbara Middleton</strong>
-              <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
-              <br><small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
-            </p>
+            <div class="content">
+              <?= $val['synopsis'] ?><br>
+              <time datetime="2016-1-1"><?= $val['date'] ?></time>
+            </div>
+            <a class=""><i class="material-icons">favorite</i>Like</a>
           </div>
           </div>
         </article>
