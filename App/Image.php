@@ -19,25 +19,27 @@ class Image
     
     public static function getImgId($id)
     {
-      return (App::getDb()->getprepare("SELECT user.id, image.user_id, image.image, image.date, image.id as image_id, image.synopsis, user.email, user.pseudo FROM image INNER JOIN `user` ON user.id = image.user_id WHERE image.id LIKE ? ", [$id]));
+      return (App::getDb()->getprepare("SELECT user.id, user.pseudo, image.id as image_id, image.title, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category LIKE category.id WHERE image.id LIKE ? ", [$id], true));
     }
 
     public static function getUserImg($pseudo, $order = NULL)
     {
       if (!$order)
         $order = "ORDER BY image.id DESC";
-      return (App::getDb()->getprepare("SELECT user.id, image.user_id, image.image, image.date, image.id as image_id, user.email, user.pseudo FROM image INNER JOIN `user` ON user.id = image.user_id WHERE user.pseudo LIKE ? " . $order, [$pseudo]));
+      return (App::getDb()->getprepare("SELECT user.id, user.pseudo, image.id as image_id, image.title, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category LIKE category.id WHERE user.pseudo LIKE ? " . $order, [$pseudo]));
     }
 
     public static function getAllImg($order = NULL)
     {
       if (!$order)
         $order = "ORDER BY image.id DESC";
-      return (App::getDb()->getquery("SELECT user.id, user.email, user.pseudo, image.user_id, image.image, image.date, image.id as image_id, image.title, image.synopsis  FROM image INNER JOIN `user` WHERE user.id LIKE image.user_id ". $order));
+      return (App::getDb()->getquery("SELECT user.id, user.pseudo, image.id as image_id, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category LIKE category.id ". $order));
     }
 
     public static function synopsis($sys)
     {
+      if (is_null($sys))
+        return ("No synopsis");
       $str = substr($sys, 0, 90);
       if (strlen($sys) > 90)
         $str .= "...";

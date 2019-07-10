@@ -27,13 +27,15 @@
                   <div class="navbar-end">
                   <?php
                     use App\App;
-                        if (App::sessionExist()) {?>
+                    if (App::sessionExist())
+                    {?>
                         <a class="navbar-item" href="../Public/index.php?p=user_upload"><i class="material-icons">add_a_photo</i></a>
                         <a class="navbar-item" href="../Public/index.php?p=user_home&user=<?=$_SESSION['pseudo']?>"><i class="material-icons">home</i></a>
                         <a class="navbar-item" href="../Public/index.php?p=notification"><i class="material-icons">notifications</i></a>
                         <a class="navbar-item" href="../Public/index.php?p=account"><i class="material-icons">account_circle</i></a>
-                        <?php }?>
-                        <a class="navbar-item" href="../Public/index.php?p=connection"><i class="material-icons">settings</i></a>
+                  <?php
+                    }?>
+                    <a class="navbar-item" href="../Public/index.php?p=connection"><i class="material-icons">settings</i></a>
                   </div>
               </div>
           </nav>
@@ -43,7 +45,7 @@
     <!-- print previous content -->
     <?= $content ?>
   </main>
-  <footer class="footer">
+  <footer class="footer" style="margin-top: 20px;">
     <div class="content has-text-centered">
       <p>
         <strong>Camagru</strong> by <a href="https://profile.intra.42.fr/users/rgermain">GERMAIN Remi</a>. The source code is on

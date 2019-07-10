@@ -1,4 +1,10 @@
 <div class="box">
+    <progress class="progress is-small" value="15" max="100">15%</progress>
+    <progress class="progress" value="30" max="100">30%</progress>
+    <progress class="progress is-medium" value="45" max="100">45%</progress>
+    <progress class="progress is-large" value="60" max="100">60%</progress>
+</div>
+<div class="box">
     <table class="table">
         <thead>
             <tr>
@@ -20,24 +26,14 @@
         </tfoot>
         <tbody>
         <?php $i = 0; foreach ($val as $key => $key2)
-        { ?>
+        {?>
             <tr>
-            <th><?= $i++ ?></th>
-            <td><a href="../Public/index.php?p=image&id=<?= $key2['image_id'] ?>" title="<?= "comment" ?>"><?= "comment" ?></a> <strong>(C)</strong>
-            </td>
-            <td>38</td>
-            <td>23</td>
-            <td>12</td>
-            <td>3</td>
-            <td>68</td>
-            <td>36</td>
-            <td>+32</td>
-            <td>81</td>
-            <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Champions_League#Group_stage" title="2016–17 UEFA Champions League">Champions League group stage</a></td>
+                <th><?= $i++ ?></th>
+                <td><a href="../Public/index.php?p=image&id=<?= $key2['image_id'] ?>" title="<?= $key2['title'] ?>"><?= $key2['title'] ?></a></td>
+                <td><? $key2['like'] ?></td>
+                <td><?= Image::synopsis($key2['synopsis']) ?></td>
+                <td><?= $key2['category'] ?></td>
             </tr>
-
-
-
         <?php
         } ?>
         </tbody>

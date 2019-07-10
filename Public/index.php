@@ -4,7 +4,7 @@ use     App\Autoloader;
 use     App\App;
 Autoloader::register();
 App::session();
-APP::require_file(NULL);
+APP::getPath(NULL);
 
 if (isset($_GET['p']))
     $page = $_GET['p'];

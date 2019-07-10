@@ -53,6 +53,10 @@ class Connection
                 "creation_date" => date("Y/m/d"),
                 "valid" => $valid);
             APP::getDB()->setprepare("INSERT INTO user (pseudo, email, pass, creation_date, valid) VALUE(:pseudo, :email, :pass, :creation_date, :valid)", $val);
+            $val = array(
+                "sys" => "No synopis",
+                "logo" => base64_encode(file_get_contents(App::getPath("vue/img/profil.png"))));
+            APP::getDB()->setprepare("INSERT INTO home (synopsis, logo) VALUE(:sys, :logo)", $val);
             header('Location:/Public/index.php?p=connection');
         }
         else

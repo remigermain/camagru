@@ -57,7 +57,7 @@ class App
 
 	}
 
-	Public static function require_file($file)
+	Public static function getPath($file)
 	{
 		if (is_null($file))
 			static::$path = str_replace("App", "", __DIR__);
