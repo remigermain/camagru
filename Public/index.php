@@ -4,7 +4,7 @@ use     App\Autoloader;
 use     App\App;
 Autoloader::register();
 App::session();
-
+APP::require_file(NULL);
 
 if (isset($_GET['p']))
     $page = $_GET['p'];
@@ -20,8 +20,8 @@ else if ($page === 'connection')
     require '../Pages/connection.php';
 else if ($page === 'account')
     require '../Pages/user/account.php';
-else if ($page === 'user_images')
-    require '../Pages/user/user_images.php';
+else if ($page === 'user_upload')
+    require '../Pages/user/user_upload.php';
 else if ($page === 'user_home')
     require '../Pages/user/user_home.php';
 else if ($page === 'admin_account')

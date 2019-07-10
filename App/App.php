@@ -12,6 +12,7 @@ class App
 
 	private static $database;
 	private static $title = 'camagru';
+	private static $path;
 
 	Public static function getDb()
 	{
@@ -54,6 +55,13 @@ class App
 	{
 		self::$title = $title;
 
+	}
+
+	Public static function require_file($file)
+	{
+		if (is_null($file))
+			static::$path = str_replace("App", "", __DIR__);
+		return (str_replace("App", "", __DIR__) . $file);
 	}
 }
 

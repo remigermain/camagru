@@ -20,8 +20,9 @@ if (!App::sessionExist())
   <form id="form-over">
     <?php
       use App\Image;
-      Image::printImg($_SESSION['pseudo']);
-      ?>
+      $val = Image::getUserImg($_SESSION['pseudo']);
+      require (App::require_file("/Pages/user/user_overview.php"));
+    ?>
   </form>
 <!-- edit  -->
   <form id="form-edit" style="display: none">

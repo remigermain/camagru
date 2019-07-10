@@ -28,7 +28,7 @@
                   <?php
                     use App\App;
                         if (App::sessionExist()) {?>
-                        <a class="navbar-item" href="../Public/index.php?p=user_images"><i class="material-icons">add_a_photo</i></a>
+                        <a class="navbar-item" href="../Public/index.php?p=user_upload"><i class="material-icons">add_a_photo</i></a>
                         <a class="navbar-item" href="../Public/index.php?p=user_home&user=<?=$_SESSION['pseudo']?>"><i class="material-icons">home</i></a>
                         <a class="navbar-item" href="../Public/index.php?p=notification"><i class="material-icons">notifications</i></a>
                         <a class="navbar-item" href="../Public/index.php?p=account"><i class="material-icons">account_circle</i></a>
