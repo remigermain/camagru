@@ -20,15 +20,22 @@ class Image
         App::getDb()->setprepare("INSERT INTO image (email, `image`, `date`, categorie) VALUES(:email, :img, :date, :cat)", $val);
     }
 
-    public static function getImg($pseudo)
+    public static function getImg($pseudo, $order = NULL)
     {
-     //   $val = '%' . str_replace('@', '%', $login);
-        return (App::getDb()->getprepare("SELECT * FROM image INNER JOIN `user` WHERE user.id LIKE image.email AND user.pseudo LIKE ?", [$pseudo]));
+      if (!$order)
+        $order = "ORDER BY image.id DESC";
+      return (App::getDb()->getprepare("SELECT user.id, image.email, image.image, image.date, user.email, user.pseudo FROM image INNER JOIN `user` ON user.id = image.email WHERE user.pseudo LIKE ? " . $order, [$pseudo]));
     }
 
-    public static function getAllImg()
+    public static function getAllImg($order = NULL)
     {
-        return (App::getDb()->getquery("SELECT * FROM image INNER JOIN `user` WHERE user.id LIKE image.email"));
+      if (!$order)
+        $order = "ORDER BY image.id DESC";
+      return (App::getDb()->getquery("SELECT user.id, image.email, image.image, image.date, user.email, user.pseudo FROM image INNER JOIN `user` WHERE user.id LIKE image.email ". $order));
+    }
+
+    public static function getHome($pseudo)
+    {
     }
 
     public static function printImg($login)
@@ -54,12 +61,13 @@ class Image
         $val = static::getAllImg();
         foreach ($val as $key => $key2)
         {
+         // require '../Pages/templates/image_homepage.php';
          //   die(var_dump($key2));
             $tab .= '<div class="column is-3"><div class="card"><div class="card-image"><figure class="image is-4by3"><a href="../Public/index.php?p=image">';
             $tab .= '<img src="data:image/jpeg;base64, ' . $key2['image'] . '" alt="Placeholder image"></a>';
             $tab .= '</figure></div><div class="card-content"><div class="media"><div class="media-left"><figure class="image is-48x48">';
             $tab .= '<img class="is-rounded" src="../vue/img/profil.jpg" alt="Placeholder image"></figure></div><div class="content">';
-            $tab .= '<p class="title is-6"><a href="../Public/index.php?p=user_home&user=' . $key2['pseudo'] . '">' . $key2['pseudo'] . '</a></p><time datetime="2016-1-1">' . $key2['creation_date'] . '</time>';
+            $tab .= '<p class="title is-6"><a href="../Public/index.php?p=user_home&user=' . $key2['pseudo'] . '">' . $key2['pseudo'] . '</a></p><time datetime="2016-1-1">' . $key2['date'] . '</time>';
             $tab .= '</div><a class="button is-link">Like</a></div></div></div></div>';
         }
         $tab .= '</div></div>';
@@ -68,39 +76,12 @@ class Image
 
     public static function printHome($pseudo)
     {
-        $tab = '
-            <div class="box">
-                  <div class="container">
-                    <div class="box">
-                      <article class="media">
-                        <div class="media-left">
-                          <figure class="image is-128x128">
-                            <img class="is-rounded" src="../vue/img/profil.jpg" alt="Image">
-                          </figure>
-                        </div>
-                        <div class="media-content">
-                          <div class="content">
-                            <p><strong>'. $pseudo . '</strong><br>
-                              <a class="button is-warning is-outlined">Follower</a>
-                              <br><br>
-                              <span>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                              </span>
-                            </p>
-                          </div>
-                          <div class="tags are-large">
-                            <span class="tag">Follower 666</span>
-                            <span class="tag">Image 666</span>
-                            <span class="tag">Like 666</span>
-                          </div>
-                        </div>
-                      </article>
-                    </div>
-                  </div>';
-        return ($tab);
+      $image = "/../vue/img/profil.jpg";
+      $follower = rand() % 666;
+      $number = rand() % 666;
+      $synopsis = "Au XIVe siècle, un bergsman (paysan libre qui outre ses activités agricoles produit aussi du fer) d'origine allemande nommé Englika établit un haut fourneau et une forge utilisant l'énergie des rapides de la rivière Snytenån (ou Snytsboån). Le village d'Englikobenning est né, et des bergsmän s'y succèdent pour gérer les fourneaux et les forges. La situation change à la fin du ";
+      $like = rand() % 666;
+      require '../Pages/templates/home.php';
     }
 }
 ?>

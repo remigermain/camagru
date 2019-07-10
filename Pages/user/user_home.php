@@ -5,7 +5,7 @@
  use App\Error;
 if (!isset($_GET['user']) || !APP::userexist($_GET['user']))
   Error::notFound();
-print(Image::printHome($_GET['user']));
+Image::printHome($_GET['user']);
 ?>
 <!--  menu -->
   <div class="hero-foot">
