@@ -63,6 +63,11 @@ class App
 			static::$path = str_replace("App", "", __DIR__);
 		return (str_replace("App", "", __DIR__) . $file);
 	}
+
+	Public static function print_var($file)
+	{
+		return (htmlspecialchars($file));
+	}
 }
 
 ?>

@@ -77,6 +77,35 @@ function delete_image(id)
     console.log(id);
 }
 
+
+function showHint(id)
+{
+    const req = new XMLHttpRequest();
+
+    req.open("POST", "http://127.0.0.1:8008/Server/edit_info_image.php", true);
+
+    var id = document.getElementById('2').value;
+    var form = new FormData;
+    form.append('id', id);
+    req.onreadystatechange = function()
+    { 
+        if(req.readyState == 4)
+        {
+            if(req.status == 200)
+            {
+                console.log("Status de la réponse: %d (%s)", req.status, req.statusText, req.responseText);
+                    //  storing(req.responseText);	
+                }	
+                else	
+                {
+                    alert("Error: returned status code " + req.status + " " + req.statusText);
+                }	
+            }
+        }     
+    req.send(form); 
+}
+
+
 cancel_modal();
 close_modal();
 cancel_chanel();
