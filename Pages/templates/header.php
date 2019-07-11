@@ -1,3 +1,9 @@
+<?php
+use App\App;
+use App\User;
+App::session();
+
+?>
 <body class="Site">
   <head>
           <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -21,37 +27,43 @@
               <div class="navbar-menu">
                   <div class="navbar-start" style="flex-grow: 1; justify-content: center;" >
                       <div class="navbar-item field " >
-                          <input class="input is-rounded " type="text" placeholder="search">
+                          <input class="input is-rounded" type="text" placeholder="search">
                       </div>
                   </div>
                   <div class="navbar-end">
                   <?php
-                    use App\App;
                     if (App::sessionExist())
-                    {?>
+                    {
+                      $logo = User::getUserInfo($_SESSION['pseudo']);
+                      ?>
                         <a class="navbar-item" href="../Public/index.php?p=user_upload"><i class="material-icons">add_a_photo</i></a>
-                        <a class="navbar-item" href="../Public/index.php?p=user_home&user=<?=$_SESSION['pseudo']?>"><i class="material-icons">home</i></a>
+                        <a class="navbar-item" href="../Public/index.php?p=user_home&user=<?=$_SESSION['pseudo']?>">
+                          <i class="material-icons">home</i></a>
                         <a class="navbar-item" href="../Public/index.php?p=notification"><i class="material-icons">notifications</i></a>
-                        <a class="navbar-item" href="../Public/index.php?p=account"><i class="material-icons">account_circle</i></a>
+                        <a class="navbar-item" href="../Public/index.php?p=account">
+                          <div class="image">
+                            <img class="logo is-rounded" src="data:image/jpeg;base64, <?= $logo['logo'] ?>">
+                          </div>
+                          <!-- <i class="material-icons">account_circle</i> -->
+                        </a>
+                        <div class="navbar-item">
+                          <form class="container" id="formlogout" method="POST" action="/Server/connection.php">
+                            <div class="field">
+                              <p class="control">
+                                <button class="button" id="submit" name="submit" value="logout">
+                                  <i class="material-icons">exit_to_app</i>
+                                Logout</button>
+                              </p>
+                            </div>
+                          </form>
+                        </div>
                   <?php
-                    }?>
+                    } else {?>
                     <a class="navbar-item" href="../Public/index.php?p=connection"><i class="material-icons">settings</i></a>
+                    <?php } ?>
                   </div>
               </div>
           </nav>
       </section>
   </header>
-  <main class="Site-content">
-    <!-- print previous content -->
-    <?= $content ?>
-  </main>
-  <footer class="footer" style="margin-top: 20px;">
-    <div class="content has-text-centered">
-      <p>
-        <strong>Camagru</strong> by <a href="https://profile.intra.42.fr/users/rgermain">GERMAIN Remi</a>. The source code is on
-        <a href="https://framagit.org/rgermain">framagit</a>. The website made withe
-        <a href="https://bulma.io/">Bluma</a>.
-      </p>
-    </div>
-  </footer>
-</body>
+  

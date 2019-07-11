@@ -13,7 +13,7 @@ else
 
 $title = NULL;
 ob_start();
-
+require '../Pages/templates/header.php';
 if ($page === 'home')
     require '../Pages/home.php';
 else if ($page === 'connection')
@@ -34,6 +34,8 @@ else if ($page === 'notification')
     require '../Pages/user/user_notification.php';
 else if ($page === 'image')
     require '../Pages/image.php';
+else if ($page === 'about')
+    require '../Pages/about.php';
 else
 {
     require '../Pages/error.php';
@@ -42,8 +44,7 @@ else
 if ($title === NULL)
     $title =  $_GET['p'];
 
+require '../Pages/templates/footer.php';
 $content = ob_get_clean();
-
-require '../Pages/templates/default.php';
-
+print ($content);
 ?>

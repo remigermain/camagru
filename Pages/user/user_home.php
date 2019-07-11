@@ -36,6 +36,17 @@ $like = rand() % 666;
                         <a class="button is-warning is-outlined">Follower</a>
                         <br><br>
                         <span><?= $synopsis ?></span>
+                        <?php if (App::sessionExist() && $_SESSION['pseudo'] == $_GET['user'])
+                          { ?>
+                            <div class="field is-grouped is-grouped-multiline">
+                              <div class="control">
+                                <div class="tags has-addons">
+                                  <a class="tag is-link"><i class="material-icons">settings</i> modify</a>
+                                </div>
+                              </div>
+                            </div>
+                        <?php
+                          } ?>
                         </p>
                     </div>
                     <div class="tags are-large">
@@ -96,12 +107,12 @@ $like = rand() % 666;
                           </div>
                         </div>
                         <!--  modify -->
-                        <?php if (App::sessionExist()) { ?>
+                        <?php if (App::sessionExist() && $_SESSION['pseudo'] == $_GET['user']) { ?>
                            <div class="field is-grouped is-grouped-multiline">
                              <div class="control">
                                <div class="tags has-addons">
-                                 <a class="tag is-link"> <i class="material-icons">settings</i> modify</a>
-                                 <a class="tag is-light"> <i class="material-icons">delete_forever</i> delete</a>
+                                 <a class="tag is-light"> <i class="material-icons">settings</i> modify</a>
+                                 <a class="tag is-danger"> <i class="material-icons">delete_forever</i> delete</a>
                                </div>
                              </div>
                            </div>

@@ -2,8 +2,10 @@
 use App\App;
 use App\Error;
 use App\Image;
+use App\User;
 if (!App::sessionExist())
-    Error::notAccess();
+  Error::notAccess();
+$info = User::getUserInfo($_SESSION['pseudo']);
 ?>
 <div class="hero-foot">
   <nav class="tabs">
@@ -51,13 +53,15 @@ if (!App::sessionExist())
   </form>
 <!-- edit  -->
   <form id="form-edit" style="display: none" class="box">
+  <?php
+    ?>
     <div class="columns">
       <!--  change password -->
       <div class="column is-one-quarter">
         <div class="box">
           <section class="section">
             <div class="container">
-              <h2 class="title">Password</h2>
+              <h2 class="subtitle is-3">Password</h2>
             </div>
           </section>
           <form class="container" method="POST" action="/Server/user_change.php">
@@ -93,7 +97,7 @@ if (!App::sessionExist())
     <div class="column is-one-quarter">
       <div class="box">
         <section class="section">
-            <h3 class="title">New Email</h3>
+            <h3 class="subtitle is-3">New Email</h3>
         </section>
         <form class="container" method="POST" action="/Server/user_change.php">
           <div class="field">
@@ -117,11 +121,11 @@ if (!App::sessionExist())
     <div class="column is-one-quarter">
         <div class="box">
           <section class="section">
-              <h3 class="title">pseudo</h3>
+              <h3 class="subtitle is-3">Pseudo</h3>
           </section>
           <form class="container" method="POST" action="/Server/user_change.php">
             <div class="field">
-              <label class="label">New peudo</label>
+              <label class="label">New pseudo</label>
                 <p class="control has-icons-left has-icons-right">
                   <input class="input" id="email" type="text" name="pseudo" placeholder="Email" required>
                   <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
@@ -139,12 +143,16 @@ if (!App::sessionExist())
     </div>
     <!--  change pseudo -->
     <div class="column is-one-quarter">
-      <div class="box">
-        <section class="section">
-            <h3 class="title">Profils logo</h3>
+      <div class="box is-centered">
+        <section class="section is-centered">
+            <h3 class="subtitle is-3">Profils logo</h3>
         </section>
         <form class="container" action="/Server/user_change.php" method="post" enctype="multipart/form-data">
-          <div class="buttons is-centered"><h3 class="title">Load image form local.</h3></div>
+          <div class="buttons is-centered">
+            <figure class="image is-128x128">
+              <img class="is-rounded" src="data:image/jpeg;base64, <?= $key2['logo'] ?>" >
+            </figure>
+          <h4 class="subtitle is-5">Load image form local.</h4></div>
           <div class="file is-warning is-boxed is-centered">
             <label class="file-label">
               <input class="file-input" type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg,image/png"required>
@@ -165,9 +173,10 @@ if (!App::sessionExist())
         </form>
       </div>
     </div>
-  </form>  
+  </form> 
 <!--  contact  -->
   <form id="form-cont" style="display: none">
   </form>
+</div>
 </div>
 <script src="/Script/account.js"></script>
