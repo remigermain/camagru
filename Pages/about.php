@@ -34,7 +34,7 @@
               </figure>
             </div>
             <div class="content">
-              <p class="title is-6"><a href="">@rgermain</a></p>
+              <p class="title is-6"><a href="#">@rgermain</a></p>
               42 est la première formation en informatique entièrement gratuite, ouverte à toutes et à tous sans condition de diplôme et accessible dès 18 ans. Sa pédagogie est basée sur le peer-to-peer learning : un fonctionnement participatif, sans cours, sans professeur, qui permet aux étudiants de libérer toute leur créativité grâce à l’apprentissage par projets. 42 a été fondée à l’initiative de Xavier Niel en 2013 alors que l’industrie du numérique en France subissait une importante pénurie de développeurs informatiques. Pour former en grand nombre les meilleurs talents de demain, l’établissement met à disposition les meilleures infrastructures dans des lieux innovants et modernes à Paris et Fremont (Silicon Valley). 42, est notre réponse à ce que devrait être l’école de demain.
               <br>
             </div>

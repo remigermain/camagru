@@ -38,13 +38,24 @@ $like = rand() % 666;
                         <span><?= $synopsis ?></span>
                         <?php if (App::sessionExist() && $_SESSION['pseudo'] == $_GET['user'])
                           { ?>
-                            <div class="field is-grouped is-grouped-multiline">
-                              <div class="control">
-                                <div class="tags has-addons">
-                                  <a class="tag is-link"><i class="material-icons">settings</i> modify</a>
-                                </div>
-                              </div>
+                        <button id="edit_button" class="button chanel_modal" onclick="display_modal_chanel()"><i class="material-icons">settings</i></button>
+                          <div id="chanel" value="<?= $info['pseudo']  ?>" class="modal">
+                            <div id="back" class="modal-background"></div>
+                            <div class="modal-card">
+                              <header class="modal-card-head">
+                                <p class="modal-card-title">Edit</p>
+                                <button id="but_close_chanel" class="delete" aria-label="close"></button>
+                              </header>
+                              <section class="modal-card-body">
+                                <h1 class="subtitle is-4">Synopsis chanel</h1>
+                                <textarea type="textarea" class="textarea"><?= $synopsis ?></textarea>
+                              </section>
+                              <footer class="modal-card-foot">
+                                <button class="button is-link">Save changes</button>
+                                <button id="but_cancel_chanel" class="button" aria-label="close" >Cancel</button>
+                              </footer>
                             </div>
+                          </div>
                         <?php
                           } ?>
                         </p>
@@ -111,8 +122,28 @@ $like = rand() % 666;
                            <div class="field is-grouped is-grouped-multiline">
                              <div class="control">
                                <div class="tags has-addons">
-                                 <a class="tag is-light"> <i class="material-icons">settings</i> modify</a>
-                                 <a class="tag is-danger"> <i class="material-icons">delete_forever</i> delete</a>
+                                <button id="edit_button" class="button" onclick="display_modal(<?= $key2['image_id'] ?>)"><i class="material-icons">settings</i></button>
+                                  <div id="modal<?= $key2['image_id'] ?>" class="modal">
+                                    <div id="back_img<?= $key2['image_id'] ?>" class="modal-background"></div>
+                                    <div class="modal-card">
+                                      <header class="modal-card-head">
+                                        <p class="modal-card-title">Edit</p>
+                                        <button id="close<?= $key2['image_id'] ?>" class="delete" aria-label="close"></button>
+                                      </header>
+                                      <section class="modal-card-body">
+                                        <h1 class="subtitle is-4">Title</h1>
+                                        <textarea type="textarea" class="textarea"><?= $key2['title'] ?></textarea>
+                                        <h1 class="subtitle is-4">Synopsis</h1>
+                                        <textarea type="textarea" class="textarea"><?= $key2['synopsis'] ?></textarea>
+                                      </section>
+                                      <footer class="modal-card-foot">
+                                        <button class="button is-link">Save changes</button>
+                                        <button id="cancel<?= $key2['image_id'] ?>" class="button" aria-label="close" >Cancel</button>
+                                      </footer>
+                                    </div>
+                                  </div>
+                                  <!--  <a class="tag is-light"> <i class="material-icons">settings</i> modify</a> -->
+                                <button id="delete<?= $key2['image_id'] ?>" class="button is-danger" onclick="delete_image(<?= $key2['image_id'] ?>)"><i class="material-icons">delete_forever</i> delete</button>
                                </div>
                              </div>
                            </div>
@@ -125,3 +156,4 @@ $like = rand() % 666;
     } ?>
   </div>
 </div>
+<script src="../script/edit.js"></script>
