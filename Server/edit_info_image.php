@@ -1,14 +1,9 @@
 <?php
 require '../App/Autoloader.php';
-use     App\Autoloader;
-Autoloader::register();
-use App\App;
+use App\Autoloader;
 use App\Error;
-use App\User;
 use App\Image;
-
-
-var_dump($_POST);
+Autoloader::register();
 
 if (isset($_POST) && isset($_POST['methode']))
 {

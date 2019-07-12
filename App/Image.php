@@ -17,7 +17,7 @@ class Image
         App::getDb()->setprepare("INSERT INTO image (`user_id`, `image`, `date`, category) VALUES(:email, :img, :date, :cat)", $val);
     }
     
-    public static function getImgId($id)
+    public static function getImgById($id)
     {
       return (App::getDb()->getprepare("SELECT user.id, user.pseudo, image.id as image_id, image.title, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category LIKE category.id WHERE image.id LIKE ? ", [$id], true));
     }
@@ -55,7 +55,6 @@ class Image
     {
       if (!APP::sessionExist())
         Error::notAccess();
-      var_dump($id, $_SESSION);
       return (App::getDb()->setprepare("DELETE FROM image WHERE id LIKE :id_image AND user_id LIKE :user_id", array("id_image" => $id, "user_id" => $_SESSION['id'])));
     }
 

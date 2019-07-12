@@ -4,7 +4,7 @@ use App\App;
 use App\Error;
 if (!isset($_GET) || !isset($_GET['id']))
   Error::notFound();  
-$val = Image::getImgId($_GET['id']);
+$val = Image::getImgById($_GET['id']);
 if (!$val)
   Error::notFound();
 ?>
