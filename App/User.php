@@ -40,7 +40,6 @@ class User
     {
         App::session();
         $val = array("img" => $img, "email" => $_SESSION['login']);
-      //  die(var_dump($val));
         App::getDb()->setprepare("UPDATE `home` INNER JOIN `user` ON home.id = user.id SET home.logo = :img WHERE user.email LIKE :email", $val);
     }
 }

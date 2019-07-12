@@ -15,9 +15,14 @@ class Connection
             return (APP::getDB()->getprepare("SELECT email, pass FROM user WHERE email LIKE ? AND pass LIKE ?", array($email, $pass), true));
     }
 
-    public static function getPseudo($email)
+    private static function getPseudo($email)
     {
         return (APP::getDB()->getprepare("SELECT email, pseudo FROM user WHERE email LIKE ?", [$email], true));
+    }
+    
+    private static function getIdPseudo($email)
+    {
+        return (APP::getDB()->getprepare("SELECT id FROM user WHERE email LIKE ?", [$email], true));
     }
     
     public static function login()
@@ -27,6 +32,7 @@ class Connection
             App::session();
             $_SESSION['login'] = $_POST['email'];
             $_SESSION['pseudo'] = static::getPseudo($_POST['email'])['pseudo'];
+            $_SESSION['id'] = static::getIdPseudo($_POST['email'])['id'];
             header('Location:/Public/index.php');
         }
         else
@@ -38,6 +44,7 @@ class Connection
         App::session();
         unset($_SESSION['login']);
         unset($_SESSION['pseudo']);
+        unset($_SESSION['id']);
         session_destroy();
         header('Location:/Public/index.php?p=home');
     }

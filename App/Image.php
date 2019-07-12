@@ -33,10 +33,33 @@ class Image
     {
       if (!$order)
         $order = "ORDER BY image.id DESC";
-      return (App::getDb()->getquery("SELECT user.id, user.pseudo, image.id as image_id, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category LIKE category.id ". $order));
+      return (App::getDb()->getquery("SELECT user.id, user.pseudo, image.id as image_id, image.title, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category LIKE category.id ". $order));
     }
 
-    public static function synopsis($sys)
+    public static function updateImage($id, $synopsis, $title)
+    {
+      if (!APP::sessionExist())
+        Error::notAccess();
+      return (App::getDb()->setprepare("UPDATE image SET synopsis = :sys , title = :title  WHERE image.id LIKE :id", array("id" => $id, "sys" => $synopsis, "title" => $title)));
+    }
+
+    public static function updateHome($synopsis)
+    {
+      if (!APP::sessionExist())
+        Error::notAccess();
+      return (App::getDb()->setprepare("UPDATE home INNER JOIN user ON home.id = user.id SET synopsis = :sys WHERE user.pseudo = :id", array("id" => $_SESSION['pseudo'], "sys" => $synopsis)));
+    }
+
+
+    public static function removeImage($id)
+    {
+      if (!APP::sessionExist())
+        Error::notAccess();
+      var_dump($id, $_SESSION);
+      return (App::getDb()->setprepare("DELETE FROM image WHERE id LIKE :id_image AND user_id LIKE :user_id", array("id_image" => $id, "user_id" => $_SESSION['id'])));
+    }
+
+    public static function subSynopsis($sys)
     {
       if (is_null($sys))
         return ("No synopsis");
@@ -45,7 +68,17 @@ class Image
         $str .= "...";
       else if (substr($sys, -1) != '.')
         $str .= ".";
-      return ($str);
+      return (App::printString($str));
+    }
+
+    public static function subTitle($title)
+    {
+      if (is_null($title))
+        return ("No Title");
+      $str = substr($title, 0, 16);
+      if (strlen($title) > 16)
+        $str .= "...";
+      return (App::printString($str));
     }
 }
 ?>

@@ -32,7 +32,7 @@ class App
 	Public static function sessionExist()
 	{
 		static::session();
-		if (isset($_SESSION) && isset($_SESSION['login']))
+		if (isset($_SESSION) && isset($_SESSION['login']) && static::userExist($_SESSION['pseudo']))
 			return (true);
 		else
 			return (false);
@@ -64,7 +64,7 @@ class App
 		return (str_replace("App", "", __DIR__) . $file);
 	}
 
-	Public static function print_var($file)
+	Public static function printString($file)
 	{
 		return (htmlspecialchars($file));
 	}

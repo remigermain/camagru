@@ -37,8 +37,9 @@
                             <p class="title is-6">@<?= $key2['pseudo'] ?></p>
                         </a>
                     </div>
+                    <h1 class="tag subtitle is-8"><?= Image::subTitle($key2['title']) ?></h1>
                     <div class="content">
-                        <?= Image::synopsis($key2['synopsis']) ?><br>
+                        <?= Image::subSynopsis($key2['synopsis']) ?><br>
                     </div>
                     <a class=""><i class="material-icons">favorite</i>Like</a>
                     <div class="field is-grouped is-grouped-multiline">

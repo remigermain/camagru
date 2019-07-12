@@ -6,7 +6,7 @@ Autoloader::register();
 App::session();
 APP::getPath(NULL);
 
-if (isset($_GET['p']))
+if (isset($_GET) && isset($_GET['p']))
     $page = $_GET['p'];
 else
     $page = 'home';
@@ -41,7 +41,7 @@ else
     require '../Pages/error.php';
     $title = "error";
 }
-if ($title === NULL)
+if ($title === NULL && isset($_GET) && isset($_GET['p']))
     $title =  $_GET['p'];
 
 require '../Pages/templates/footer.php';

@@ -2,8 +2,8 @@ var edit_button = document.getElementById("edit_button");
 var static = "1";
 var modal = document.getElementById("modal" + static);
 var back_image = document.getElementById("back_img" + static);
-var close = document.getElementById("close" + static);
-var cancel = document.getElementById("cancel" +static);
+var close = document.getElementById("but_close_chanel");
+var cancel = document.getElementById("but_cancel_chanel");
 var back = document.getElementById("back");
 var chanel = document.getElementById("chanel");
 var but_close_chanel = document.getElementById("but_close_chanel");
@@ -78,30 +78,37 @@ function delete_image(id)
 }
 
 
-function showHint(id)
+function showHint(id, methode)
 {
     const req = new XMLHttpRequest();
-
     req.open("POST", "http://127.0.0.1:8008/Server/edit_info_image.php", true);
-
-    var id = document.getElementById('2').value;
     var form = new FormData;
+
+    console.log(methode);
+    if (methode == "home")
+    {
+        var homeSys = document.getElementById("homeSynopsis").value;
+        form.append('sys', homeSys);
+    }
+    else if (methode == "image")
+    {
+        var sys = document.getElementById("sys" + id).value;
+        var title = document.getElementById("title" + id).value;
+        form.append('sys', sys);
+        form.append('title', title);
+    }
     form.append('id', id);
+    form.append('methode', methode);
     req.onreadystatechange = function()
     { 
         if(req.readyState == 4)
         {
-            if(req.status == 200)
-            {
+            if(req.status >= 200 && req.status < 300)
                 console.log("Status de la réponse: %d (%s)", req.status, req.statusText, req.responseText);
-                    //  storing(req.responseText);	
-                }	
-                else	
-                {
-                    alert("Error: returned status code " + req.status + " " + req.statusText);
-                }	
-            }
-        }     
+            else	
+                alert("Error: returned status code " + req.status + " " + req.statusText);
+        }
+    }     
     req.send(form); 
 }
 
