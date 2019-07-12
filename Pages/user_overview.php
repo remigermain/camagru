@@ -29,10 +29,10 @@
         {?>
             <tr>
                 <th><?= $i++ ?></th>
-                <td><a href="../Public/index.php?p=image&id=<?= $key2['image_id'] ?>" title="<?= $key2['title'] ?>"><?= $key2['title'] ?></a></td>
-                <td><? $key2['like'] ?></td>
+                <td><a href="../Public/index.php?p=image&id=<?= App::printString($key2['image_id']) ?>" title="<?= App::printString($key2['title']) ?>"><?= App::printString($key2['title']) ?></a></td>
+                <td><? App::printString($key2['like']) ?></td>
                 <td><?= Image::synopsis($key2['synopsis']) ?></td>
-                <td><?= $key2['category'] ?></td>
+                <td><?= App::printString($key2['category']) ?></td>
             </tr>
         <?php
         } ?>

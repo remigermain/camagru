@@ -32,5 +32,15 @@ class Error
 		$str = "you not have access to this page";
 		header ('Location:/Public/index.php?p=error&error=' . $str);
 	}
+
+	public static function stringError($file)
+	{
+		return ($file);
+	}
+
+	public static function noSession($str)
+	{
+		return ("You need to be connected to " . $str);
+	}
 }
 ?>

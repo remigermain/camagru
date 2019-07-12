@@ -54,8 +54,8 @@ if (!$val)
         <div class="media-content">
           <div class="content">
             <div class="content">
-              <?= $val['synopsis'] ?><br>
-              <time datetime="2016-1-1"><?= $val['date'] ?></time>
+              <?= App::printString($val['synopsis'])?><br>
+              <time datetime="2016-1-1"><?= App::printString($val['date']) ?></time>
             </div>
             <a class=""><i class="material-icons">favorite</i>Like</a>
           </div>

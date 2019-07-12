@@ -10,7 +10,19 @@ class User
 {
     static Public function getUserInfo($login)
     {
-        return (App::getDb()->getprepare("SELECT * FROM user INNER JOIN home ON home.id = user.id WHERE user.pseudo LIKE ?", [$login], true));
+        $info = App::getDb()->getprepare("SELECT * FROM user INNER JOIN home ON home.id = user.id WHERE user.pseudo LIKE ?", [$login], true);
+        $follower = App::getDb()->getprepare("SELECT COUNT(*) as follower FROM follower INNER JOIN user ON user.id = follower.user_id WHERE user.pseudo LIKE ?", [$login], true);
+        $like = App::getDb()->getprepare("SELECT COUNT(*) as `like` FROM `like` INNER JOIN user ON user.id = like.user_id WHERE user.pseudo LIKE ?", [$login], true);
+        $image_nb = App::getDb()->getprepare("SELECT COUNT(*) as `image_nb` FROM `image` INNER JOIN user ON user.id = image.user_id WHERE user.pseudo LIKE ?", [$login], true);
+        $info['nb_image'] = $image_nb['image_nb'];
+        $info['follower'] = $follower['follower'];
+        $info['like'] = $like['like'];
+        return ($info);
+    }
+
+    static Public function getUserId($pseudo)
+    {
+        return (App::getDb()->getprepare("SELECT id FROM user WHERE user.pseudo LIKE ?", [$pseudo], true)['id']);
     }
 
     static Public function changeMail($new_mail)
@@ -41,6 +53,28 @@ class User
         App::session();
         $val = array("img" => $img, "email" => $_SESSION['login']);
         App::getDb()->setprepare("UPDATE `home` INNER JOIN `user` ON home.id = user.id SET home.logo = :img WHERE user.email LIKE :email", $val);
+    }
+
+    static Public function UserFollowUser($pseudo, $pseudo2)
+    {
+        $user1 = User::getUserId($pseudo);
+        $user2 = User::getUserId($pseudo2);
+        $val = array("follower" => $user1, "user_id" => $user2);
+        return (App::getDb()->getprepare("SELECT COUNT(*) as count FROM `follower` WHERE user_id LIKE :user_id AND follower LIKE :follower", $val, true)['count']);
+    }
+
+    static Public function userFollow($pseudo)
+    {
+        App::session();
+        $id_follower = User::getUserId($pseudo);
+        if ($id_follower == $_SESSION['id'])
+            return (Error::stringError("You can't follow you !"));
+        $val = array("follower" => $_SESSION['id'], "user_id" => $id_follower);
+        $ret = App::getDb()->getprepare("SELECT COUNT(*) as count FROM `follower` WHERE user_id LIKE :user_id AND follower LIKE :follower", $val, true)['count'];
+        if (intval($ret))
+            App::getDb()->setprepare("DELETE FROM follower WHERE user_id LIKE :user_id AND follower LIKE :follower", $val);
+        else
+            App::getDb()->setprepare("INSERT INTO follower (user_id, follower) VALUES(:user_id, :follower)", $val);
     }
 }
 ?>

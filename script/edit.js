@@ -72,12 +72,6 @@ function window_event()
     }
 }
 
-function delete_image(id)
-{
-    console.log(id);
-}
-
-
 function showHint(id, methode)
 {
     const req = new XMLHttpRequest();

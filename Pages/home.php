@@ -1,5 +1,6 @@
 <?php
   use App\Image;
+  use App\App;
   $val = Image::getAllImg();
 ?>
 <div class="hero-foot">
@@ -21,7 +22,7 @@
             <div class="card">
                 <div class="card-image">
                     <figure class="image is-4by3">
-                    <a href="../Public/index.php?p=image&id=<?= $key2['image_id'] ?>">
+                    <a href="../Public/index.php?p=image&id=<?= App::printString($key2['image_id']) ?>">
                         <img src="data:image/jpeg;base64, <?= $key2['image'] ?>" alt="Placeholder image">
                     </a>
                     </figure>
@@ -33,8 +34,8 @@
                                 <img class="is-rounded" src="data:image/jpeg;base64, <?= $key2['logo'] ?>" alt="Placeholder image">
                             </figure>
                         </div>
-                        <a href="../Public/index.php?p=user_home&user=<?= $key2['pseudo'] ?>">
-                            <p class="title is-6">@<?= $key2['pseudo'] ?></p>
+                        <a href="../Public/index.php?p=user_home&user=<?= App::printString($key2['pseudo']) ?>">
+                            <p class="title is-6">@<?= App::printString($key2['pseudo']) ?></p>
                         </a>
                     </div>
                     <h1 class="tag subtitle is-8"><?= Image::subTitle($key2['title']) ?></h1>
@@ -45,8 +46,8 @@
                     <div class="field is-grouped is-grouped-multiline">
                         <div class="control">
                           <div class="tags has-addons">
-                            <div class="tag"><time datetime="2016-1-1"><?= $key2['date'] ?></time></div>
-                            <a class="tag is-link"><?= $key2['category'] ?></a>
+                            <div class="tag"><time datetime="2016-1-1"><?= App::printString($key2['date']) ?></time></div>
+                            <a class="tag is-link"><?= App::printString($key2['category']) ?></a>
                             <a class="tag is-light">Tag</a>
                           </div>
                         </div>

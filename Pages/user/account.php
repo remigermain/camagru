@@ -40,10 +40,10 @@ $info = User::getUserInfo($_SESSION['pseudo']);
               {?>
                 <tr>
                   <th><?= $i++ ?></th>
-                  <td><a href="../Public/index.php?p=image&id=<?= $key2['image_id'] ?>" title="<?= $key2['title'] ?>"><?= $key2['title'] ?></a></td>
-                  <td><? $key2['like'] ?></td>
+                  <td><a href="../Public/index.php?p=image&id=<?= App::printString($key2['image_id']) ?>" title="<?= App::printString($key2['title']) ?>"><?= App::printString($key2['title']) ?></a></td>
+                  <td><? App::printString($key2['like']) ?></td>
                   <td><?= Image::subSynopsis($key2['synopsis']) ?></td>
-                  <td><?= $key2['category'] ?></td>
+                  <td><?= App::printString($key2['category']) ?></td>
                 </tr>
               <?php
               } ?>
@@ -150,7 +150,7 @@ $info = User::getUserInfo($_SESSION['pseudo']);
         <form class="container" action="/Server/user_change.php" method="post" enctype="multipart/form-data">
           <div class="buttons is-centered">
             <figure class="image is-128x128">
-              <img class="is-rounded" src="data:image/jpeg;base64, <?= $key2['logo'] ?>" >
+              <img class="is-rounded" src="data:image/jpeg;base64, <?= $info['logo'] ?>" >
             </figure>
           <h4 class="subtitle is-5">Load image form local.</h4></div>
           <div class="file is-warning is-boxed is-centered">
