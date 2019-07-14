@@ -58,6 +58,14 @@ class Image
       return (App::getDb()->setprepare("DELETE FROM image WHERE id LIKE :id_image AND user_id LIKE :user_id", array("id_image" => $id, "user_id" => $_SESSION['id'])));
     }
 
+    public static function userLikeImage($id_image)
+    {
+      if (!APP::sessionExist())
+        return (false);
+      $val = array("image_id" => $id_image, "user_pseudo" => $_SESSION['pseudo']);
+      return (App::getDb()->getprepare("SELECT COUNT(*) as bool FROM `like` INNER JOIN user ON user.id = `like`.`user_id` WHERE `like`.image_id = :image_id AND user.pseudo = :user_pseudo", $val, true)['bool']);
+    }
+
     public static function subSynopsis($sys)
     {
       if (is_null($sys))

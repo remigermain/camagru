@@ -11,50 +11,14 @@ $info = User::getUserInfo($_SESSION['pseudo']);
   <nav class="tabs">
     <div class="container">
       <ul>
-        <li id="over-active"><a onclick="displayOver()">Overview</a></li>
-        <li id="edit-active"><a onclick="displayEdit()">Account Edit</a></li>
-        <li id="cont-active"><a onclick="displayCont()">Contact</a></li>
+        <li class="is-active"><a>Account Edit</a></li>
       </ul>
     </div>
   </nav>
 </div>
-<!--  overview  -->
 <div class="container">
-  <form id="form-over">
-    <?php
-      $val = Image::getUserImg($_SESSION['pseudo']);
-      ?>
-      <div class="box">
-          <table class="table">
-              <thead>
-                  <tr>
-                    <th><abbr title="Position">Pos</abbr></th>
-                    <th>Photos</th>
-                    <th><abbr title="Like">Likes</abbr></th>
-                    <th><abbr title="Comment">Comments</abbr></th>
-                    <th><abbr title="category">category</abbr></th>
-                  </tr>
-              </thead>
-              <tbody>
-              <?php $i = 0; foreach ($val as $key => $key2)
-              {?>
-                <tr>
-                  <th><?= $i++ ?></th>
-                  <td><a href="../Public/index.php?p=image&id=<?= App::printString($key2['image_id']) ?>" title="<?= App::printString($key2['title']) ?>"><?= App::printString($key2['title']) ?></a></td>
-                  <td><? App::printString($key2['like']) ?></td>
-                  <td><?= Image::subSynopsis($key2['synopsis']) ?></td>
-                  <td><?= App::printString($key2['category']) ?></td>
-                </tr>
-              <?php
-              } ?>
-              </tbody>
-          </table>
-      </div>
-  </form>
 <!-- edit  -->
-  <form id="form-edit" style="display: none" class="box">
-  <?php
-    ?>
+  <form style="display" class="box">
     <div class="columns">
       <!--  change password -->
       <div class="column is-one-quarter">
@@ -174,9 +138,4 @@ $info = User::getUserInfo($_SESSION['pseudo']);
       </div>
     </div>
   </form> 
-<!--  contact  -->
-  <form id="form-cont" style="display: none">
-  </form>
 </div>
-</div>
-<script src="/Script/account.js"></script>

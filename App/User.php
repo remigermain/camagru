@@ -12,7 +12,7 @@ class User
     {
         $info = App::getDb()->getprepare("SELECT * FROM user INNER JOIN home ON home.id = user.id WHERE user.pseudo LIKE ?", [$login], true);
         $follower = App::getDb()->getprepare("SELECT COUNT(*) as follower FROM follower INNER JOIN user ON user.id = follower.user_id WHERE user.pseudo LIKE ?", [$login], true);
-        $like = App::getDb()->getprepare("SELECT COUNT(*) as `like` FROM `like` INNER JOIN user ON user.id = like.user_id WHERE user.pseudo LIKE ?", [$login], true);
+        $like = App::getDb()->getprepare("SELECT COUNT(*) as `like` FROM `like` INNER JOIN image ON `like`.`image_id` LIKE image.id INNER JOIN user ON user.id LIKE image.user_id WHERE user.pseudo LIKE ?", [$login], true);
         $image_nb = App::getDb()->getprepare("SELECT COUNT(*) as `image_nb` FROM `image` INNER JOIN user ON user.id = image.user_id WHERE user.pseudo LIKE ?", [$login], true);
         $info['nb_image'] = $image_nb['image_nb'];
         $info['follower'] = $follower['follower'];
@@ -75,6 +75,19 @@ class User
             App::getDb()->setprepare("DELETE FROM follower WHERE user_id LIKE :user_id AND follower LIKE :follower", $val);
         else
             App::getDb()->setprepare("INSERT INTO follower (user_id, follower) VALUES(:user_id, :follower)", $val);
+    }
+
+    static Public function userLikeImage($id_image)
+    {
+        if (!App::sessionExist())
+            Error::notAccess();
+        App::session();
+        $val = array("user_id" => $_SESSION['id'], "image_id" => $id_image);
+        $ret = Image::userLikeImage($id_image);
+        if ($ret)
+            App::getDb()->setprepare("DELETE FROM `like` WHERE user_id LIKE :user_id AND image_id LIKE :image_id", $val);
+        else
+            App::getDb()->setprepare("INSERT INTO `like` (user_id, image_id) VALUES(:user_id, :image_id)", $val);
     }
 }
 ?>

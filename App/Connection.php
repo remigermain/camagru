@@ -70,6 +70,11 @@ class Connection
             Error::user_notvalid();
     }
 
+    public static function newPassword()
+    {
+        // TODO
+    }
+
 }
 
 ?>

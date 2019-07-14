@@ -2,12 +2,23 @@
 use App\Image;
 use App\App;
 use App\Error;
+use App\Comment;
 if (!isset($_GET) || !isset($_GET['id']))
   Error::notFound();  
 $val = Image::getImgById($_GET['id']);
 if (!$val)
   Error::notFound();
+$com = Comment::getCommentImage($_GET['id']);
 ?>
+<div class="hero-foot">
+  <nav class="tabs">
+    <div class="container">
+      <ul>
+        <li class="is-active"><a>Image</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
 <!--    print images -->
 <div class="container">
   <div class="columns is-multiline">
@@ -32,7 +43,10 @@ if (!$val)
           </div>
           <h1 class="tag subtitle is-4"><?= App::printString($val['title']) ?></h1>
           <div class="content"><?= App::printString($val['synopsis']) ?><br></div>
-          <a class=""><i class="material-icons">favorite</i>Like</a>
+          <?php $like = Image::userLikeImage($_GET['id']); {?>
+            <button id="like" class="button is-outlined is-danger" onclick="reqFollowLike('<?= $_GET['id'] ?>', 'like')">
+            <?php if ($like) { ?><i class="material-icons">check</i><i class="material-icons">favorite</i><?php } else { ?><i class="material-icons">add</i><i class="material-icons">favorite_border</i><?php } ?></button>
+          <?php } ?>
           <div class="field is-grouped is-grouped-multiline">
             <div class="control">
               <!--  tag -->
@@ -45,25 +59,43 @@ if (!$val)
           </div>
       </div>
     </div>
-<!--    print comment  -->
-      <br />
-      <article class="media">
-        <figure class="media-left">
-          <p class="image is-64x64"><img src="../vue/ing/image.png"></p>
-        </figure>
-        <div class="media-content">
-          <div class="content">
-            <div class="content">
-              <?= App::printString($val['synopsis'])?><br>
-              <time datetime="2016-1-1"><?= App::printString($val['date']) ?></time>
-            </div>
-            <a class=""><i class="material-icons">favorite</i>Like</a>
-          </div>
-          </div>
-        </article>
-        </div>
-      </div>
-    </div>
+  </div>
 </div>
+<!--    menu  -->
+<div class="hero-foot">
+  <nav class="tabs">
+    <div class="container">
+      <ul>
+        <li class="is-active"><a>Comment</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<br />
+<!--    print comment  -->
+<div class="columns">
+    <div class="column">
+      <?php foreach($com as $keycom => $keycom2) { ?>
+        <div class="card-content box">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img class="is-rounded logo" src="data:image/jpeg;base64, <?= APP::printString($keycom2['logo']) ?>" alt="Placeholder image">
+              </figure>
+            </div>
+            <a href="../Public/index.php?p=user_home&user=<?= APP::printString($keycom2['pseudo']) ?>">
+              <p class="title is-6">@<?= APP::printString($keycom2['pseudo']) ?></p>
+            </a>
+          </div>
+          <div class="content"><?= App::printString($keycom2['comment'])?><br>
+            <time datetime="2016-1-1"><?= App::printString($keycom2['date']) ?></time>
+          </div>
+        </div>
+      <?php } ?>
+    </div>
+  </div>
+</div>
+
+<script src="../script/follow.js"></script>
 
 

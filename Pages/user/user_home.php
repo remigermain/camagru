@@ -14,7 +14,7 @@
   $follow = 1;
  ?>
 <!--  profils -->
-<div style="margin-top: 20px;">
+<div id="all" style="margin-top: 20px;">
     <div class="container">
         <div class="box">
             <article class="media">
@@ -26,8 +26,10 @@
                 <div class="media-content">
                     <div class="content">
                         <p><strong><?= APP::printString($_GET['user']) ?></strong><br>
-                        <button class="button is-outlined is-link" onclick="reqFollow('<?= $_GET['user'] ?>', 'follow')">
+                        <?php if (!App::sessionExist() || $_SESSION['pseudo'] != $_GET['user']) {?>
+                          <button id="follow" class="button is-outlined is-link" onclick="reqFollowLike('<?= $_GET['user'] ?>', 'follow')">
                           <?php if ($follow) { ?><i class="material-icons">check</i><?php } else { ?><i class="material-icons">add</i><?php } ?> Follow</button>
+                        <?php } ?>
                         <br><br>
                         <span><?= APP::printString($info['synopsis']) ?></span>
                         <div class="tags are-large">
@@ -79,7 +81,7 @@
     { ?>
         <div class="column is-3">
             <div class="card">
-                <div class="card-image">
+               <div class="card-image">
                     <figure class="image is-4by3">
                     <a href="../Public/index.php?p=image&id=<?= App::printString($key2['image_id']) ?>">
                         <img src="data:image/jpeg;base64, <?= APP::printString($key2['image']) ?>" alt="Placeholder image">
@@ -87,7 +89,7 @@
                     </figure>
                 </div>
                 <div class="card-content">
-                    <div class="media">
+      <!--              <div class="media">
                         <div class="media-left">
                             <figure class="image is-48x48">
                                 <img class="is-rounded" src="data:image/jpeg;base64, <?= APP::printString($key2['logo']) ?>" alt="Placeholder image">
@@ -99,9 +101,15 @@
                         <div class="media-right">
                         </div>
                     </div>
-                    <h1 class="tag subtitle is-8"><?=App::printString($key2['title']) ?></h1>
+          -->          <h1 class="tag subtitle is-8"><?=App::printString($key2['title']) ?></h1>
                     <div class="content"><?= Image::subSynopsis($key2['synopsis']) ?><br></div>
-                    <a class=""><i class="material-icons">favorite</i>Like</a>
+                    <!--  like  --->
+                    <?php $like = Image::userLikeImage($key2['image_id']); {?>
+                          <button id="like" class="button is-outlined is-danger" onclick="reqFollowLike('<?= $key2['image_id'] ?>', 'like')">
+                          <?php if ($like) { ?><i class="material-icons">check</i><i class="material-icons">favorite</i><?php } else { ?><i class="material-icons">add</i><i class="material-icons">favorite_border</i><?php } ?></button>
+                      <?php } ?>
+                      
+                    <!--<a class=""><i class="material-icons">favorite</i>Like</a>-->
                     <div class="field is-grouped is-grouped-multiline">
                         <div class="control">
                           <!--  tag -->
@@ -137,10 +145,28 @@
                                     </div>
                                   </div>
                                   <!--  <a class="tag is-light"> <i class="material-icons">settings</i> modify</a> -->
-                                <button id="delete<?= App::printString($key2['image_id']) ?>" class="button is-danger" onclick="showHint(<?= App::printString($key2['image_id']) ?>, 'delete')"><i class="material-icons">delete_forever</i> delete</button>
+                                <button id="delete" class="button" onclick="display_modal_del(<?= App::printString($key2['image_id']) ?>)"><i class="material-icons">delete</i></button>
+                                  <div id="modal_del<?= App::printString($key2['image_id']) ?>" class="modal">
+                                    <div id="del_back<?= App::printString($key2['image_id']) ?>" class="modal-background"></div>
+                                    <div class="modal-card">
+                                      <header class="modal-card-head">
+                                        <p class="modal-card-title">Delete pictures</p>
+                                        <button id="del_close<?= App::printString($key2['image_id']) ?>" class="delete" aria-label="close"></button>
+                                      </header>
+                                      <section class="modal-card-body">
+                                        <p class="subtitle is-4">Are you sure to delete this pictures ?</p>
+                                      </section>
+                                      <footer class="modal-card-foot">
+                                        <button id="delete<?= App::printString($key2['image_id']) ?>" class="button is-danger" onclick="showHint(<?= App::printString($key2['image_id']) ?>, 'delete')"><i class="material-icons">delete_forever</i> delete</button>
+                                        <button id="del_cancel<?= App::printString($key2['image_id']) ?>" class="button" aria-label="close" >Cancel</button>
+                                      </footer>
+                                    </div>
+                                  </div>
+                                </button>
                                </div>
                              </div>
                            </div>
+                          <!--  end -->
                         <?php } ?>
                     </div>
                 </div>

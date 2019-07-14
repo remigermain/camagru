@@ -42,7 +42,10 @@
                     <div class="content">
                         <?= Image::subSynopsis($key2['synopsis']) ?><br>
                     </div>
-                    <a class=""><i class="material-icons">favorite</i>Like</a>
+                    <?php $like = Image::userLikeImage($key2['image_id']); {?>
+                          <button id="like" class="button is-outlined is-danger" onclick="reqFollowLike('<?= $key2['image_id'] ?>', 'like')">
+                          <?php if ($like) { ?><i class="material-icons">check</i><i class="material-icons">favorite</i><?php } else { ?><i class="material-icons">add</i><i class="material-icons">favorite_border</i><?php } ?></button>
+                      <?php } ?>
                     <div class="field is-grouped is-grouped-multiline">
                         <div class="control">
                           <div class="tags has-addons">
@@ -60,3 +63,4 @@
         } ?>
     </div>
 </div>
+<script src="../script/follow.js"></script>
