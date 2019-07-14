@@ -12,7 +12,13 @@ function reqFollowLike(id, methode)
         if(req.readyState == 4)
         {
             if(req.status >= 200 && req.status < 300)
-                document.location.reload(true);
+            {
+               // document.location.reload(true);
+               var xhr = new XMLHttpReuqest();
+                xhr.open("GET", "http://127.0.0.1:8008/Public/index.php?p=user_home");
+                xhr.onreadystatechange = handler; // do something here...
+                xhr.send()
+            }
             else
                 alert("Error: returned status code " + req.status + " " + req.statusText);
         }

@@ -16,6 +16,7 @@ $info = User::getUserInfo($_SESSION['pseudo']);
     </div>
   </nav>
 </div>
+
 <div class="container">
 <!-- edit  -->
   <form style="display" class="box">
@@ -138,4 +139,5 @@ $info = User::getUserInfo($_SESSION['pseudo']);
       </div>
     </div>
   </form> 
+  </div>
 </div>

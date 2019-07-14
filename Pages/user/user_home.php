@@ -15,55 +15,60 @@
  ?>
 <!--  profils -->
 <div id="all" style="margin-top: 20px;">
-    <div class="container">
-        <div class="box">
-            <article class="media">
-                <div class="media-left">
-                    <figure class="image is-128x128">
-                        <img class="is-rounded" src="data:image/jpeg;base64, <?= $info['logo'] ?>" alt="Image">
-                    </figure>
-                </div>
-                <div class="media-content">
-                    <div class="content">
-                        <p><strong><?= APP::printString($_GET['user']) ?></strong><br>
-                        <?php if (!App::sessionExist() || $_SESSION['pseudo'] != $_GET['user']) {?>
-                          <button id="follow" class="button is-outlined is-link" onclick="reqFollowLike('<?= $_GET['user'] ?>', 'follow')">
-                          <?php if ($follow) { ?><i class="material-icons">check</i><?php } else { ?><i class="material-icons">add</i><?php } ?> Follow</button>
-                        <?php } ?>
-                        <br><br>
-                        <span><?= APP::printString($info['synopsis']) ?></span>
-                        <div class="tags are-large">
-                            <span class="tag">Follower <?= APP::printString($info['follower']) ?></span>
-                            <span class="tag">Image <?= APP::printString($info['nb_image']) ?></span>
-                            <span class="tag">Like <?= APP::printString($info['like']) ?></span>
-                            <?php if (App::sessionExist() && $_SESSION['pseudo'] == $_GET['user'])
-                              { ?>
-                            <button id="edit_button" class="button chanel_modal" onclick="display_modal_chanel()"><i class="material-icons">settings</i></button>
-                              <div id="chanel" value="<?= $info['pseudo'] ?>" class="modal">
-                                <div id="back" class="modal-background"></div>
-                                <div class="modal-card">
-                                  <header class="modal-card-head">
-                                    <p class="modal-card-title">Edit</p>
-                                    <button id="but_close_chanel" class="delete" aria-label="close"></button>
-                                  </header>
-                                  <section class="modal-card-body">
-                                    <h1 class="subtitle is-4">Synopsis chanel</h1>
-                                    <textarea id="homeSynopsis" type="textarea" class="textarea"><?= APP::printString($info['synopsis']) ?></textarea>
-                                  </section>
-                                  <footer class="modal-card-foot">
-                                    <button class="button is-link" id="2" onclick="showHint(null, 'home')">Save changes</button>
-                                    <button id="but_cancel_chanel" class="button" aria-label="close" >Cancel</button>
-                                  </footer>
-                                </div>
-                              </div>
-                            <?php
-                              } ?>
-                        </div>
-                    </div>
-                </div>
-            </article>
+  <div class="container">
+    <div class="box">
+      <article class="media">
+        <div class="media-left">
+          <figure class="image is-128x128">
+            <img class="is-rounded" src="data:image/jpeg;base64, <?= $info['logo'] ?>" alt="Image">
+          </figure>
         </div>
+        <div class="media-content">
+          <div class="content">
+            <p><strong><?= APP::printString($_GET['user']) ?></strong><br>
+            <?php if (!App::sessionExist() || $_SESSION['pseudo'] != $_GET['user']) {?>
+              <button id="follow" class="button is-outlined is-link" onclick="reqFollowLike('<?= $_GET['user'] ?>', 'follow')">
+                <?php if ($follow) { ?><i class="material-icons">check</i>
+                <?php } else { ?>
+                <i class="material-icons">add</i>
+                <?php } ?> Follow<
+              </button>
+            <?php } ?>
+            <br><br>
+            <span><?= APP::printString($info['synopsis']) ?></span>
+            <div class="tags are-large">
+              <span class="tag">Follower <?= APP::printString($info['follower']) ?></span>
+              <span class="tag">Image <?= APP::printString($info['nb_image']) ?></span>
+              <span class="tag">Like <?= APP::printString($info['like']) ?></span>
+              <?php if (App::sessionExist() && $_SESSION['pseudo'] == $_GET['user'])
+                { ?>
+              <button id="edit_button" class="button chanel_modal" onclick="display_modal_chanel()"><i class="material-icons">settings</i></button>
+              <div id="chanel" value="<?= $info['pseudo'] ?>" class="modal">
+                <div id="back" class="modal-background"></div>
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <p class="modal-card-title">Edit</p>
+                    <button id="but_close_chanel" class="delete" aria-label="close"></button>
+                  </header>
+                  <section class="modal-card-body">
+                    <h1 class="subtitle is-4">Synopsis chanel</h1>
+                    <textarea id="homeSynopsis" type="textarea" class="textarea"><?= APP::printString($info['synopsis']) ?></textarea>
+                  </section>
+                  <footer class="modal-card-foot">
+                    <button class="button is-link" id="2" onclick="showHint(null, 'home')">Save changes</button>
+                    <button id="but_cancel_chanel" class="button" aria-label="close" >Cancel</button>
+                  </footer>
+                </div>
+              </div>
+              <?php
+                } ?>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
+  </div>
+</div>
 <!--  menu -->
   <div class="hero-foot">
     <nav class="tabs">
@@ -83,33 +88,19 @@
             <div class="card">
                <div class="card-image">
                     <figure class="image is-4by3">
-                    <a href="../Public/index.php?p=image&id=<?= App::printString($key2['image_id']) ?>">
-                        <img src="data:image/jpeg;base64, <?= APP::printString($key2['image']) ?>" alt="Placeholder image">
-                    </a>
+                        <a href="../Public/index.php?p=image&id=<?= App::printString($key2['image_id']) ?>">
+                            <img src="data:image/jpeg;base64, <?= APP::printString($key2['image']) ?>" alt="Placeholder image">
+                        </a>
                     </figure>
                 </div>
                 <div class="card-content">
-      <!--              <div class="media">
-                        <div class="media-left">
-                            <figure class="image is-48x48">
-                                <img class="is-rounded" src="data:image/jpeg;base64, <?= APP::printString($key2['logo']) ?>" alt="Placeholder image">
-                            </figure>
-                        </div>
-                        <a href="../Public/index.php?p=user_home&user=<?= App::printString($key2['pseudo']) ?>">
-                            <p class="title is-6">@<?= App::printString($key2['pseudo']) ?></p>
-                        </a>
-                        <div class="media-right">
-                        </div>
-                    </div>
-          -->          <h1 class="tag subtitle is-8"><?=App::printString($key2['title']) ?></h1>
+                    <h1 class="tag subtitle is-8"><?=App::printString($key2['title']) ?></h1>
                     <div class="content"><?= Image::subSynopsis($key2['synopsis']) ?><br></div>
                     <!--  like  --->
                     <?php $like = Image::userLikeImage($key2['image_id']); {?>
                           <button id="like" class="button is-outlined is-danger" onclick="reqFollowLike('<?= $key2['image_id'] ?>', 'like')">
                           <?php if ($like) { ?><i class="material-icons">check</i><i class="material-icons">favorite</i><?php } else { ?><i class="material-icons">add</i><i class="material-icons">favorite_border</i><?php } ?></button>
-                      <?php } ?>
-                      
-                    <!--<a class=""><i class="material-icons">favorite</i>Like</a>-->
+                    <?php } ?>
                     <div class="field is-grouped is-grouped-multiline">
                         <div class="control">
                           <!--  tag -->
@@ -121,7 +112,7 @@
                         </div>
                         <!--  modify -->
                         <?php if (App::sessionExist() && $_SESSION['pseudo'] == $_GET['user']) { ?>
-                           <div class="field is-grouped is-grouped-multiline">
+                            <div class="field is-grouped is-grouped-multiline">
                              <div class="control">
                                <div class="tags has-addons">
                                 <button id="edit_button" class="button" onclick="display_modal(<?= App::printString($key2['image_id']) ?>)"><i class="material-icons">settings</i></button>
@@ -146,7 +137,7 @@
                                   </div>
                                   <!--  <a class="tag is-light"> <i class="material-icons">settings</i> modify</a> -->
                                 <button id="delete" class="button" onclick="display_modal_del(<?= App::printString($key2['image_id']) ?>)"><i class="material-icons">delete</i></button>
-                                  <div id="modal_del<?= App::printString($key2['image_id']) ?>" class="modal">
+                                   <div id="modal_del<?= App::printString($key2['image_id']) ?>" class="modal">
                                     <div id="del_back<?= App::printString($key2['image_id']) ?>" class="modal-background"></div>
                                     <div class="modal-card">
                                       <header class="modal-card-head">
@@ -162,7 +153,6 @@
                                       </footer>
                                     </div>
                                   </div>
-                                </button>
                                </div>
                              </div>
                            </div>
@@ -172,8 +162,7 @@
                 </div>
             </div>
         </div>
-    <?php
-    } ?>
+    <?php } ?>
   </div>
 </div>
 <script src="../script/follow.js"></script>

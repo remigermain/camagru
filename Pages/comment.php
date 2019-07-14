@@ -1,4 +1,7 @@
 <?php
+require '../App/Autoloader.php';
+use     App\Autoloader;
+Autoloader::register();
 use App\Comment;
 $com = Comment::getCommentImage($_GET['id']);
 ?>
