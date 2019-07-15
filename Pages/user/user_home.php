@@ -94,12 +94,15 @@
                     </figure>
                 </div>
                 <div class="card-content">
-                    <h1 class="tag subtitle is-8"><?=App::printString($key2['title']) ?></h1>
+                    <h1 class="tag subtitle is-8"><?=Image::subTitle($key2['title']) ?></h1>
                     <div class="content"><?= Image::subSynopsis($key2['synopsis']) ?><br></div>
                     <!--  like  --->
                     <?php $like = Image::userLikeImage($key2['image_id']); {?>
                           <button id="like" class="button is-outlined is-danger" onclick="reqFollowLike('<?= $key2['image_id'] ?>', 'like')">
-                          <?php if ($like) { ?><i class="material-icons">check</i><i class="material-icons">favorite</i><?php } else { ?><i class="material-icons">add</i><i class="material-icons">favorite_border</i><?php } ?></button>
+                          <?php if ($like) { ?>
+                          <i class="material-icons">check</i><i class="material-icons">favorite</i>
+                          <?php } else { ?><i class="material-icons">add</i><i class="material-icons">favorite_border</i>
+                          <?php } ?></button>
                     <?php } ?>
                     <div class="field is-grouped is-grouped-multiline">
                         <div class="control">

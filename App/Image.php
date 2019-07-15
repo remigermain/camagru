@@ -82,8 +82,8 @@ class Image
     {
       if (is_null($title))
         return ("No Title");
-      $str = substr($title, 0, 16);
-      if (strlen($title) > 16)
+      $str = substr($title, 0, 20);
+      if (strlen($title) > 20)
         $str .= "...";
       return (App::printString($str));
     }

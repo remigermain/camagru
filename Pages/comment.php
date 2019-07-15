@@ -23,7 +23,7 @@ $com = Comment::getCommentImage($_GET['id']);
             <time datetime="2016-1-1"><?= App::printString($keycom2['date']) ?></time>
           </div>
         </div>
-    <?php } ?>
+      <?php } ?>
       </div>
     </div>
 </div>
