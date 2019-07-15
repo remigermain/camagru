@@ -14,9 +14,9 @@ $count = App::calculPage($com);
 $pagination = 1;
 if (isset($_GET['pagination']))
   $pagination = $_GET['pagination'];
-if (($pagination * 5 + $pagination % 5) > $count)
+if ($pagination * 5 - 5 > $count)
   $pagination = $count;
-else if ($pagination < 0)
+else if ($pagination <= 0)
   $pagination = 1;
 $com = Comment::Pagination($com, $pagination * 5 - 5);
 if (APP::sessionExist())
@@ -134,8 +134,8 @@ if (APP::sessionExist())
     </div>
   </div>
 <nav class="pagination" role="navigation" aria-label="pagination">
-  <a class="pagination-previous" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $i + 1 ?>" >Previous</a>
-  <a class="pagination-next" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $i + 1 ?>" >Next page</a>
+  <a class="pagination-previous" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $pagination - 1 ?>" >Previous</a>
+  <a class="pagination-next" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $pagination + 1 ?>" >Next page</a>
   <ul class="pagination-list">
     <li>
       <a class="pagination-link <?= App::paginationCurrent($pagination, 1) ?>" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>" aria-label="Goto page 1">1</a>
@@ -159,14 +159,14 @@ if (APP::sessionExist())
       <span class="pagination-ellipsis">&hellip;</span>
     </li>
     <?php } ?>
+    <?php if ($count > 1) { ?>
     <li>
       <a class="pagination-link <?= App::paginationCurrent($pagination, $count) ?>" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $count ?>" aria-label="Goto page <?= $count ?>"><?= $count ?></a>
     </li>
+    <?php } ?>
   </ul>
   </nav>
 </div>
-
-
 <script src="../script/follow.js"></script>
 <script src="../script/comment.js"></script>
 

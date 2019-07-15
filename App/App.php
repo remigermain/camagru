@@ -81,7 +81,9 @@ class App
 	{
 		$count = count($tab);
 		$final = floor($count / 5);
-		if (($count % 5) > 1)
+		if (($count % 5) > 0)
+			$final++;
+		if ($final == 0)
 			$final++;
 		return ($final);
 	}
