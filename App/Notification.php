@@ -28,6 +28,14 @@ class Notification
     {
 
     }
+
+    public static function sendMail($mail, $sub, $msg)
+    {
+        $val = 'From: webmaster@camagru.com' . "\r\n" .
+                'Reply-To: webmaster@camagru.com' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+        mail($mail, $sub, $msg, $val);
+    }
 }
 
 ?>

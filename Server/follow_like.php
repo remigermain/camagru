@@ -4,9 +4,9 @@ use App\Autoloader;
 use App\Error;
 use App\Image;
 use App\User;
+use App\Comment;
 use App\App;
 Autoloader::register();
-var_dump($_POST);
 if (!App::sessionExist())
     return (Error::noSession("Follow it."));
 if (isset($_POST) && isset($_POST['methode']))
@@ -15,6 +15,8 @@ if (isset($_POST) && isset($_POST['methode']))
         User::userFollow($_POST['id']);
     else if ($_POST['methode'] == "like")
         User::userLikeImage($_POST['id']);
+    else if ($_POST['methode'] == "comment")
+        Comment::commentImage($_POST['id'], $_POST['comment']);
     else
         return (Error::wrongRequest());
 }

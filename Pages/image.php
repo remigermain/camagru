@@ -2,6 +2,7 @@
 use App\Image;
 use App\App;
 use App\Error;
+use App\User;
 use App\Comment;
 if (!isset($_GET) || !isset($_GET['id']))
   Error::notFound();  
@@ -9,6 +10,8 @@ $val = Image::getImgById($_GET['id']);
 if (!$val)
   Error::notFound();
 $com = Comment::getCommentImage($_GET['id']);
+if (APP::sessionExist())
+  $info = User::getUserInfo($_SESSION['pseudo'])['logo'];
 ?>
 <div class="hero-foot">
   <nav class="tabs">
@@ -75,27 +78,54 @@ $com = Comment::getCommentImage($_GET['id']);
 </div>
 <br />
 <!--    print comment  -->
-<div class="columns">
-  <div class="column">
-    <?php foreach($com as $keycom => $keycom2) { ?>
-      <div class="card-content box">
-        <div class="media">
-          <div class="media-left">
-            <figure class="image is-48x48">
-              <img class="is-rounded logo" src="data:image/jpeg;base64, <?= APP::printString($keycom2['logo']) ?>" alt="Placeholder image">
-            </figure>
+<div class="column">
+  <div class="container">
+    <?php if (App::sessionExist()) { ?>
+    <article class="media box">
+      <figure class="media-left">
+        <p class="image is-64x64">
+          <img class="is-rounded" src="data:image/jpeg;base64, <?= $info ?>">
+        </p>
+      </figure>
+      <div class="media-content">
+        <div class="field">
+          <p class="control">
+            <textarea id="comment"class="textarea" placeholder="Add a comment..."></textarea>
+          </p>
+        </div>
+        <nav class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <a class="button is-info" onclick="reqComment(<?= $_GET['id'] ?>)">Submit</a>
+            </div>
           </div>
-          <a href="../Public/index.php?p=user_home&user=<?= APP::printString($keycom2['pseudo']) ?>">
-            <p class="title is-6">@<?= APP::printString($keycom2['pseudo']) ?></p>
-          </a>
-        </div>
-        <div class="content"><?= App::printString($keycom2['comment'])?><br>
-          <time datetime="2016-1-1"><?= App::printString($keycom2['date']) ?></time>
-        </div>
+        </nav>
       </div>
+    </article>
     <?php } ?>
+  <div class="columns">
+    <div class="column">
+      <?php foreach($com as $keycom => $keycom2) { ?>
+        <div class="card-content box">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img class="is-rounded logo" src="data:image/jpeg;base64, <?= APP::printString($keycom2['logo']) ?>" alt="Placeholder image">
+              </figure>
+            </div>
+            <a href="../Public/index.php?p=user_home&user=<?= APP::printString($keycom2['pseudo']) ?>">
+              <p class="title is-6">@<?= APP::printString($keycom2['pseudo']) ?></p>
+            </a>
+          </div>
+          <div class="content"><?= App::printString($keycom2['comment'])?><br>
+            <time datetime="2016-1-1"><?= App::printString($keycom2['date']) ?></time>
+          </div>
+        </div>
+      <?php } ?>
+    </div>
   </div>
 </div>
 <script src="../script/follow.js"></script>
+<script src="../script/comment.js"></script>
 
 

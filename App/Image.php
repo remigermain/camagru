@@ -13,7 +13,7 @@ class Image
         App::session();
         $email_id = App::getDb()->getprepare("SELECT id FROM user WHERE email LIKE ?", [$_SESSION['login']]);
         $cat = App::getDb()->getprepare("SELECT id FROM category WHERE id LIKE ?", [$cat]);
-        $val = array("email" => $email_id[0][0], "img" => $img, "date" => date("Y/m/d"), "cat" => $cat);
+        $val = array("email" => $email_id[0][0], "img" => $img, "date" => date("Y/m/d H:i"), "cat" => $cat);
         App::getDb()->setprepare("INSERT INTO image (`user_id`, `image`, `date`, category) VALUES(:email, :img, :date, :cat)", $val);
     }
     

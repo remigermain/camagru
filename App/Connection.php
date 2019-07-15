@@ -4,6 +4,7 @@ namespace App;
 use       App\Error;
 use       App\Database;
 use       App\App;
+use       App\Notification;
 
 class Connection
 {
@@ -57,7 +58,7 @@ class Connection
                 "pseudo" => $_POST['pseudo'],
                 "email" => $_POST['email'],
                 "pass" => hash('whirlpool', $_POST['password']),
-                "creation_date" => date("Y/m/d"),
+                "creation_date" => date("Y/m/d H:i"),
                 "valid" => $valid);
             APP::getDB()->setprepare("INSERT INTO user (pseudo, email, pass, creation_date, valid) VALUE(:pseudo, :email, :pass, :creation_date, :valid)", $val);
             $val = array(
@@ -70,11 +71,20 @@ class Connection
             Error::user_notvalid();
     }
 
-    public static function newPassword()
+    public static function newPassword($mail)
     {
-        // TODO
+        $ret = App::getDb()->getprepare("SELECT * FROM user WHERE user.email = ?", [$mail], true);
+        if (!$ret)
+            Error::user_notvalid();
+        else
+        {
+            $pass = APP::generatePassword();
+            $val = array("new_pass" => hash('whirlpool', $pass), "email" => $mail);
+            App::getDB()->setprepare("UPDATE user SET user.pass = :new_pass WHERE user.email LIKE :email", $val);
+            $msg = "Hi ". $ret['pseudo'] . ", " . "<br />Your new password is ". $pass . "<br /><br />Camagru.";
+            Notification::sendMail($mail, "[Camagru] Reset Password", $msg);
+        }
     }
-
 }
 
 ?>

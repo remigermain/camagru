@@ -17,6 +17,8 @@ if (isset($_POST) && isset($_POST['submit']))
         Connection::register();
     else if ($_POST['submit'] === 'logout')
         Connection::logout();
+    else if ($_POST['submit'] === 'forgot')
+        Connection::newPassword($_POST['email']);
     else
         Error::wrongPost();
 }

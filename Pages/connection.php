@@ -42,18 +42,23 @@ use App\App;
   </section>
   <form class="container" id="formlogin" method="POST" action="/Server/connection.php">
     <div class="field">
-        <label class="label">Email</label>
-        <p class="control has-icons-left">
-          <input class="input" id="email" type="email" name="email" placeholder="Email" required>
-            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-            <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
-        </p>
-      </div>
+      <label class="label">Email</label>
+      <p class="control has-icons-left">
+        <input class="input" id="email" type="email" name="email" placeholder="Email" required>
+          <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+          <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
+      </p>
+    </div>
     <div class="field">
       <label class="label">Password</label>
       <p class="control has-icons-left">
         <input class="input" id="password" type="password" name="password" placeholder="Password" required>
           <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+      </p>
+    </div>
+    <div class="field">
+      <p class="control">
+        <a class="is-link" id="submit" name="submit" value="login" onclick="reqForgotpassword();">Forgot password ?</a>
       </p>
     </div>
     <div class="field">
