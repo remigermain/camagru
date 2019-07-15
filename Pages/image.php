@@ -134,7 +134,7 @@ if (APP::sessionExist())
     </div>
   </div>
 <nav class="pagination" role="navigation" aria-label="pagination">
-  <a class="pagination-previous" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $pagination - 1 ?>" >Previous</a>
+  <a class="pagination-previous" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $pagination - 1 ? $pagination - 1 : 1 ?>" >Previous</a>
   <a class="pagination-next" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $pagination + 1 ?>" >Next page</a>
   <ul class="pagination-list">
     <li>
