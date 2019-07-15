@@ -21,7 +21,7 @@ function change_logo()
 if(isset($_POST["submit"]))
 {
     if($_POST['submit'] == "change_password")
-        User::changePassword($_POST['email'], $_POST['new_password'], $_POST['conf_password']);
+        User::changePassword($_POST['oldpassword'], $_POST['newpassword'], $_POST['confpassword']);
     else if($_POST['submit'] == "change_email")
         User::changeMail($_POST['email']);
     else if($_POST['submit'] == "change_pseudo")

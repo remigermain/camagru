@@ -19,10 +19,10 @@ $info = User::getUserInfo($_SESSION['pseudo']);
 
 <div class="container">
 <!-- edit  -->
-  <form style="display" class="box">
+  <div style="display" class="box">
     <div class="columns">
       <!--  change password -->
-      <div class="column is-one-quarter">
+      <div class="column is-one-fifth">
         <div class="box">
           <section class="section">
             <div class="container">
@@ -33,13 +33,13 @@ $info = User::getUserInfo($_SESSION['pseudo']);
             <div class="field">
               <label class="label">Old password</label>
               <p class="control has-icons-left">
-                <input class="input" id="pseudo" type="text" name="pseudo" placeholder="Pseudo" required>
+                <input class="input" id="password" type="text" name="oldpassword" placeholder="Pseudo" required>
               </p>
             </div>
             <div class="field">
-            <label class="label">New password</label>
+              <label class="label">New password</label>
               <p class="control has-icons-left">
-                <input class="input" id="password" type="password" name="password" placeholder="Password" required>
+                <input class="input" id="password" type="password" name="newpassword" placeholder="Password" required>
                   <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
               </p>
             </div>
@@ -59,7 +59,7 @@ $info = User::getUserInfo($_SESSION['pseudo']);
         </div>
       </div>
     <!--  change email -->
-    <div class="column is-one-quarter">
+    <div class="column is-one-fifth">
       <div class="box">
         <section class="section">
             <h3 class="subtitle is-3">New Email</h3>
@@ -83,7 +83,7 @@ $info = User::getUserInfo($_SESSION['pseudo']);
       </div>
     </div>
     <!--  change pseudo -->
-    <div class="column is-one-quarter">
+    <div class="column is-one-fifth">
         <div class="box">
           <section class="section">
               <h3 class="subtitle is-3">Pseudo</h3>
@@ -107,7 +107,7 @@ $info = User::getUserInfo($_SESSION['pseudo']);
         </div>
     </div>
     <!--  change pseudo -->
-    <div class="column is-one-quarter">
+    <div class="column is-one-fifth">
       <div class="box is-centered">
         <section class="section is-centered">
             <h3 class="subtitle is-3">Profils logo</h3>
@@ -134,6 +134,32 @@ $info = User::getUserInfo($_SESSION['pseudo']);
                 <i class="material-icons">cloud_upload</i></span>
               <span class="file-label">Submit</span>
             </label>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!--  notification -->
+    <div class="column is-one-fifth">
+      <div class="box is-centered">
+        <section class="section is-centered">
+            <h3 class="subtitle is-4">Notification</h3>
+        </section>
+        <form class="container" action="/Server/user_change.php" method="post" enctype="multipart/form-data">
+          <div class="file is-warning is-boxed is-centered">
+            <div class="control">
+              <label class="radio">
+                <input id="noti_yes" type="radio" name="answer">Yes
+              </label>
+              <label class="radio">
+                <input id="noti_no" type="radio" name="answer">No
+              </label>
+            </div>
+          </div>
+          <br />
+          <div class="field">
+              <p class="control">
+                <button class="button" id="submit" name="submit" value="change_pseudo" onclick=>submit</button>
+              </p>
           </div>
         </form>
       </div>

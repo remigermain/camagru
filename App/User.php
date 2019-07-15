@@ -44,8 +44,8 @@ class User
     static Public function changePassword($old_pass, $new_pass, $conf_pass)
     {
         App::session();
-        $val = array("old_pass" => $old_pass, "new_pass" => $new_pass, "email" => $_SESSION['login']);
-        App::getDb()->setprepare("UPDATE `user` SET password = :new_pass WHERE email LIKE :email AND password LIKE :old_password", $val);
+        $val = array("old_pass" => hash('whirlpool', $old_pass), "new_pass" => hash('whirlpool', $new_pass), "email" => $_SESSION['login']);
+        App::getDb()->setprepare("UPDATE `user` SET pass = :new_pass WHERE email LIKE :email AND pass LIKE :old_pass", $val);
     }
 
     static Public function changeLogo($img)
@@ -75,6 +75,7 @@ class User
             App::getDb()->setprepare("DELETE FROM follower WHERE user_id LIKE :user_id AND follower LIKE :follower", $val);
         else
             App::getDb()->setprepare("INSERT INTO follower (user_id, follower) VALUES(:user_id, :follower)", $val);
+       // Notification::sendMail($pseudo, );
     }
 
     static Public function userLikeImage($id_image)

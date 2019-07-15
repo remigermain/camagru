@@ -27,11 +27,12 @@
           <div class="content">
             <p><strong><?= APP::printString($_GET['user']) ?></strong><br>
             <?php if (!App::sessionExist() || $_SESSION['pseudo'] != $_GET['user']) {?>
-              <button id="follow" class="button is-outlined is-link" onclick="reqFollowLike('<?= $_GET['user'] ?>', 'follow')">
-                <?php if ($follow) { ?><i class="material-icons">check</i>
+              <button id="follow" class="button <?= $follow ? "is-outlined" : "" ?> is-link" onclick="reqFollowLike('<?= $_GET['user'] ?>', 'follow')">
+                <?php if ($follow) { ?>
+                  <i class="material-icons">check</i>
                 <?php } else { ?>
-                <i class="material-icons">add</i>
-                <?php } ?> Follow<
+                  <i class="material-icons">add</i>
+                <?php } ?> Follow
               </button>
             <?php } ?>
             <br><br>
@@ -100,8 +101,9 @@
                     <?php $like = Image::userLikeImage($key2['image_id']); {?>
                           <button id="like" class="button is-outlined is-danger" onclick="reqFollowLike('<?= $key2['image_id'] ?>', 'like')">
                           <?php if ($like) { ?>
-                          <i class="material-icons">check</i><i class="material-icons">favorite</i>
-                          <?php } else { ?><i class="material-icons">add</i><i class="material-icons">favorite_border</i>
+                            <i class="material-icons">check</i><i class="material-icons">favorite</i>
+                          <?php } else { ?>
+                            <i class="material-icons">add</i><i class="material-icons">favorite_border</i>
                           <?php } ?></button>
                     <?php } ?>
                     <div class="field is-grouped is-grouped-multiline">

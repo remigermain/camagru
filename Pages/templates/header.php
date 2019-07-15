@@ -39,7 +39,6 @@ App::session();
                         <a class="navbar-item" href="../Public/index.php?p=user_upload"><i class="material-icons">add_a_photo</i></a>
                         <a class="navbar-item" href="../Public/index.php?p=user_home&user=<?=$_SESSION['pseudo']?>">
                           <i class="material-icons">home</i></a>
-                        <a class="navbar-item" href="../Public/index.php?p=notification"><i class="material-icons">notifications</i></a>
                         <a class="navbar-item" href="../Public/index.php?p=account">
                           <div class="image">
                             <img class="logo is-rounded" src="data:image/jpeg;base64, <?= $logo['logo'] ?>">
