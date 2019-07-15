@@ -18,6 +18,14 @@ class Comment
         $val = array("user_id" => $_SESSION['id'], "id_image" => $id_image, "date" => date("Y/m/d H:i"), "comment" => $comment);
         App::getDb()->setprepare("INSERT INTO comment (user_id, `image`, `date`, comment) VALUES(:user_id, :id_image, :date, :comment)", $val);
     }
+
+    static public function Pagination($com, $number)
+    {
+        $i = 0;
+        while ($i < $number && isset($com[$i]))
+            unset($com[$i++]);
+        return ($com);
+    }
 }
 
 ?>

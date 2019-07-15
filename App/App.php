@@ -76,6 +76,23 @@ class App
 		}
 		return $result;
 	}
+
+	Public static function calculPage($tab)
+	{
+		$count = count($tab);
+		$final = floor($count / 5);
+		if (($count % 5) > 1)
+			$final++;
+		return ($final);
+	}
+
+	Public static function paginationCurrent($i, $j)
+	{
+		if ($i == $j)
+			return ("is-current");
+		return ("");
+	}
+
 }
 
 ?>
