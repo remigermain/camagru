@@ -10,17 +10,17 @@ $val = Image::getImgById($_GET['id']);
 if (!$val)
   Error::notFound();
 $com = Comment::getCommentImage($_GET['id']);
-$count = App::calculPage($com);
+$count = App::calculPage($com, 5);
 $pagination = 1;
 if (isset($_GET['pagination']))
   $pagination = $_GET['pagination'];
 if ($pagination * 5 - 5 > $count)
-  $pagination = $count;
+$pagination = $count;
 else if ($pagination <= 0)
   $pagination = 1;
-$com = Comment::Pagination($com, $pagination * 5 - 5);
+$com = App::Pagination($com, $pagination, 5);
 if (APP::sessionExist())
-  $info = User::getUserInfo($_SESSION['pseudo'])['logo'];
+  $info = User::getUserInfo($_SESSION['username'])['logo'];
 ?>
 <div class="hero-foot">
   <nav class="tabs">
@@ -48,8 +48,8 @@ if (APP::sessionExist())
                     <img class="is-rounded" src="data:image/jpeg;base64, <?= APP::printString($val['logo']) ?>" alt="Placeholder image">
                 </figure>
               </div>
-              <a href="../Public/index.php?p=user_home&user=<?= APP::printString($val['pseudo']) ?>">
-                <p class="title is-6">@<?= APP::printString($val['pseudo']) ?></p>
+              <a href="../Public/index.php?p=user_home&user=<?= APP::printString($val['username']) ?>">
+                <p class="title is-6">@<?= APP::printString($val['username']) ?></p>
               </a>
               <div class="media-right"></div>
             </div>
@@ -122,8 +122,8 @@ if (APP::sessionExist())
                 <img class="is-rounded logo" src="data:image/jpeg;base64, <?= APP::printString($keycom2['logo']) ?>" alt="Placeholder image">
               </figure>
             </div>
-            <a href="../Public/index.php?p=user_home&user=<?= APP::printString($keycom2['pseudo']) ?>">
-              <p class="title is-6">@<?= APP::printString($keycom2['pseudo']) ?></p>
+            <a href="../Public/index.php?p=user_home&user=<?= APP::printString($keycom2['username']) ?>">
+              <p class="title is-6">@<?= APP::printString($keycom2['username']) ?></p>
             </a>
           </div>
           <div class="content"><?= App::printString($keycom2['comment'])?><br>
@@ -133,39 +133,8 @@ if (APP::sessionExist())
       <?php } ?>
     </div>
   </div>
-<nav class="pagination" role="navigation" aria-label="pagination">
-  <a class="pagination-previous" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $pagination - 1 ? $pagination - 1 : 1 ?>" >Previous</a>
-  <a class="pagination-next" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $pagination + 1 ?>" >Next page</a>
-  <ul class="pagination-list">
-    <li>
-      <a class="pagination-link <?= App::paginationCurrent($pagination, 1) ?>" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>" aria-label="Goto page 1">1</a>
-    </li>
-    <?php if ($pagination - 1 > 2) { ?>
-    <li>
-      <span class="pagination-ellipsis">&hellip;</span>
-    </li>
-    <?php } ?>
-    
-    <?php  $i = $pagination - 1; while ($i < $pagination + 2) {
-      if ($i > 1 && $i < $count) {
-      ?>
-      <li>
-        <a class="pagination-link <?= App::paginationCurrent($pagination, $i) ?>" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $i ?>" aria-label="Page <?= $i ?>" aria-current="page"><?= $i ?></a>
-      </li>
-      <?php } $i++; } ?>
-
-    <?php if ($pagination + 2 < $count) { ?>
-    <li>
-      <span class="pagination-ellipsis">&hellip;</span>
-    </li>
-    <?php } ?>
-    <?php if ($count > 1) { ?>
-    <li>
-      <a class="pagination-link <?= App::paginationCurrent($pagination, $count) ?>" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $count ?>" aria-label="Goto page <?= $count ?>"><?= $count ?></a>
-    </li>
-    <?php } ?>
-  </ul>
-  </nav>
+  <!-- pagination -->
+  <?php $url = "../Public/index.php?p=image&id=". $_GET['id']; require '../Pages/pagination.php'; ?>
 </div>
 <script src="../script/follow.js"></script>
 <script src="../script/comment.js"></script>

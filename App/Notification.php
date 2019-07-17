@@ -20,11 +20,11 @@ class Notification
 
     }
 
-    public static function newLike($pseudo)
+    public static function newLike($username)
     {
     }
 
-    public static function newComment($pseudo, $image_id)
+    public static function newComment($username, $image_id)
     {
 
     }
@@ -35,6 +35,11 @@ class Notification
                 'Reply-To: webmaster@camagru.com' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
         mail($mail, $sub, $msg, $val);
+    }
+
+    public static function message($str)
+    {
+        print ($str);
     }
 }
 

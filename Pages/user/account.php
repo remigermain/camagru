@@ -5,7 +5,7 @@ use App\Image;
 use App\User;
 if (!App::sessionExist())
   Error::notAccess();
-$info = User::getUserInfo($_SESSION['pseudo']);
+$info = User::getUserInfo($_SESSION['username']);
 ?>
 <div class="hero-foot">
   <nav class="tabs">
@@ -33,7 +33,7 @@ $info = User::getUserInfo($_SESSION['pseudo']);
             <div class="field">
               <label class="label">Old password</label>
               <p class="control has-icons-left">
-                <input class="input" id="password" type="text" name="oldpassword" placeholder="Pseudo" required>
+                <input class="input" id="password" type="text" name="oldpassword" placeholder="username" required>
               </p>
             </div>
             <div class="field">
@@ -82,17 +82,17 @@ $info = User::getUserInfo($_SESSION['pseudo']);
         </form>
       </div>
     </div>
-    <!--  change pseudo -->
+    <!--  change username -->
     <div class="column is-one-fifth">
         <div class="box">
           <section class="section">
-              <h3 class="subtitle is-3">Pseudo</h3>
+              <h3 class="subtitle is-3">username</h3>
           </section>
           <form class="container" method="POST" action="/Server/user_change.php">
             <div class="field">
-              <label class="label">New pseudo</label>
+              <label class="label">New username</label>
                 <p class="control has-icons-left has-icons-right">
-                  <input class="input" id="email" type="text" name="pseudo" placeholder="Email" required>
+                  <input class="input" id="email" type="text" name="username" placeholder="Email" required>
                   <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
                   <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
                 </p>
@@ -100,13 +100,13 @@ $info = User::getUserInfo($_SESSION['pseudo']);
             </div>
             <div class="field">
               <p class="control">
-                <button class="button" id="submit" name="submit" value="change_pseudo">submit</button>
+                <button class="button" id="submit" name="submit" value="change_username">submit</button>
               </p>
             </div>
           </form>
         </div>
     </div>
-    <!--  change pseudo -->
+    <!--  change username -->
     <div class="column is-one-fifth">
       <div class="box is-centered">
         <section class="section is-centered">
@@ -158,7 +158,7 @@ $info = User::getUserInfo($_SESSION['pseudo']);
           <br />
           <div class="field">
               <p class="control">
-                <button class="button" id="submit" name="submit" value="change_pseudo" onclick=>submit</button>
+                <button class="button" id="submit" name="submit" value="change_username" onclick=>submit</button>
               </p>
           </div>
         </form>

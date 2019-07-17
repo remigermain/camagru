@@ -31,15 +31,15 @@ class App
 	Public static function sessionExist()
 	{
 		static::session();
-		if (isset($_SESSION) && isset($_SESSION['login']) && static::userExist($_SESSION['pseudo']))
+		if (isset($_SESSION) && isset($_SESSION['username']) && static::userExist($_SESSION['username']))
 			return (true);
 		else
 			return (false);
 	}
 
-	public static function userExist($pseudo)
+	public static function userExist($username)
 	{
-		if (APP::getDB()->getprepare("SELECT pseudo FROM user WHERE pseudo LIKE ?", [$pseudo]))
+		if (APP::getDB()->getprepare("SELECT username FROM user WHERE username LIKE ?", [$username]))
 			return (true);
 		else
 			return (false);
@@ -77,11 +77,13 @@ class App
 		return $result;
 	}
 
-	Public static function calculPage($tab)
+	Public static function calculPage($tab, $page_number)
 	{
+		if ($page_number <= 0)
+			return (0);
 		$count = count($tab);
-		$final = floor($count / 5);
-		if (($count % 5) > 0)
+		$final = floor($count / $page_number);
+		if (($count % $page_number) > 0)
 			$final++;
 		if ($final == 0)
 			$final++;
@@ -95,6 +97,13 @@ class App
 		return ("");
 	}
 
+	static public function Pagination($com, $number)
+    {
+        $i = 0;
+        while ($i < $number && isset($com[$i]))
+            unset($com[$i++]);
+        return ($com);
+    }
 }
 
 ?>

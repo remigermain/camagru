@@ -19,21 +19,21 @@ class Image
     
     public static function getImgById($id)
     {
-      return (App::getDb()->getprepare("SELECT user.id, user.pseudo, image.id as image_id, image.title, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category LIKE category.id WHERE image.id LIKE ? ", [$id], true));
+      return (App::getDb()->getprepare("SELECT user.id, user.username, image.id as image_id, image.title, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category LIKE category.id WHERE image.id LIKE ? ", [$id], true));
     }
 
-    public static function getUserImg($pseudo, $order = NULL)
+    public static function getUserImg($username, $order = NULL)
     {
       if (!$order)
         $order = "ORDER BY image.id DESC";
-      return (App::getDb()->getprepare("SELECT user.id, user.pseudo, image.id as image_id, image.title, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category LIKE category.id WHERE user.pseudo LIKE ? " . $order, [$pseudo]));
+      return (App::getDb()->getprepare("SELECT user.id, user.username, image.id as image_id, image.title, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category LIKE category.id WHERE user.username LIKE ? " . $order, [$username]));
     }
 
     public static function getAllImg($order = NULL)
     {
       if (!$order)
         $order = "ORDER BY image.id DESC";
-      return (App::getDb()->getquery("SELECT user.id, user.pseudo, image.id as image_id, image.title, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category LIKE category.id ". $order));
+      return (App::getDb()->getquery("SELECT user.id, user.username, image.id as image_id, image.title, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category LIKE category.id ". $order));
     }
 
     public static function updateImage($id, $synopsis, $title)
@@ -47,7 +47,7 @@ class Image
     {
       if (!APP::sessionExist())
         Error::notAccess();
-      return (App::getDb()->setprepare("UPDATE home INNER JOIN user ON home.id = user.id SET synopsis = :sys WHERE user.pseudo = :id", array("id" => $_SESSION['pseudo'], "sys" => $synopsis)));
+      return (App::getDb()->setprepare("UPDATE home INNER JOIN user ON home.id = user.id SET synopsis = :sys WHERE user.username = :id", array("id" => $_SESSION['username'], "sys" => $synopsis)));
     }
 
 
@@ -62,8 +62,8 @@ class Image
     {
       if (!APP::sessionExist())
         return (false);
-      $val = array("image_id" => $id_image, "user_pseudo" => $_SESSION['pseudo']);
-      return (App::getDb()->getprepare("SELECT COUNT(*) as bool FROM `like` INNER JOIN user ON user.id = `like`.`user_id` WHERE `like`.image_id = :image_id AND user.pseudo = :user_pseudo", $val, true)['bool']);
+      $val = array("image_id" => $id_image, "user_username" => $_SESSION['username']);
+      return (App::getDb()->getprepare("SELECT COUNT(*) as bool FROM `like` INNER JOIN user ON user.id = `like`.`user_id` WHERE `like`.image_id = :image_id AND user.username = :user_username", $val, true)['bool']);
     }
 
     public static function subSynopsis($sys)

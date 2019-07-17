@@ -7,7 +7,15 @@ class Error
 
     public static function wrongPost()
     {
-		header ('Location:/Public/index.php?p=login');
+		//header ('Location:/Public/index.php?p=login');
+		?>
+		<div class="notification is-danger">
+ 			<button class="delete"></button>
+ 			Primar lorem ipsum dolor sit amet, consectetur
+ 			adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Sit amet,
+ 			consectetur adipiscing elit
+		</div>
+		<?php
     }
     
     Public static function notFound()
@@ -23,14 +31,12 @@ class Error
 
 	public static function user_notvalid()
 	{
-		$str = "User dosen't exist or , you need to valid mail before login";
-		header ('Location:/Public/index.php?p=error&error=' . $str);
+		print ("1 User dosen't exist or , you need to valid mail before login");
 	}
 
 	public static function notAccess()
 	{
-		$str = "you not have access to this page";
-		header ('Location:/Public/index.php?p=error&error=' . $str);
+		print ("1 you not have access to this page");
 	}
 
 	public static function stringError($file)

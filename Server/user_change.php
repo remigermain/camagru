@@ -24,8 +24,8 @@ if(isset($_POST["submit"]))
         User::changePassword($_POST['oldpassword'], $_POST['newpassword'], $_POST['confpassword']);
     else if($_POST['submit'] == "change_email")
         User::changeMail($_POST['email']);
-    else if($_POST['submit'] == "change_pseudo")
-        User::changePseudo($_POST['pseudo']);
+    else if($_POST['submit'] == "change_username")
+        User::changeusername($_POST['username']);
     else if($_POST['submit'] == "change_logo")
         change_logo();
     else
@@ -33,5 +33,5 @@ if(isset($_POST["submit"]))
 }
 else
     Error::notFound();
-header('Location:/Public/index.php?p=user_home&user=' . $_SESSION['pseudo']);
+header('Location:/Public/index.php?p=user_home&user=' . $_SESSION['username']);
 ?>

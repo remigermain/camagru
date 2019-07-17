@@ -10,8 +10,18 @@
  $val = Image::getUserImg($_GET['user']);
  $info = User::getUserInfo($_GET['user']);
  $follow = 0;
- if (App::sessionExist() && User::userFollowUser($_SESSION['pseudo'], $_GET['user']))
+ if (App::sessionExist() && User::userFollowUser($_SESSION['username'], $_GET['user']))
   $follow = 1;
+//     calcul pagination //
+  $count = App::calculPage($val, 8);
+  $pagination = 1;
+  if (isset($_GET['pagination']))
+    $pagination = $_GET['pagination'];
+  if ($pagination * 8 - 8 > $count)
+    $pagination = $count;
+  else if ($pagination <= 0)
+    $pagination = 1;
+  $val = App::Pagination($val, $pagination * 8 - 8);
  ?>
 <!--  profils -->
 <div id="all" style="margin-top: 20px;">
@@ -26,7 +36,7 @@
         <div class="media-content">
           <div class="content">
             <p><strong><?= APP::printString($_GET['user']) ?></strong><br>
-            <?php if (!App::sessionExist() || $_SESSION['pseudo'] != $_GET['user']) {?>
+            <?php if (!App::sessionExist() || $_SESSION['username'] != $_GET['user']) {?>
               <button id="follow" class="button <?= $follow ? "is-outlined" : "" ?> is-link" onclick="reqFollowLike('<?= $_GET['user'] ?>', 'follow')">
                 <?php if ($follow) { ?>
                   <i class="material-icons">check</i>
@@ -41,10 +51,10 @@
               <span class="tag">Follower <?= APP::printString($info['follower']) ?></span>
               <span class="tag">Image <?= APP::printString($info['nb_image']) ?></span>
               <span class="tag">Like <?= APP::printString($info['like']) ?></span>
-              <?php if (App::sessionExist() && $_SESSION['pseudo'] == $_GET['user'])
+              <?php if (App::sessionExist() && $_SESSION['username'] == $_GET['user'])
                 { ?>
               <button id="edit_button" class="button chanel_modal" onclick="display_modal_chanel()"><i class="material-icons">settings</i></button>
-              <div id="chanel" value="<?= $info['pseudo'] ?>" class="modal">
+              <div id="chanel" value="<?= $info['username'] ?>" class="modal">
                 <div id="back" class="modal-background"></div>
                 <div class="modal-card">
                   <header class="modal-card-head">
@@ -116,7 +126,7 @@
                           </div>
                         </div>
                         <!--  modify -->
-                        <?php if (App::sessionExist() && $_SESSION['pseudo'] == $_GET['user']) { ?>
+                        <?php if (App::sessionExist() && $_SESSION['username'] == $_GET['user']) { ?>
                             <div class="field is-grouped is-grouped-multiline">
                              <div class="control">
                                <div class="tags has-addons">
@@ -140,7 +150,7 @@
                                       </footer>
                                     </div>
                                   </div>
-                                  <!--  <a class="tag is-light"> <i class="material-icons">settings</i> modify</a> -->
+                                  <!--  delete -->
                                 <button id="delete" class="button" onclick="display_modal_del(<?= App::printString($key2['image_id']) ?>)"><i class="material-icons">delete</i></button>
                                    <div id="modal_del<?= App::printString($key2['image_id']) ?>" class="modal">
                                     <div id="del_back<?= App::printString($key2['image_id']) ?>" class="modal-background"></div>
@@ -169,8 +179,10 @@
         </div>
     <?php } ?>
   </div>
+  <!--  pagination -->
+  <?php $url = "../Public/index.php?p=user_home&user=" . $_GET['user']; require '../Pages/pagination.php'; ?>
 </div>
 <script src="../script/follow.js"></script>
-<?php if (App::sessionExist() && $_SESSION['pseudo'] == $_GET['user']) { ?>
+<?php if (App::sessionExist() && $_SESSION['username'] == $_GET['user']) { ?>
   <script src="../script/edit.js"></script>
 <?php } ?>

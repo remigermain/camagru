@@ -15,8 +15,8 @@ $com = Comment::getCommentImage($_GET['id']);
                 <img class="is-rounded logo" src="data:image/jpeg;base64, <?= APP::printString($keycom2['logo']) ?>" alt="Placeholder image">
               </figure>
             </div>
-            <a href="../Public/index.php?p=user_home&user=<?= APP::printString($keycom2['pseudo']) ?>">
-              <p class="title is-6">@<?= APP::printString($keycom2['pseudo']) ?></p>
+            <a href="../Public/index.php?p=user_home&user=<?= APP::printString($keycom2['username']) ?>">
+              <p class="title is-6">@<?= APP::printString($keycom2['username']) ?></p>
             </a>
           </div>
           <div class="content"><?= App::printString($keycom2['comment'])?><br>

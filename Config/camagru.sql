@@ -177,7 +177,7 @@ CREATE TABLE `like` (
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `pseudo` varchar(32) DEFAULT NULL,
+  `username` varchar(32) DEFAULT NULL,
   `pass` varchar(200) DEFAULT NULL,
   `email` longtext,
   `creation_date` date NOT NULL,
@@ -188,7 +188,7 @@ CREATE TABLE `user` (
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`id`, `pseudo`, `pass`, `email`, `creation_date`, `valid`) VALUES
+INSERT INTO `user` (`id`, `username`, `pass`, `email`, `creation_date`, `valid`) VALUES
 (2, 'rgermain', '8aca2602792aec6f11a67206531fb7d7f0dff59413145e6973c45001d0087b42d11bc645413aeff63a42391a39145a591a92200d560195e53b478584fdae231a', 'a@a', '2019-07-10', 1),
 (3, 'fchancel', '8aca2602792aec6f11a67206531fb7d7f0dff59413145e6973c45001d0087b42d11bc645413aeff63a42391a39145a591a92200d560195e53b478584fdae231a', 'q@q', '2019-07-10', 1),
 (4, 'kranbono', '3a95f5644f3780c4614b01ca517aebcfaf5114164e21814ae42ed031a134b94fc75392121e90a48c3cb8e55a8315e590319d0c43948914a99daf97a945e3df75', 'w@w', '2019-07-10', 1),

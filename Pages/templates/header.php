@@ -12,6 +12,7 @@ App::session();
           <link rel="stylesheet" href="../vue/header.css">
           <link rel="stylesheet" href="../vue/bluma.css">
           <link rel="stylesheet" href="../vue/material.css">
+          <script src="../script/notification.js"></script>
     </head>
     <header>
       <section class="home">
@@ -34,10 +35,10 @@ App::session();
                   <?php
                     if (App::sessionExist())
                     {
-                      $logo = User::getUserInfo($_SESSION['pseudo']);
+                      $logo = User::getUserInfo($_SESSION['username']);
                       ?>
                         <a class="navbar-item" href="../Public/index.php?p=user_upload"><i class="material-icons">add_a_photo</i></a>
-                        <a class="navbar-item" href="../Public/index.php?p=user_home&user=<?=$_SESSION['pseudo']?>">
+                        <a class="navbar-item" href="../Public/index.php?p=user_home&user=<?=$_SESSION['username']?>">
                           <i class="material-icons">home</i></a>
                         <a class="navbar-item" href="../Public/index.php?p=account">
                           <div class="image">
@@ -64,5 +65,6 @@ App::session();
               </div>
           </nav>
       </section>
-  </header>
+    </header>
+    <div class="container column" id="notif"></div>
   

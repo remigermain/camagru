@@ -1,5 +1,5 @@
-<!--    check login form  --->
 <?php
+//   check login form //
 require '../App/Autoloader.php';
 use     App\Autoloader;
 Autoloader::register();
@@ -8,7 +8,6 @@ use App\App;
 use App\Error;
 use App\Database;
 use App\Connection;
-
 if (isset($_POST) && isset($_POST['submit']))
 {
     if ($_POST['submit'] === 'login')
@@ -25,4 +24,3 @@ if (isset($_POST) && isset($_POST['submit']))
 else
     Error::wrongPost();
 ?>
-<h1>dddd</h1>
