@@ -82,4 +82,3 @@
   <!--  pagination -->
   <?php $url = "../Public/index.php?p=home"; require '../Pages/pagination.php'; ?>
 </div>
-<script src="../script/follow.js"></script>

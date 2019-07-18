@@ -182,7 +182,6 @@
   <!--  pagination -->
   <?php $url = "../Public/index.php?p=user_home&user=" . $_GET['user']; require '../Pages/pagination.php'; ?>
 </div>
-<script src="../script/follow.js"></script>
 <?php if (App::sessionExist() && $_SESSION['username'] == $_GET['user']) { ?>
   <script src="../script/edit.js"></script>
 <?php } ?>

@@ -266,7 +266,6 @@ function create_comment(obj, id, pagi, username)
     {
         if (div_base.childElementCount == 5)
             div_base.removeChild(div_base.lastElementChild);
-        console.log(id);
         div_base.prepend(div4);
     }
     document.getElementById("comment").value = "";

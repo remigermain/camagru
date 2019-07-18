@@ -144,7 +144,5 @@ if (APP::sessionExist())
   <!-- pagination -->
   <?php $url = "../Public/index.php?p=image&id=". $_GET['id']; require '../Pages/pagination.php'; ?>
 </div>
-<script src="../script/follow.js"></script>
-<script src="../script/comment.js"></script>
 
 
