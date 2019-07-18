@@ -103,7 +103,15 @@ class App
         while ($i < $number && isset($com[$i]))
             unset($com[$i++]);
         return ($com);
-    }
+	}
+	
+	Public static function createJson($msg, $status = 1)
+	{
+		$res['status'] = $status;
+		$res['msg'] = $msg;
+		$res = json_encode($res);
+		print($res);		
+	}
 }
 
 ?>

@@ -75,7 +75,7 @@ class User
             App::getDb()->setprepare("DELETE FROM follower WHERE user_id LIKE :user_id AND follower LIKE :follower", $val);
         else
             App::getDb()->setprepare("INSERT INTO follower (user_id, follower) VALUES(:user_id, :follower)", $val);
-       // Notification::sendMail($username, );
+        App::createJson("Modification success!");        
     }
 
     static Public function userLikeImage($id_image)
@@ -89,6 +89,7 @@ class User
             App::getDb()->setprepare("DELETE FROM `like` WHERE user_id LIKE :user_id AND image_id LIKE :image_id", $val);
         else
             App::getDb()->setprepare("INSERT INTO `like` (user_id, image_id) VALUES(:user_id, :image_id)", $val);
+        App::createJson("Modification success!");
     }
 }
 ?>

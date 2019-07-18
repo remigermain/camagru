@@ -37,7 +37,7 @@
           <div class="content">
             <p><strong><?= APP::printString($_GET['user']) ?></strong><br>
             <?php if (!App::sessionExist() || $_SESSION['username'] != $_GET['user']) {?>
-              <button id="follow" class="button <?= $follow ? "is-outlined" : "" ?> is-link" onclick="reqFollowLike('<?= $_GET['user'] ?>', 'follow')">
+              <button id="follow" class="button <?= $follow ? "is-outlined" : "" ?> is-link" onclick="reqFollow('<?= $_GET['user'] ?>')">
                 <?php if ($follow) { ?>
                   <i class="material-icons">check</i>
                 <?php } else { ?>
@@ -46,11 +46,11 @@
               </button>
             <?php } ?>
             <br><br>
-            <span><?= APP::printString($info['synopsis']) ?></span>
+            <span id="homeSynopsis5"><?= APP::printString($info['synopsis']) ?></span>
             <div class="tags are-large">
-              <span class="tag">Follower <?= APP::printString($info['follower']) ?></span>
-              <span class="tag">Image <?= APP::printString($info['nb_image']) ?></span>
-              <span class="tag">Like <?= APP::printString($info['like']) ?></span>
+              <span id="totalFollow" class="tag">Follower <?= APP::printString($info['follower']) ?></span>
+              <span id="totalImage" class="tag">Image <?= APP::printString($info['nb_image']) ?></span>
+              <span id="totalLike" class="tag">Like <?= APP::printString($info['like']) ?></span>
               <?php if (App::sessionExist() && $_SESSION['username'] == $_GET['user'])
                 { ?>
               <button id="edit_button" class="button chanel_modal" onclick="display_modal_chanel()"><i class="material-icons">settings</i></button>
@@ -63,10 +63,10 @@
                   </header>
                   <section class="modal-card-body">
                     <h1 class="subtitle is-4">Synopsis chanel</h1>
-                    <textarea id="homeSynopsis" type="textarea" class="textarea"><?= APP::printString($info['synopsis']) ?></textarea>
+                    <textarea id="newhomeSynopsis" type="textarea" class="textarea"><?= APP::printString($info['synopsis']) ?></textarea>
                   </section>
                   <footer class="modal-card-foot">
-                    <button class="button is-link" id="2" onclick="showHint(null, 'home')">Save changes</button>
+                    <button class="button is-link" id="2" onclick="reqHome()">Save changes</button>
                     <button id="but_cancel_chanel" class="button" aria-label="close" >Cancel</button>
                   </footer>
                 </div>
@@ -95,7 +95,7 @@
   <div class="columns is-multiline">
     <?php foreach ($val as $key => $key2)
     { ?>
-        <div class="column is-3">
+        <div id="base<?= App::printString($key2['image_id']) ?>" class="column is-3">
             <div class="card">
                <div class="card-image">
                     <figure class="image is-4by3">
@@ -105,11 +105,11 @@
                     </figure>
                 </div>
                 <div class="card-content">
-                    <h1 class="tag subtitle is-8"><?=Image::subTitle($key2['title']) ?></h1>
-                    <div class="content"><?= Image::subSynopsis($key2['synopsis']) ?><br></div>
+                    <h1 id="basetitle<?= App::printString($key2['image_id']) ?>" class="tag subtitle is-8"><?=Image::subTitle($key2['title']) ?></h1>
+                    <div id="basesys<?= App::printString($key2['image_id']) ?>" class="content"><?= Image::subSynopsis($key2['synopsis']) ?><br></div>
                     <!--  like  --->
                     <?php $like = Image::userLikeImage($key2['image_id']); {?>
-                          <button id="like" class="button is-outlined is-danger" onclick="reqFollowLike('<?= $key2['image_id'] ?>', 'like')">
+                          <button id="like<?= $key2['image_id'] ?>" class="button is-outlined is-danger" onclick="reqLike('<?= $key2['image_id'] ?>')">
                           <?php if ($like) { ?>
                             <i class="material-icons">check</i><i class="material-icons">favorite</i>
                           <?php } else { ?>
@@ -145,7 +145,7 @@
                                         <textarea id="sys<?= App::printString($key2['image_id']) ?>" type="textarea" class="textarea"><?= APP::printString($key2['synopsis']) ?></textarea>
                                       </section>
                                       <footer class="modal-card-foot">
-                                        <button class="button is-link" onclick="showHint(<?= App::printString($key2['image_id']) ?>, 'image')">Save changes</button>
+                                        <button class="button is-link" onclick="reqModify(<?= App::printString($key2['image_id']) ?>)">Save changes</button>
                                         <button id="cancel<?= App::printString($key2['image_id']) ?>" class="button" aria-label="close" >Cancel</button>
                                       </footer>
                                     </div>
@@ -163,7 +163,7 @@
                                         <p class="subtitle is-4">Are you sure to delete this pictures ?</p>
                                       </section>
                                       <footer class="modal-card-foot">
-                                        <button id="delete<?= App::printString($key2['image_id']) ?>" class="button is-danger" onclick="showHint(<?= App::printString($key2['image_id']) ?>, 'delete')"><i class="material-icons">delete_forever</i> delete</button>
+                                        <button id="delete<?= App::printString($key2['image_id']) ?>" class="button is-danger" onclick="reqDelete(<?= App::printString($key2['image_id']) ?>)"><i class="material-icons">delete_forever</i> delete</button>
                                         <button id="del_cancel<?= App::printString($key2['image_id']) ?>" class="button" aria-label="close" >Cancel</button>
                                       </footer>
                                     </div>

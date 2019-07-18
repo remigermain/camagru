@@ -5,15 +5,15 @@ use App\Error;
 use App\Image;
 Autoloader::register();
 
-if (isset($_POST) && isset($_POST['methode']))
+if (isset($_POST) && isset($_POST['submit']))
 {
-    if ($_POST['methode'] == "home")
+    if ($_POST['submit'] == "home")
         Image::updateHome($_POST['sys']);
-    else if ($_POST['methode'] == "image")
+    else if ($_POST['submit'] == "image")
         Image::updateImage($_POST['id'], $_POST['sys'], $_POST['title']);
-    else if ($_POST['methode'] == "delete")
+    else if ($_POST['submit'] == "delete")
         Image::removeImage($_POST['id']);
 }
 else
-    return (Error::wrongRequest());
+    Error::wrongRequest();
 ?>

@@ -8,6 +8,9 @@ use App\App;
 use App\Error;
 use App\Database;
 use App\Connection;
+//var_dump("gergrgerge");
+//print(json_encode($_POST));
+//return ;
 if (isset($_POST) && isset($_POST['submit']))
 {
     if ($_POST['submit'] === 'login')
@@ -19,8 +22,8 @@ if (isset($_POST) && isset($_POST['submit']))
     else if ($_POST['submit'] === 'forgot')
         Connection::newPassword($_POST['email']);
     else
-        Error::wrongPost();
+        Error::wrongRequest();
 }
 else
-    Error::wrongPost();
+    Error::wrongRequest();
 ?>

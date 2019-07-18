@@ -13,6 +13,7 @@ App::session();
           <link rel="stylesheet" href="../vue/bluma.css">
           <link rel="stylesheet" href="../vue/material.css">
           <script src="../script/notification.js"></script>
+          <script src="../script/common.js"></script>
     </head>
     <header>
       <section class="home">
@@ -66,5 +67,6 @@ App::session();
           </nav>
       </section>
     </header>
-    <div class="container column" id="notif"></div>
+    <!--  notification -->
+    <div><div class="container column" id="notif"></div></div>
   

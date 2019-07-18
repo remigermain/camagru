@@ -1,3 +1,9 @@
+function remove_notify()
+{
+  const not = document.getElementById('notify');
+  if (not)
+    not.remove();
+}
 
 function create_close()
 {
@@ -12,7 +18,8 @@ function create_notify(msg, type)
     const div = document.createElement('div');
     const close = create_close();
     div.classList.add("notification");
-    if (type == 1)
+    div.setAttribute('id', "notify");
+    if (type != 1)
     {
         var error = document.createElement('strong');
         error.textContent = "Error: ";
@@ -20,7 +27,7 @@ function create_notify(msg, type)
         div.classList.add("is-danger");
     }
     else
-    div.classList.add("is-info");
+        div.classList.add("is-info");
     div.append(msg);
     div.append(close);
     document.getElementById('notif').prepend(div);

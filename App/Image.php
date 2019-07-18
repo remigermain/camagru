@@ -40,14 +40,20 @@ class Image
     {
       if (!APP::sessionExist())
         Error::notAccess();
-      return (App::getDb()->setprepare("UPDATE image SET synopsis = :sys , title = :title  WHERE image.id LIKE :id", array("id" => $id, "sys" => $synopsis, "title" => $title)));
+      if (App::getDb()->setprepare("UPDATE image SET synopsis = :sys , title = :title  WHERE image.id LIKE :id", array("id" => $id, "sys" => $synopsis, "title" => $title)))
+        App::createJson("Modification success!");
+      else
+        Error::wrongRequest();
     }
 
     public static function updateHome($synopsis)
     {
       if (!APP::sessionExist())
         Error::notAccess();
-      return (App::getDb()->setprepare("UPDATE home INNER JOIN user ON home.id = user.id SET synopsis = :sys WHERE user.username = :id", array("id" => $_SESSION['username'], "sys" => $synopsis)));
+      if (App::getDb()->setprepare("UPDATE home INNER JOIN user ON home.id = user.id SET synopsis = :sys WHERE user.username = :id", array("id" => $_SESSION['username'], "sys" => $synopsis)))
+        App::createJson("Modification success!");
+      else
+        Error::wrongRequest();
     }
 
 
@@ -55,7 +61,11 @@ class Image
     {
       if (!APP::sessionExist())
         Error::notAccess();
-      return (App::getDb()->setprepare("DELETE FROM image WHERE id LIKE :id_image AND user_id LIKE :user_id", array("id_image" => $id, "user_id" => $_SESSION['id'])));
+      if (1)
+        //App::getDb()->setprepare("DELETE FROM image WHERE id LIKE :id_image AND user_id LIKE :user_id", array("id_image" => $id, "user_id" => $_SESSION['id'])))
+        App::createJson("Image as deleted.");
+      else
+        Error::wrongRequest();
     }
 
     public static function userLikeImage($id_image)

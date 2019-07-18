@@ -59,13 +59,13 @@ class	Database
 
 	public function setquery($statement)
 	{
-		$req = $this->getPDO()->query($statement);
+		return ($req = $this->getPDO()->query($statement));
 	}
 
 	public function setprepare($statement, $attributes)
 	{
 		$req = $this->getPDO()->prepare($statement);
-		$req->execute($attributes);
+		return ($req->execute($attributes));
 	}
 }
 
