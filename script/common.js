@@ -1,23 +1,70 @@
-function sendrequest(form, url)
+
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//                             request                                      //
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+
+
+//.then(function(r) {console.log(r.text().then(data => console.log("ciucou" + data)))})
+//      connection ( login , logout , register, forgot password)  ///
+
+function reqForgotpassword()
 {
-    ret = false;
-    fetch("http://127.0.0.1:8008/Server/" + url, { body: form, method: "post"})
-    //.then(function(r) {console.log(r.text().then(data => console.log("ciucou" + data)))})
+  var form = new FormData;
+  form.append('submit', "forgot");
+  form.append('email', document.getElementById("email_forgot").value);
+  reqConnection(form);
+  forgot.classList.remove("is-active");
+}
+
+function reqLogin()
+{
+  console.log("fdffdd");
+  var form = new FormData;
+  form.append('submit', "login");
+  form.append('email', document.getElementById("email").value);
+  form.append('password', document.getElementById("password").value);
+  reqConnection(form);
+}
+
+function reqRegister()
+{
+  var form = new FormData;
+  form.append('submit', "register");
+  form.append('username', document.getElementById("username").value);
+  form.append('email', document.getElementById("regemail").value);
+  form.append('password', document.getElementById("regpassword").value);
+  form.append('confpassword', document.getElementById("confpassword").value);
+  reqConnection(form);
+}
+
+function reqLogout()
+{
+  var form = new FormData;
+  form.append('submit', "logout");
+  reqConnection(form);
+}
+
+function reqConnection(form)
+{
+    fetch("http://127.0.0.1:8008/Server/connection.php", { body: form, method: "post"})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
-        console.log(obj)
         remove_notify();
         if (obj.body.redirect)
             window.location.href = obj.body.url;
         else
             create_notify(obj.body.msg, obj.body.status);
      })
-   .catch(function(error){
+    .catch(function(error){
         remove_notify();
         console.log(error)
     });
 }
 
+//      like image or un-like  ///
 function reverseLike(id)
 {
     const div = document.getElementById("like" + id);
@@ -48,6 +95,7 @@ function reverseLike(id)
     div.append(heart);
 }
 
+//      like follow or un-follow  ///
 function reverseFollow(id)
 {
     const div = document.getElementById("follow");
@@ -76,16 +124,15 @@ function reverseFollow(id)
     div.append(" Follow");
 }
 
+//     follow   ///
 function reqFollow(id)
 {
     var form = new FormData;
     form.append('submit', 'follow');
     form.append('id', id);
     fetch("http://127.0.0.1:8008/Server/follow_like.php", { body: form, method: "post"})
-  //  .then(function(r) {console.log(r.text().then(data => console.log("ciucou" + data)))})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
-   //     console.log(obj.body)
         reverseFollow(id);
     })
    .catch(function(error){
@@ -93,20 +140,154 @@ function reqFollow(id)
     });
 }
 
+//      like inage ///
 function reqLike(id)
 {
     var form = new FormData;
     form.append('submit', 'like');
     form.append('id', id);
     fetch("http://127.0.0.1:8008/Server/follow_like.php", { body: form, method: "post"})
-    //   .then(function(r) {console.log(r.text().then(data => console.log("ciucou" + data)))})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
-    //    console.log(obj.body)
         reverseLike(id);
     })
    .catch(function(error){
         console.log(error)
     });
-    //chanel.classList.remove("is-active");
+}
+
+//          delete image   //
+function reqDelete(id)
+{
+    var div = document.getElementById("base" + id)
+    var form = new FormData;
+    form.append('id', id);
+    form.append('submit', "delete");
+
+    fetch("http://127.0.0.1:8008/Server/edit_info_image.php", { body: form, method: "post"})
+    .then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    .then(function(obj) {
+        remove_notify();
+        create_notify(obj.body.msg, obj.body.status);
+        if (document.getElementById('totalImage'))
+            document.getElementById('totalImage').innerHTML = "Image " + parseInt(document.getElementById('totalImage').innerHTML.substr(5) - 1);
+        div.remove();
+    })
+    .catch(function(error){
+        remove_notify();
+        console.log(error)
+    });
+    del.classList.remove("is-active")
+}
+
+//         update  home user //
+function reqHome()
+{
+    var form = new FormData;
+    form.append('submit', "home");
+    form.append('sys', document.getElementById("newhomeSynopsis").value);
+
+    fetch("http://127.0.0.1:8008/Server/edit_info_image.php", { body: form, method: "post"})
+    .then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    .then(function(obj) {
+        remove_notify();
+        create_notify(obj.body.msg, obj.body.status);
+        document.getElementById("homeSynopsis5").innerText = document.getElementById("newhomeSynopsis").value;
+    })
+   .catch(function(error){
+        remove_notify();
+        console.log(error)
+    });
+    if (chanel)
+        chanel.classList.remove("is-active");
+}
+
+//         update  image information //
+function reqModify(id)
+{
+    var form = new FormData;
+    form.append('submit', "image");
+    form.append('id', id);
+    form.append('sys', document.getElementById("sys" + id).value);
+    form.append('title', document.getElementById("title" + id).value);
+
+    fetch("http://127.0.0.1:8008/Server/edit_info_image.php", { body: form, method: "post"})
+    .then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    .then(function(obj) {
+        remove_notify();
+        create_notify(obj.body.msg, obj.body.status);
+        document.getElementById("basesys" + id).innerText = document.getElementById("sys" + id).value.substr(0, 90);
+        document.getElementById("basetitle" + id).innerText = document.getElementById("title" + id).value.substr(0, 20);
+    })
+   .catch(function(error){
+        remove_notify();
+        console.log(error)
+    });
+    modal.classList.remove("is-active");
+}
+
+//        create   new comment  //
+function create_comment(obj, id, pagi, username)
+{
+    const div_base = document.getElementById('allComment');
+    const div = document.createElement('div');
+    div.classList.add('media');
+    
+    const fig = document.createElement('figure');
+    fig.setAttribute('class', 'image is-48x48');
+    fig.append(document.getElementById('userComment').cloneNode(true));
+    const div2 = document.createElement('div');
+    div2.classList.add('media-left');
+    div2.append(fig);
+    div.append(div2);
+    
+    const text = document.createElement('p');
+    text.setAttribute('class', 'title is-6');
+    text.innerHTML = "@" + username;
+    div.append(text);
+    
+    const time = document.createElement('time');
+    time.setAttribute('datetime', 'fdfdf');
+    const date = new Date();
+    time.innerHTML = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay();
+    
+    const br = document.createElement('br');
+    const div3 = document.createElement('div')
+    div3.classList.add('content');
+    div3.append(time);
+    div3.prepend(br);
+    div3.prepend(document.getElementById('comment').value);
+    
+    const div4 = document.createElement('div');
+    div4.setAttribute('class', 'card-content box');
+    div4.append(div);
+    div4.append(div3);
+    if (pagi == 1)
+    {
+        if (div_base.childElementCount == 5)
+            div_base.removeChild(div_base.lastElementChild);
+        console.log(id);
+        div_base.prepend(div4);
+    }
+    document.getElementById("comment").value = "";
+}
+
+function reqComment(id, pagi)
+{
+    var form = new FormData;
+    form.append('submit', "comment");
+    form.append('id', id);
+    form.append('comment', document.getElementById("comment").value);
+
+    fetch("http://127.0.0.1:8008/Server/follow_like.php", { body: form, method: "post"})
+  //  .then(function(r) {console.log(r.text().then(data => console.log("ciucou" + data)))})
+    .then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    .then(function(obj) {
+        remove_notify();
+        create_comment(obj, id, pagi, obj.body.user_name);
+    })
+   .catch(function(error){
+        remove_notify();
+        console.log(error)
+    });
 }

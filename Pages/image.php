@@ -55,10 +55,18 @@ if (APP::sessionExist())
             </div>
             <h1 class="tag subtitle is-4"><?= App::printString($val['title']) ?></h1>
             <div class="content"><?= App::printString($val['synopsis']) ?><br></div>
+
+
             <?php $like = Image::userLikeImage($_GET['id']); {?>
-              <button id="like" class="button is-outlined is-danger" onclick="reqFollowLike('<?= $_GET['id'] ?>', 'like')">
-              <?php if ($like) { ?><i class="material-icons">check</i><i class="material-icons">favorite</i><?php } else { ?><i class="material-icons">add</i><i class="material-icons">favorite_border</i><?php } ?></button>
-            <?php } ?>
+                <button id="like<?= $_GET['id'] ?>" class="button is-outlined is-danger" onclick="reqLike('<?= $_GET['id'] ?>')">
+                <?php if ($like) { ?>
+                  <i class="material-icons">check</i><i class="material-icons">favorite</i>
+                <?php } else { ?>
+                  <i class="material-icons">add</i><i class="material-icons">favorite_border</i>
+                <?php } ?></button>
+                <?php } ?>
+
+
             <div class="field is-grouped is-grouped-multiline">
               <div class="control">
                 <!--  tag -->
@@ -93,19 +101,19 @@ if (APP::sessionExist())
     <article class="media box">
       <figure class="media-left">
         <p class="image is-64x64">
-          <img class="is-rounded" src="data:image/jpeg;base64, <?= $info ?>">
+          <img id="userComment" class="is-rounded" src="data:image/jpeg;base64, <?= $info ?>">
         </p>
       </figure>
       <div class="media-content">
         <div class="field">
           <p class="control">
-            <textarea id="comment"class="textarea" placeholder="Add a comment..."></textarea>
+            <textarea id="comment" class="textarea" placeholder="Add a comment..."></textarea>
           </p>
         </div>
         <nav class="level">
           <div class="level-left">
             <div class="level-item">
-              <a class="button is-info" onclick="reqComment(<?= $_GET['id'] ?>)">Submit</a>
+              <a class="button is-info" onclick="reqComment(<?= $_GET['id'] ?>, <?= $pagination ?>); return false;">Submit</a>
             </div>
           </div>
         </nav>
@@ -113,7 +121,7 @@ if (APP::sessionExist())
     </article>
     <?php } ?>
   <div class="columns">
-    <div class="column">
+    <div id="allComment" class="column">
       <?php $i = 0; foreach($com as $keycom => $keycom2) { if (++$i > 5) break; ?>
         <div class="card-content box">
           <div class="media">

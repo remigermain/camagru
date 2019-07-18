@@ -62,49 +62,6 @@ function close_forgot_funct()
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-//                             request                                      //
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-
-function reqForgotpassword()
-{
-  var form = new FormData;
-  form.append('submit', "forgot");
-  form.append('email', document.getElementById("email_forgot").value);
-  sendrequest(form, "connection.php");
-  forgot.classList.remove("is-active");
-}
-
-function reqLogin()
-{
-  console.log("fdffdd");
-  var form = new FormData;
-  form.append('submit', "login");
-  form.append('email', document.getElementById("email").value);
-  form.append('password', document.getElementById("password").value);
-  error = sendrequest(form, "connection.php");
-}
-
-function reqRegister()
-{
-  var form = new FormData;
-  form.append('submit', "register");
-  form.append('username', document.getElementById("username").value);
-  form.append('email', document.getElementById("regemail").value);
-  form.append('password', document.getElementById("regpassword").value);
-  form.append('confpassword', document.getElementById("confpassword").value);
-  sendrequest(form, "connection.php");
-}
-
-function reqLogout()
-{
-  var form = new FormData;
-  form.append('submit', "logout");
-  sendrequest(form, "connection.php");
-}
-
-//////////////////////////////////////////////////////////////////////////////
 
 function window_event()
 {
