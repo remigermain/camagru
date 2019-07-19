@@ -114,11 +114,17 @@ use App\App;
         </p>
     </div>
     <div class="field">
-        <label class="label">Confirm Password</label>
-        <p class="control has-icons-left">
-          <input class="input" id="confpassword" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="confpassword" placeholder="Confirm Password" required>
-            <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
-        </p>
+      <label class="label">Confirm Password</label>
+      <p class="control has-icons-left">
+        <input class="input" id="confpassword" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="confpassword" placeholder="Confirm Password" required>
+          <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+      </p>
+    </div>
+    <div class="field">
+      <label class="checkbox">
+        <input type="checkbox" required>
+        I agree to the <a href="#">terms and conditions</a>
+      </label>
     </div>
     <div class="field">
       <p class="control">
