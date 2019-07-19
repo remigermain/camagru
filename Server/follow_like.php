@@ -8,7 +8,14 @@ use App\Comment;
 use App\App;
 Autoloader::register();
 if (!App::sessionExist())
-    return (Error::noSession("Follow it."));
+{
+    if ($_POST['submit'] == "follow")
+        return (Error::noSession("Follow user!"));
+    else if ($_POST['submit'] == "like")
+        return (Error::noSession("like this photos!"));
+    else if ($_POST['submit'] == "comment")
+        return (Error::noSession("Comment photos!"));
+}
 if (isset($_POST) && isset($_POST['submit']))
 {
     if ($_POST['submit'] == "follow")

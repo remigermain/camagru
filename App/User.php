@@ -68,20 +68,22 @@ class User
         App::session();
         $id_follower = User::getUserId($username);
         if ($id_follower == $_SESSION['id'])
-            return (Error::stringError("You can't follow you !"));
-        $val = array("follower" => $_SESSION['id'], "user_id" => $id_follower);
-        $ret = App::getDb()->getprepare("SELECT COUNT(*) as count FROM `follower` WHERE user_id LIKE :user_id AND follower LIKE :follower", $val, true)['count'];
-        if (intval($ret))
-            App::getDb()->setprepare("DELETE FROM follower WHERE user_id LIKE :user_id AND follower LIKE :follower", $val);
-        else
-            App::getDb()->setprepare("INSERT INTO follower (user_id, follower) VALUES(:user_id, :follower)", $val);
-        App::createJson("Modification success!");        
+            Error::stringError("You can't follow you !");
+        {
+            $val = array("follower" => $_SESSION['id'], "user_id" => $id_follower);
+            $ret = App::getDb()->getprepare("SELECT COUNT(*) as count FROM `follower` WHERE user_id LIKE :user_id AND follower LIKE :follower", $val, true)['count'];
+            if (intval($ret))
+                App::getDb()->setprepare("DELETE FROM follower WHERE user_id LIKE :user_id AND follower LIKE :follower", $val);
+            else
+                App::getDb()->setprepare("INSERT INTO follower (user_id, follower) VALUES(:user_id, :follower)", $val);
+            App::createJson("Modification success!");
+        }
     }
 
     static Public function userLikeImage($id_image)
     {
         if (!App::sessionExist())
-            Error::notAccess();
+            return (Error::notAccess());
         App::session();
         $val = array("user_id" => $_SESSION['id'], "image_id" => $id_image);
         $ret = Image::userLikeImage($id_image);

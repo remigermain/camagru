@@ -49,7 +49,7 @@ class Error
 
 	public static function noSession($str)
 	{
-		return ("You need to be connected to " . App::printString($str));
+		App::createJson("You need to be connected to " . App::printString($str), 0);
 	}
 
 	public static function user_Exist($username)

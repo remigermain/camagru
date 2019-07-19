@@ -12,39 +12,39 @@
 
 function reqForgotpassword()
 {
-  var form = new FormData;
-  form.append('submit', "forgot");
-  form.append('email', document.getElementById("email_forgot").value);
-  reqConnection(form);
-  forgot.classList.remove("is-active");
+    var form = new FormData;
+    form.append('submit', "forgot");
+    form.append('email', document.getElementById("email_forgot").value);
+    reqConnection(form);
+    forgot.classList.remove("is-active");
 }
 
 function reqLogin()
 {
-  console.log("fdffdd");
-  var form = new FormData;
-  form.append('submit', "login");
-  form.append('email', document.getElementById("email").value);
-  form.append('password', document.getElementById("password").value);
-  reqConnection(form);
+    console.log("fdffdd");
+    var form = new FormData;
+    form.append('submit', "login");
+    form.append('email', document.getElementById("email").value);
+    form.append('password', document.getElementById("password").value);
+    reqConnection(form);
 }
 
 function reqRegister()
 {
-  var form = new FormData;
-  form.append('submit', "register");
-  form.append('username', document.getElementById("username").value);
-  form.append('email', document.getElementById("regemail").value);
-  form.append('password', document.getElementById("regpassword").value);
-  form.append('confpassword', document.getElementById("confpassword").value);
-  reqConnection(form);
+    var form = new FormData;
+    form.append('submit', "register");
+    form.append('username', document.getElementById("username").value);
+    form.append('email', document.getElementById("regemail").value);
+    form.append('password', document.getElementById("regpassword").value);
+    form.append('confpassword', document.getElementById("confpassword").value);
+    reqConnection(form);
 }
 
 function reqLogout()
 {
-  var form = new FormData;
-  form.append('submit', "logout");
-  reqConnection(form);
+    var form = new FormData;
+    form.append('submit', "logout");
+    reqConnection(form);
 }
 
 function reqConnection(form)
@@ -56,8 +56,8 @@ function reqConnection(form)
         if (obj.body.redirect)
             window.location.href = obj.body.url;
         else
-            create_notify(obj.body.msg, obj.body.status);
-     })
+        create_notify(obj.body.msg, obj.body.status);
+    })
     .catch(function(error){
         remove_notify();
         console.log(error)
@@ -70,7 +70,7 @@ function reverseLike(id)
     const div = document.getElementById("like" + id);
     var nbLike = 0;
     if (document.getElementById("totalLike"))
-        nbLike = parseInt(document.getElementById("totalLike").innerHTML.substr(5));
+    nbLike = parseInt(document.getElementById("totalLike").innerHTML.substr(5));
     var heart = document.createElement('i');
     var check = document.createElement('i');
     heart.classList.add('material-icons');
@@ -88,9 +88,9 @@ function reverseLike(id)
         nbLike--;
     }
     while (div.firstChild)
-        div.removeChild(div.firstChild);
+    div.removeChild(div.firstChild);
     if (document.getElementById("totalLike"))
-        document.getElementById("totalLike").innerHTML = "Like " + nbLike;
+    document.getElementById("totalLike").innerHTML = "Like " + nbLike;
     div.append(check);
     div.append(heart);
 }
@@ -102,7 +102,7 @@ function reverseFollow(id)
     var check = document.createElement('i');
     var nbFollow = 0;
     if (document.getElementById("totalFollow"))
-        nbFollow = parseInt(document.getElementById("totalFollow").innerHTML.substr(9));
+    nbFollow = parseInt(document.getElementById("totalFollow").innerHTML.substr(9));
     check.classList.add('material-icons');
     if (div.firstElementChild.innerHTML === "add")
     {
@@ -133,9 +133,13 @@ function reqFollow(id)
     fetch("http://127.0.0.1:8008/Server/follow_like.php", { body: form, method: "post"})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
-        reverseFollow(id);
+        remove_notify();
+        if (!obj.body.status)
+            create_notify(obj.body.msg, obj.body.status);
+        else
+            reverseFollow(id);
     })
-   .catch(function(error){
+    .catch(function(error){
         console.log(error)
     });
 }
@@ -147,11 +151,16 @@ function reqLike(id)
     form.append('submit', 'like');
     form.append('id', id);
     fetch("http://127.0.0.1:8008/Server/follow_like.php", { body: form, method: "post"})
+ //   .then(function(r) {console.log(r.text().then(data => console.log("ciucou" + data)))})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
-        reverseLike(id);
+        remove_notify();
+        if (!obj.body.status)
+            create_notify(obj.body.msg, obj.body.status);
+        else
+            reverseLike(id);
     })
-   .catch(function(error){
+    .catch(function(error){
         console.log(error)
     });
 }
@@ -289,4 +298,48 @@ function reqComment(id, pagi)
         remove_notify();
         console.log(error)
     });
+}
+
+
+function reqUserNotif()
+{
+    var form = new FormData;
+    
+    form.append('submit', 'notif');
+    form.append('no', document.getElementById('noti_no').value);
+    form.append('yes', document.getElementById('noti_yes').value);
+}
+
+function reqUserName()
+{
+    var form = new FormData;
+    
+    form.append('submit', 'userName');
+    form.append('username', document.getElementsByName('username').value);
+}
+
+function reqUserLogo()
+{
+    var form = new FormData;
+    
+    form.append('submit', 'logo');
+    form.append('logo', document.getElementsById('fileToUpload').value);
+}
+
+function reqUserPass()
+{
+    var form = new FormData;
+    
+    form.append('submit', 'changepass');
+    form.append('oldpassword', document.getElementsByName('oldpassword').value);
+    form.append('newpassword', document.getElementsByName('newpassword').value);
+    form.append('confpassword', document.getElementById('confpassword').value);
+}
+
+function reqUserMail()
+{
+    var form = new FormData;
+    
+    form.append('submit', 'email');
+    form.append('email', document.getElementsByName('email').value);
 }

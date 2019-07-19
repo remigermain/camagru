@@ -1,33 +1,149 @@
-  <nav class="pagination" role="navigation" aria-label="pagination">
-   <a class="pagination-previous" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $pagination - 1 ? $pagination - 1 : 1 ?>" >Previous</a>
-   <a class="pagination-next" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $pagination + 1 > $count ? $count : $pagination + 1 ?>" >Next page</a>
-   <ul class="pagination-list">
-     <li>
-       <a class="pagination-link <?= App::paginationCurrent($pagination, 1) ?>" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>" aria-label="Goto page 1">1</a>
-     </li>
-     <?php if ($pagination - 1 > 2) { ?>
-     <li>
-       <span class="pagination-ellipsis">&hellip;</span>
-     </li>
-     <?php } ?>
-      
-     <?php  $i = $pagination - 1; while ($i < $pagination + 2) {
-       if ($i > 1 && $i < $count) {
-       ?>
-       <li>
-         <a class="pagination-link <?= App::paginationCurrent($pagination, $i) ?>" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $i ?>" aria-label="Page <?= $i ?>" aria-current="page"><?= $i ?></a>
-       </li>
-       <?php } $i++; } ?>
-        
-     <?php if ($pagination + 2 < $count) { ?>
-     <li>
-       <span class="pagination-ellipsis">&hellip;</span>
-     </li>
-     <?php } ?>
-     <?php if ($count > 1) { ?>
-     <li>
-       <a class="pagination-link <?= App::paginationCurrent($pagination, $count) ?>" href="../Public/index.php?p=image&id=<?= $_GET['id'] ?>&pagination=<?= $count ?>" aria-label="Goto page <?= $count ?>"><?= $count ?></a>
-     </li>
-     <?php } ?>
-   </ul>
-  </nav>
+<div style="display" class="box">
+    <div class="columns">
+      <!--  change password -->
+      <div class="column is-one-fifth">
+        <div class="box">
+          <section class="section">
+            <div class="container">
+              <h2 class="subtitle is-3">Password</h2>
+            </div>
+          </section>
+          <form class="container" method="POST" onsubmit="reqUserPass(); return false;">
+            <div class="field">
+              <label class="label">Old password</label>
+              <p class="control has-icons-left">
+                <input class="input" id="password" type="text" name="oldpassword" placeholder="Old Password" required>
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">New password</label>
+              <p class="control has-icons-left">
+                <input class="input" id="password" type="password" name="newpassword" placeholder="Password" required>
+                  <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">Confirmation New Password</label>
+              <p class="control has-icons-left">
+                <input class="input" id="confpassword" type="password" name="confpassword" placeholder="Confirm Password" required>
+                <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <button class="button" id="submit" name="submit" value="change_password">submit</button>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    <!--  change email -->
+    <div class="column is-one-fifth">
+      <div class="box">
+        <section class="section">
+            <h3 class="subtitle is-3">New Email</h3>
+        </section>
+        <form class="container" method="POST" onsubmit="reqUserMail(); return false;">
+          <div class="field">
+            <label class="label">Email</label>
+              <p class="control has-icons-left has-icons-right">
+                <input class="input" id="email" type="email" name="email" placeholder="Email" required>
+                <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+                <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
+              </p>
+            </label>
+          </div>
+          <div class="field">
+            <p class="control">
+              <button class="button" id="submit" name="submit" value="change_email">submit</button>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!--  change username -->
+    <div class="column is-one-fifth">
+        <div class="box">
+          <section class="section">
+              <h3 class="subtitle is-3">Username</h3>
+          </section>
+          <form class="container" method="POST" onsubmit="reqUserName(); return false;">
+            <div class="field">
+              <label class="label">New username</label>
+                <p class="control has-icons-left has-icons-right">
+                  <input class="input" id="email" type="text" name="username" placeholder="Username" required>
+                  <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+                  <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
+                </p>
+              </label>
+            </div>
+            <div class="field">
+              <p class="control">
+                <button class="button" id="submit" name="submit" value="change_username">submit</button>
+              </p>
+            </div>
+          </form>
+        </div>
+    </div>
+    <!--  change logo -->
+    <div class="column is-one-fifth">
+      <div class="box is-centered">
+        <section class="section is-centered">
+            <h3 class="subtitle is-3">Profils logo</h3>
+        </section>
+        <form class="container" onsubmit="reqUserLogo(); return false;" method="post" enctype="multipart/form-data">
+          <div class="buttons is-centered">
+            <figure class="image is-128x128">
+              <img class="is-rounded" src="data:image/jpeg;base64, <?= $info['logo'] ?>" >
+            </figure>
+          <h4 class="subtitle is-5">Load image form local.</h4></div>
+          <div class="file is-warning is-boxed is-centered">
+            <label class="file-label">
+              <input class="file-input" type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg,image/png"required>
+                <span class="button is-link is-hovered"><span class="file-icon">
+                <i class="material-icons">cloud_upload</i></span>
+              <span class="file-label">Open file...</span>
+            </label>
+          </div>
+          <br />
+          <div class="file is-warning is-boxed is-centered">
+            <label class="file-label">
+              <input class="file-input" type="submit" name="submit" value="change_logo" id="fileToUpload">
+                <span class="button is-link is-hovered"><span class="file-icon">
+                <i class="material-icons">cloud_upload</i></span>
+              <span class="file-label">Submit</span>
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!--  notification -->
+    <div class="column is-one-fifth">
+      <div class="box is-centered">
+        <section class="section is-centered">
+            <h3 class="subtitle is-4">Notification</h3>
+        </section>
+        <form class="container" onsubmit="reqUserNotif(); return false;" method="post" enctype="multipart/form-data">
+          <div class="file is-warning is-boxed is-centered">
+            <div class="control">
+              <label class="radio">
+                <input id="noti_yes" type="radio" name="answer">Yes
+              </label>
+              <label class="radio">
+                <input id="noti_no" type="radio" name="answer">No
+              </label>
+            </div>
+          </div>
+          <br />
+          <div class="field">
+              <p class="control">
+                <button class="button" id="submit" name="submit" value="change_username" >submit</button>
+              </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </form> 
+</div>
+</div>
+</div>
