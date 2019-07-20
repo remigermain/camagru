@@ -11,7 +11,7 @@ if (isset($_GET) && isset($_GET['p']))
 else
     $page = 'home';
 
-$title =  $_GET['p'];
+$title = $page;
 ob_start();
 if ($page === 'home')
     require '../Pages/home.php';
