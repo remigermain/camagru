@@ -39,7 +39,7 @@ class App
 
 	public static function userExist($username)
 	{
-		if (APP::getDB()->getprepare("SELECT username FROM user WHERE username LIKE ?", [$username]))
+		if (APP::getDB()->getprepare("SELECT username FROM user WHERE username = ?", [$username]))
 			return (true);
 		else
 			return (false);

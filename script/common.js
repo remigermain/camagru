@@ -288,11 +288,27 @@ function reqComment(id, pagi)
     form.append('comment', document.getElementById("comment").value);
 
     fetch("http://127.0.0.1:8008/Server/follow_like.php", { body: form, method: "post"})
-  //  .then(function(r) {console.log(r.text().then(data => console.log("ciucou" + data)))})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
         remove_notify();
         create_comment(obj, id, pagi, obj.body.user_name);
+    })
+    .catch(function(error){
+        remove_notify();
+        console.log(error)
+    });
+}
+
+//.then(function(r) {console.log(r.text().then(data => console.log("ciucou" + data)))})
+//       Account   user //
+function reqAccount(form)
+{
+    fetch("http://127.0.0.1:8008/Server/account.php", { body: form, method: "post"})
+    .then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    .then(function(obj) {
+        remove_notify();
+        if (obj.body.status != -1)
+            create_notify(obj.body.msg, obj.body.status);
     })
    .catch(function(error){
         remove_notify();
@@ -300,30 +316,29 @@ function reqComment(id, pagi)
     });
 }
 
-
 function reqUserNotif()
 {
     var form = new FormData;
     
     form.append('submit', 'notif');
-    form.append('no', document.getElementById('noti_no').value);
-    form.append('yes', document.getElementById('noti_yes').value);
+    form.append('follow', Number(document.getElementById("NotifFollow").checked));
+    form.append('comment', Number(document.getElementById("NotifComment").checked));
+    form.append('like', Number(document.getElementById("NotifLike").checked));
+    reqAccount(form);
 }
 
-function reqUserName()
+function reqUserProfil()
 {
     var form = new FormData;
+    const file = document.getElementById('fileToUpload').files[0];
     
-    form.append('submit', 'userName');
-    form.append('username', document.getElementsByName('username').value);
-}
-
-function reqUserLogo()
-{
-    var form = new FormData;
-    
-    form.append('submit', 'logo');
-    form.append('logo', document.getElementsById('fileToUpload').value);
+    form.append('submit', 'profil');
+    form.append('fileToUpload', file);
+    if (file)
+        form.append('logo', file.name);
+    form.append('email', document.getElementById('email').value);
+    form.append('username', document.getElementById('username').value);
+    reqAccount(form);
 }
 
 function reqUserPass()
@@ -331,15 +346,8 @@ function reqUserPass()
     var form = new FormData;
     
     form.append('submit', 'changepass');
-    form.append('oldpassword', document.getElementsByName('oldpassword').value);
-    form.append('newpassword', document.getElementsByName('newpassword').value);
+    form.append('oldpassword', document.getElementById('oldpassword').value);
+    form.append('newpassword', document.getElementById('newpassword').value);
     form.append('confpassword', document.getElementById('confpassword').value);
-}
-
-function reqUserMail()
-{
-    var form = new FormData;
-    
-    form.append('submit', 'email');
-    form.append('email', document.getElementsByName('email').value);
+    reqAccount(form);
 }

@@ -62,9 +62,19 @@ class Error
 		App::createJson("Mail \"" . App::printString($mail) . "\" already exists.", 0);
 	}
 
+	public static function username_Exist($username)
+	{
+		App::createJson("Username \"" . App::printString($username) . "\" already exists.", 0);
+	}
+
 	public static function not_samePass()
 	{
 		App::createJson("the password are not same!", 0);
+	}
+
+	public static function createJson($msg)
+	{
+		App::createJson($msg, 0);
 	}
 }
 ?>

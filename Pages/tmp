@@ -1,149 +1,83 @@
-<div style="display" class="box">
-    <div class="columns">
-      <!--  change password -->
-      <div class="column is-one-fifth">
-        <div class="box">
-          <section class="section">
-            <div class="container">
-              <h2 class="subtitle is-3">Password</h2>
-            </div>
-          </section>
-          <form class="container" method="POST" onsubmit="reqUserPass(); return false;">
-            <div class="field">
-              <label class="label">Old password</label>
-              <p class="control has-icons-left">
-                <input class="input" id="password" type="text" name="oldpassword" placeholder="Old Password" required>
-              </p>
-            </div>
-            <div class="field">
-              <label class="label">New password</label>
-              <p class="control has-icons-left">
-                <input class="input" id="password" type="password" name="newpassword" placeholder="Password" required>
-                  <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
-              </p>
-            </div>
-            <div class="field">
-              <label class="label">Confirmation New Password</label>
-              <p class="control has-icons-left">
-                <input class="input" id="confpassword" type="password" name="confpassword" placeholder="Confirm Password" required>
-                <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control">
-                <button class="button" id="submit" name="submit" value="change_password">submit</button>
-              </p>
-            </div>
-          </form>
+<!--  notification -->
+  <div id="UserEditNotif" class="column box is-5">
+    <section class="section">
+      <div class="container">
+        <h1 class="title">Notification</h1>
+        <h2 class="subtitle">Change Notification.</h2>
+      </div>
+    </section>
+    <div class="section">
+      <!-- follow -->
+      <div class="file is-warning is-boxed">
+        <div class="control">
+          <label class="radio">
+            <input id="noti_no" type="checkbox" name="answer">
+            <span class="title is-6"> Users Follow you</span>
+          </label>
         </div>
       </div>
-    <!--  change email -->
-    <div class="column is-one-fifth">
-      <div class="box">
-        <section class="section">
-            <h3 class="subtitle is-3">New Email</h3>
-        </section>
-        <form class="container" method="POST" onsubmit="reqUserMail(); return false;">
-          <div class="field">
-            <label class="label">Email</label>
-              <p class="control has-icons-left has-icons-right">
-                <input class="input" id="email" type="email" name="email" placeholder="Email" required>
-                <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
-              </p>
-            </label>
-          </div>
-          <div class="field">
-            <p class="control">
-              <button class="button" id="submit" name="submit" value="change_email">submit</button>
-            </p>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!--  change username -->
-    <div class="column is-one-fifth">
-        <div class="box">
-          <section class="section">
-              <h3 class="subtitle is-3">Username</h3>
-          </section>
-          <form class="container" method="POST" onsubmit="reqUserName(); return false;">
-            <div class="field">
-              <label class="label">New username</label>
-                <p class="control has-icons-left has-icons-right">
-                  <input class="input" id="email" type="text" name="username" placeholder="Username" required>
-                  <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                  <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
-                </p>
-              </label>
-            </div>
-            <div class="field">
-              <p class="control">
-                <button class="button" id="submit" name="submit" value="change_username">submit</button>
-              </p>
-            </div>
-          </form>
+      <h2 class="subititle" style="opacity: 0.5;">When user follow or unfollow you.</h2>
+      <br /> 
+      <!-- comment -->
+      <div class="file is-warning is-boxed">
+        <div class="control">
+          <label class="radio">
+            <input id="noti_no" type="checkbox" name="answer">
+            <span class="title is-6"> User comment Pictures.</span>
+          </label>
         </div>
-    </div>
-    <!--  change logo -->
-    <div class="column is-one-fifth">
-      <div class="box is-centered">
-        <section class="section is-centered">
-            <h3 class="subtitle is-3">Profils logo</h3>
-        </section>
-        <form class="container" onsubmit="reqUserLogo(); return false;" method="post" enctype="multipart/form-data">
-          <div class="buttons is-centered">
-            <figure class="image is-128x128">
-              <img class="is-rounded" src="data:image/jpeg;base64, <?= $info['logo'] ?>" >
-            </figure>
-          <h4 class="subtitle is-5">Load image form local.</h4></div>
-          <div class="file is-warning is-boxed is-centered">
-            <label class="file-label">
-              <input class="file-input" type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg,image/png"required>
-                <span class="button is-link is-hovered"><span class="file-icon">
-                <i class="material-icons">cloud_upload</i></span>
-              <span class="file-label">Open file...</span>
-            </label>
-          </div>
-          <br />
-          <div class="file is-warning is-boxed is-centered">
-            <label class="file-label">
-              <input class="file-input" type="submit" name="submit" value="change_logo" id="fileToUpload">
-                <span class="button is-link is-hovered"><span class="file-icon">
-                <i class="material-icons">cloud_upload</i></span>
-              <span class="file-label">Submit</span>
-            </label>
-          </div>
-        </form>
       </div>
-    </div>
-    <!--  notification -->
-    <div class="column is-one-fifth">
-      <div class="box is-centered">
-        <section class="section is-centered">
-            <h3 class="subtitle is-4">Notification</h3>
-        </section>
-        <form class="container" onsubmit="reqUserNotif(); return false;" method="post" enctype="multipart/form-data">
-          <div class="file is-warning is-boxed is-centered">
-            <div class="control">
-              <label class="radio">
-                <input id="noti_yes" type="radio" name="answer">Yes
-              </label>
-              <label class="radio">
-                <input id="noti_no" type="radio" name="answer">No
-              </label>
-            </div>
-          </div>
-          <br />
-          <div class="field">
-              <p class="control">
-                <button class="button" id="submit" name="submit" value="change_username" >submit</button>
-              </p>
-          </div>
-        </form>
+      <h2 class="subititle" style="opacity: 0.5;">When User comment a pictures of you.</h2>
+      <br />
+      <!-- like -->
+      <div class="file is-warning is-boxed">
+        <div class="control">
+          <label class="radio">
+            <input id="noti_no" type="checkbox" name="answer">
+            <span class="title is-6"> Users Like Pictures</span>
+          </label>
+        </div>
       </div>
+      <h2 class="subititle" style="opacity: 0.5;">When User Like pictures of you.</h2>
+      <br />
     </div>
-  </form> 
-</div>
-</div>
-</div>
+  </div>
+  <!-- password -->
+  <div id="UserEditPass" class="column is-5 box">
+    <section class="section">
+      <div class="container">
+        <h1 class="title">Password</h1>
+        <h2 class="subtitle">Change Password.</h2>
+      </div>
+    </section>
+    <form class="section" method="POST" onsubmit="reqUserPass(); return false;">
+      <div class="field">
+        <label class="label">Old password</label>
+        <p class="control has-icons-left">
+          <input class="input" id="password" type="text" name="oldpassword" placeholder="Old Password" required>
+        </p>
+      </div>
+      <div class="field">
+        <label class="label">New password</label>
+        <p class="control has-icons-left">
+          <input class="input" id="password" type="password" name="newpassword" placeholder="Password" required>
+            <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+        </p>
+      </div>
+      <div class="field">
+        <label class="label">Confirmation New Password</label>
+        <p class="control has-icons-left">
+          <input class="input" id="confpassword" type="password" name="confpassword" placeholder="Confirm Password" required>
+          <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control">
+          <button class="button" id="submit" name="submit" value="change_password">submit</button>
+        </p>
+      </div>
+    </form>
+  </div>
+
+
+

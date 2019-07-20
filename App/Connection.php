@@ -12,19 +12,19 @@ class Connection
     private static function find_user($email, $pass = null, $username = null)
     {
         if ($username)
-            return (APP::getDB()->getprepare("SELECT email, username, valid FROM user WHERE email LIKE ? OR username LIKE ?", array($email, $username), true));
+            return (APP::getDB()->getprepare("SELECT email, username, valid FROM user WHERE email = ? OR username = ?", array($email, $username), true));
         else
-            return (APP::getDB()->getprepare("SELECT email, pass, valid FROM user WHERE email LIKE ? AND pass LIKE ?", array($email, $pass), true));
+            return (APP::getDB()->getprepare("SELECT email, pass, valid FROM user WHERE email = ? AND pass = ?", array($email, $pass), true));
     }
 
     private static function getusername($email)
     {
-        return (APP::getDB()->getprepare("SELECT email, username FROM user WHERE email LIKE ?", [$email], true));
+        return (APP::getDB()->getprepare("SELECT email, username FROM user WHERE email = ?", [$email], true));
     }
     
     private static function getIdusername($email)
     {
-        return (APP::getDB()->getprepare("SELECT id FROM user WHERE email LIKE ?", [$email], true));
+        return (APP::getDB()->getprepare("SELECT id FROM user WHERE email = ?", [$email], true));
     }
     
     public static function login()
@@ -76,6 +76,7 @@ class Connection
                 "sys" => "No synopis",
                 "logo" => base64_encode(file_get_contents(App::getPath("vue/img/profil.png"))));
             APP::getDB()->setprepare("INSERT INTO home (synopsis, logo) VALUE(:sys, :logo)", $val);
+            APP::getDB()->querry("INSERT INTO notification (notiffollow, notifcomment, `notiflike`) VALUE(1, 1, 1)");
             App::createJson("account successfully created.");
         }
     }
@@ -89,7 +90,7 @@ class Connection
         {
             $pass = APP::generatePassword();
             $val = array("new_pass" => hash('whirlpool', $pass), "email" => $mail);
-            App::getDB()->setprepare("UPDATE user SET user.pass = :new_pass WHERE user.email LIKE :email", $val);
+            App::getDB()->setprepare("UPDATE user SET user.pass = :new_pass WHERE user.email = :email", $val);
             $msg = "Hi ". $ret['username'] . ", " . "<br />Your new password is ". $pass . "<br /><br />Camagru.";
             Notification::sendMail($mail, "[Camagru] Reset Password", $msg);
             App::createJson("Email sended to " . $mail . ".");

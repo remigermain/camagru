@@ -52,7 +52,7 @@ use App\App;
     <div class="field">
       <label class="label">Password</label>
       <p class="control has-icons-left"><!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" -->
-        <input class="input" id="password"  type="password" name="password" placeholder="Password" required>
+        <input class="input" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,199}" type="password" name="password" placeholder="Password" required>
           <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
       </p>
     </div>
@@ -95,7 +95,7 @@ use App\App;
     <div class="field">
       <label class="label">Username</label>
       <p class="control has-icons-left">
-        <input class="input" id="username" pattern="[A-Za-z0-9]{8,}" type="text" name="username" placeholder="Username" required>
+        <input class="input" id="username" pattern="[a-zA-Z0-9].{6,31}" type="text" name="username" placeholder="Username" required>
       </p>
     </div>
     <div class="field">
@@ -109,14 +109,14 @@ use App\App;
     <div class="field">
         <label class="label">Password</label>
         <p class="control has-icons-left">
-          <input class="input" id="regpassword" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="password" placeholder="Password" required>
+          <input class="input" id="regpassword" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,199}" name="password" placeholder="Password" required>
             <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
         </p>
     </div>
     <div class="field">
       <label class="label">Confirm Password</label>
       <p class="control has-icons-left">
-        <input class="input" id="confpassword" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="confpassword" placeholder="Confirm Password" required>
+        <input class="input" id="confpassword" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,199}" name="confpassword" placeholder="Confirm Password" required>
           <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
       </p>
     </div>
