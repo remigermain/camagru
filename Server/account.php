@@ -34,7 +34,7 @@ if(isset($_POST["submit"]))
             change_logo();
     }
     else if($_POST['submit'] == "notif")
-        User::changeNotify($_POST['follow'], $_POST['like'], $_POST['comment']);
+        User::changeNotify($_POST['follow'], $_POST['comment'], $_POST['like']);
     else
         Error::wrongRequest();
 }

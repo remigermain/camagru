@@ -6,8 +6,9 @@ use App\User;
 if (!App::sessionExist())
   Error::notFound();
 $info = User::getUserInfo($_SESSION['username']);
+$title = "Account profils";
 ?>
-<br />
+<!-- <div class="container is-fluid"></div> -->
 <div class="columns">
   <div class="column"></div>
   <div class="column is-2 box">
@@ -89,7 +90,7 @@ $info = User::getUserInfo($_SESSION['username']);
       <div class="file is-warning is-boxed">
         <div class="control">
           <label class="radio">
-            <input id="NotifFollow" type="checkbox" name="answer" onclick="reqUserNotif()">
+            <input id="NotifFollow" type="checkbox" name="answer" onclick="reqUserNotif()" <?php if($info['notif']['notiffollow']) print("checked") ?>>
             <span class="title is-6"> Users Follow you</span>
           </label>
         </div>
@@ -100,7 +101,7 @@ $info = User::getUserInfo($_SESSION['username']);
       <div class="file is-warning is-boxed">
         <div class="control">
           <label class="radio">
-            <input id="NotifComment" type="checkbox" name="answer" onclick="reqUserNotif()" value="true">
+            <input id="NotifComment" type="checkbox" name="answer" onclick="reqUserNotif()" value="true" <?php if($info['notif']['notifcomment']) print("checked") ?>>
             <span class="title is-6"> User comment Pictures.</span>
           </label>
         </div>
@@ -111,7 +112,7 @@ $info = User::getUserInfo($_SESSION['username']);
       <div class="file is-warning is-boxed">
         <div class="control">
           <label class="radio">
-            <input id="NotifLike" type="checkbox" name="answer" onclick="reqUserNotif()">
+            <input id="NotifLike" type="checkbox" name="answer" onclick="reqUserNotif()" <?php if($info['notif']['notiflike']) print("checked") ?>>
             <span class="title is-6"> Users Like Pictures</span>
           </label>
         </div>

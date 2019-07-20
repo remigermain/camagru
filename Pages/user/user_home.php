@@ -7,6 +7,7 @@
  
  if (!isset($_GET['user']) || !APP::userExist($_GET['user']))
   Error::notFound();
+ $title = $_GET['user'] . "  home";
  $val = Image::getUserImg($_GET['user']);
  $info = User::getUserInfo($_GET['user']);
  $follow = 0;

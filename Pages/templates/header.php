@@ -8,6 +8,7 @@ App::session();
   <head>
           <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1">
+          <link rel="shortcut icon" href="../vue/img/logo.png">
           <title><?= $title ?></title>
           <link rel="stylesheet" href="../vue/header.css">
           <link rel="stylesheet" href="../vue/bluma.css">
@@ -38,7 +39,7 @@ App::session();
                     {
                       $logo = User::getUserInfo($_SESSION['username']);
                       ?>
-                        <a class="navbar-item" href="../Public/index.php?p=user_upload"><i class="material-icons">add_a_photo</i></a>
+                        <a class="navbar-item" href="../Public/index.php?p=upload_image"><i class="material-icons">add_a_photo</i></a>
                         <a class="navbar-item" href="../Public/index.php?p=user_home&user=<?=$_SESSION['username']?>">
                           <i class="material-icons">home</i></a>
                         <a class="navbar-item" href="../Public/index.php?p=account">

@@ -14,9 +14,11 @@ class User
         $follower = App::getDb()->getprepare("SELECT COUNT(*) as follower FROM follower INNER JOIN user ON user.id = follower.user_id WHERE user.username = ?", [$login], true);
         $like = App::getDb()->getprepare("SELECT COUNT(*) as `like` FROM `like` INNER JOIN image ON `like`.`image_id` = image.id INNER JOIN user ON user.id = image.user_id WHERE user.username = ?", [$login], true);
         $image_nb = App::getDb()->getprepare("SELECT COUNT(*) as `image_nb` FROM `image` INNER JOIN user ON user.id = image.user_id WHERE user.username = ?", [$login], true);
+        $notif = App::getDb()->getprepare("SELECT * FROM notification WHERE id = ?", [static::getUserId($login)], true) ;
         $info['nb_image'] = $image_nb['image_nb'];
         $info['follower'] = $follower['follower'];
         $info['like'] = $like['like'];
+        $info['notif'] = $notif;
         return ($info);
     }
 

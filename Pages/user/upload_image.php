@@ -3,6 +3,7 @@ use App\App;
 use App\Error;
 if (!App::sessionExist())
     Error::notAccess();
+$title = $_SESSION['username'] . " upload pictures";
 ?>
 <div class="hero-foot">
     <nav class="tabs">
