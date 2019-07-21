@@ -44,7 +44,7 @@ use App\App;
     <div class="field">
       <label class="label">Email</label>
       <p class="control has-icons-left">
-        <input class="input" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" type="email" name="email" placeholder="Email" required>
+        <input class="input" id="email"  type="email" name="email" placeholder="Email" required>
           <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
           <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
       </p>
@@ -52,7 +52,7 @@ use App\App;
     <div class="field">
       <label class="label">Password</label>
       <p class="control has-icons-left"><!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" -->
-        <input class="input" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,199}" type="password" name="password" placeholder="Password" required>
+        <input class="input" id="password" type="password" name="password" placeholder="Password" required>
           <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
       </p>
     </div>
