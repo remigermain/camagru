@@ -2,4 +2,4 @@ Options +FollowSymlinks
 RewriteEngine on
 RewriteOptions Inherit
 
-RewriteRule ^index.php coucou.php
+RewriteRule ^index.php$ coucou.php

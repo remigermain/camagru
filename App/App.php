@@ -105,12 +105,12 @@ class App
         return ($com);
 	}
 	
-	Public static function createJson($msg, $status = 1)
+	Public static function createJson($msg, $status = 1, $new = NULL, $text = NULL)
 	{
 		$res['status'] = $status;
 		$res['msg'] = $msg;
-		$res = json_encode($res);
-		print($res);		
+		$res[$new] = $text;
+		print(json_encode($res));
 	}
 }
 

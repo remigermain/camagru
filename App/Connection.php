@@ -51,7 +51,7 @@ class Connection
         unset($_SESSION['username']);
         unset($_SESSION['id']);
         session_destroy();
-        header('Location:/Public/index.php?p=home');
+        Page::page_Header("home");
     }
 
     public static function register($valid = "0")

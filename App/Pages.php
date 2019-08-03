@@ -9,6 +9,11 @@ class Pages
         print(json_encode(array("redirect" => "1", "url" => "http://127.0.0.1:8008/Public/index.php?" . $url)));
     }
 
+    public static function page_Header($url)
+    {
+        header('Location:/Public/index.php' . $url);
+    }
+
 }
 
 ?>

@@ -1,9 +1,7 @@
 <?php
-
 require '../App/Autoloader.php';
 use     App\Autoloader;
 Autoloader::register();
-//include 'require.php';
 use App\App;
 use App\Error;
 use App\Database;

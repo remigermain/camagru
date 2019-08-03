@@ -61,9 +61,8 @@ class Image
     {
       if (!APP::sessionExist())
         Error::notAccess();
-      if (1)
-        //App::getDb()->setprepare("DELETE FROM image WHERE id = :id_image AND user_id = :user_id", array("id_image" => $id, "user_id" => $_SESSION['id'])))
-        App::createJson("Image as deleted.");
+      if (App::getDb()->setprepare("DELETE FROM image WHERE id = :id_image AND user_id = :user_id", array("id_image" => $id, "user_id" => $_SESSION['id'])))
+        App::createJson("Image as deleted");
       else
         Error::wrongRequest();
     }

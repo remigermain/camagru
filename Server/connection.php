@@ -1,16 +1,11 @@
 <?php
-//   check login form //
 require '../App/Autoloader.php';
 use     App\Autoloader;
 Autoloader::register();
-//include 'require.php';
 use App\App;
 use App\Error;
 use App\Database;
 use App\Connection;
-//var_dump("gergrgerge");
-//print(json_encode($_POST));
-//return ;
 if (isset($_POST) && isset($_POST['submit']))
 {
     if ($_POST['submit'] === 'login')

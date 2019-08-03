@@ -65,7 +65,8 @@ class	Database
 	public function setprepare($statement, $attributes)
 	{
 		$req = $this->getPDO()->prepare($statement);
-		return ($req->execute($attributes));
+		$req->execute($attributes);
+		return ($req->exec($req));
 	}
 }
 
