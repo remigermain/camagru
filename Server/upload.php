@@ -2,11 +2,8 @@
 require '../App/Autoloader.php';
 use     App\Autoloader;
 Autoloader::register();
-use App\App;
 use App\Error;
-use App\Database;
 use App\Image;
-
 if(isset($_POST["submit"]))
 {
     if (isset($_POST['cat']))

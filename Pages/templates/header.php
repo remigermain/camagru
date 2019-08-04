@@ -2,7 +2,6 @@
 use App\App;
 use App\User;
 App::session();
-
 ?>
 <body class="Site">
   <head>

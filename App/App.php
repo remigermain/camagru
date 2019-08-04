@@ -97,9 +97,22 @@ class App
 		return ("");
 	}
 
-	static public function Pagination($com, $number)
+	Public static function paginationInit($count, $nb)
+	{
+		$pagination = 1;
+		if (isset($_GET['pagination']))
+		  $pagination = $_GET['pagination'];
+		if ($pagination > $count * $nb)
+			$pagination = $count;
+		else if ($pagination <= 0)
+		  $pagination = 1;
+		return ($pagination);
+	}
+
+	static public function Pagination($com, $pagination, $number)
     {
-        $i = 0;
+		$i = 0;
+		$number = $pagination * $number - $number;
         while ($i < $number && isset($com[$i]))
             unset($com[$i++]);
         return ($com);

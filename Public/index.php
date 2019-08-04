@@ -11,13 +11,12 @@ if (isset($_GET) && isset($_GET['p']))
 else
     $page = 'home';
 
-$val = Autoloader::require_Page($page);
+$val = Autoloader::requirePage($page);
 $title = $val['title'];
 
 ob_start();
 require '../Pages/templates/header.php';
 require $val['page'];
 require '../Pages/templates/footer.php';
-
 print (ob_get_clean());
 ?>

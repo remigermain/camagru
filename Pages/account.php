@@ -1,7 +1,6 @@
 <?php
 use App\App;
 use App\Error;
-use App\Image;
 use App\User;
 if (!App::sessionExist())
   Error::notFound();

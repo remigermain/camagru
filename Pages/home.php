@@ -2,19 +2,10 @@
   use App\Image;
   use App\App;
   $val = Image::getAllImg();
-
-
+  
   $count = App::calculPage($val, 8);
-  $pagination = 1;
-  if (isset($_GET['pagination']))
-    $pagination = $_GET['pagination'];
-  if ($pagination * 8 - 8 > $count)
-    $pagination = $count;
-  else if ($pagination <= 0)
-    $pagination = 1;
-  $val = App::Pagination($val, $pagination * 8 - 8);
-
-
+  $pagination = App::paginationInit($count, 8);
+  $val = App::Pagination($val, $pagination, 8);
 ?>
 <div class="hero-foot">
   <nav class="tabs">
@@ -43,7 +34,7 @@
           <div class="card-content">
               <div class="media">
                   <div class="media-left">
-                      <figure class="image is-48x48">
+                      <figure class="image is-48x48"> 
                           <img class="is-rounded" src="data:image/jpeg;base64, <?= $key2['logo'] ?>" alt="Placeholder image">
                       </figure>
                   </div>

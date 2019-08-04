@@ -51,7 +51,7 @@ class Connection
         unset($_SESSION['username']);
         unset($_SESSION['id']);
         session_destroy();
-        Page::page_Header("home");
+        Pages::page_Header("home");
     }
 
     public static function register($valid = "0")
@@ -61,7 +61,7 @@ class Connection
             Error::not_samePass();
         else if ($ret && $ret['username'] == $_POST['username'])
             Error::user_Exist($_POST['username']);
-        else if ($ret && $ret['email'])
+        else if ($ret && $ret['email'] == $_POST['email'])
             Error::mail_Exist($_POST['email']);
         else
         {
@@ -76,8 +76,9 @@ class Connection
                 "sys" => "No synopis",
                 "logo" => base64_encode(file_get_contents(App::getPath("vue/img/profil.png"))));
             APP::getDB()->setprepare("INSERT INTO home (synopsis, logo) VALUE(:sys, :logo)", $val);
-            APP::getDB()->querry("INSERT INTO notification (notiffollow, notifcomment, `notiflike`) VALUE(1, 1, 1)");
+            APP::getDB()->setquery("INSERT INTO notification (notiffollow, notifcomment, `notiflike`) VALUE(1, 1, 1)");
             App::createJson("account successfully created.");
+            Pages::page_Json("connection");
         }
     }
 

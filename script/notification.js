@@ -1,8 +1,8 @@
 function remove_notify()
 {
-  const not = document.getElementById('notify');
-  if (not)
-    not.remove();
+  const notif = document.getElementById('notify');
+  if (notif)
+    notif.remove();
 }
 
 function create_close()

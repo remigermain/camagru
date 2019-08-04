@@ -2,9 +2,7 @@
 require '../App/Autoloader.php';
 use     App\Autoloader;
 Autoloader::register();
-use App\App;
 use App\Error;
-use App\Database;
 use App\Connection;
 if (isset($_POST) && isset($_POST['submit']))
 {

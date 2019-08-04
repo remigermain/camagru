@@ -24,7 +24,7 @@ class Error
 	
 	public static function user_notvalid()
 	{
-		App::createJson("User dosen't exist or , you need to valid mail before login", 0);
+		App::createJson("User dosen't exist verify your email/password !", 0);
 	}
 
 	public static function notAccess()

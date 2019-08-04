@@ -12,17 +12,10 @@
  $info = User::getUserInfo($_GET['user']);
  $follow = 0;
  if (App::sessionExist() && User::userFollowUser($_SESSION['username'], $_GET['user']))
-  $follow = 1;
-//     calcul pagination //
+    $follow = 1;
   $count = App::calculPage($val, 8);
-  $pagination = 1;
-  if (isset($_GET['pagination']))
-    $pagination = $_GET['pagination'];
-  if ($pagination * 8 - 8 > $count)
-    $pagination = $count;
-  else if ($pagination <= 0)
-    $pagination = 1;
-  $val = App::Pagination($val, $pagination * 8 - 8);
+  $pagination = App::paginationInit($count, 8);
+  $val = App::Pagination($val, $pagination, 8);
  ?>
 <!--  profils -->
 <div id="all" style="margin-top: 20px;">

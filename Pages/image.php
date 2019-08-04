@@ -11,13 +11,7 @@ if (!$val)
   Error::notFound();
 $com = Comment::getCommentImage($_GET['id']);
 $count = App::calculPage($com, 5);
-$pagination = 1;
-if (isset($_GET['pagination']))
-  $pagination = $_GET['pagination'];
-if ($pagination * 5 - 5 > $count)
-$pagination = $count;
-else if ($pagination <= 0)
-  $pagination = 1;
+$pagination = App::paginationInit($count, 5);
 $com = App::Pagination($com, $pagination, 5);
 if (APP::sessionExist())
   $info = User::getUserInfo($_SESSION['username'])['logo'];

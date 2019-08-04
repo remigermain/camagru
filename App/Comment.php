@@ -15,9 +15,12 @@ class Comment
     {
         if (!App::sessionExist())
             Error::notAccess();
-        $val = array("user_id" => $_SESSION['id'], "id_image" => $id_image, "date" => date("Y/m/d H:i"), "comment" => $comment);
-        App::getDb()->setprepare("INSERT INTO comment (user_id, `image`, `date`, comment) VALUES(:user_id, :id_image, :date, :comment)", $val);
-        APP::createJson("", 1, "user_name", $_SESSION['username']);
+        else
+        {
+            $val = array("user_id" => $_SESSION['id'], "id_image" => $id_image, "date" => date("Y/m/d H:i"), "comment" => $comment);
+            App::getDb()->setprepare("INSERT INTO comment (user_id, `image`, `date`, comment) VALUES(:user_id, :id_image, :date, :comment)", $val);
+            APP::createJson("", 1, "user_name", $_SESSION['username']);
+        }
     }
 }
 

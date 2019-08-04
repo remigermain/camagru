@@ -21,7 +21,6 @@ function reqForgotpassword()
 
 function reqLogin()
 {
-    console.log("fdffdd");
     var form = new FormData;
     form.append('submit', "login");
     form.append('email', document.getElementById("email").value);
@@ -46,6 +45,7 @@ function reqLogout()
     form.append('submit', "logout");
     reqConnection(form);
 }
+//.then(function(r) {console.log(r.text().then(data => console.log("json print : \n" + data)))})
 
 function reqConnection(form)
 {
@@ -55,7 +55,6 @@ function reqConnection(form)
         remove_notify();
         if (obj.body.redirect)
             window.location.href = obj.body.url;
-        else
         create_notify(obj.body.msg, obj.body.status);
     })
     .catch(function(error){
@@ -155,14 +154,15 @@ function reqLike(id)
     .then(function(obj) {
         remove_notify();
         if (!obj.body.status)
-        create_notify(obj.body.msg, obj.body.status);
+            create_notify(obj.body.msg, obj.body.status);
         else
-        reverseLike(id);
+            reverseLike(id);
     })
     .catch(function(error){
         console.log(error)
     });
 }
+//.then(function(r) {console.log(r.text().then(data => console.log("json print : \n" + data)))})
 
 //          delete image   //
 function reqDelete(id)
@@ -173,7 +173,6 @@ function reqDelete(id)
     form.append('submit', "delete");
     
     fetch("http://127.0.0.1:8008/Server/edit_info_image.php", { body: form, method: "post"})
-    .then(function(r) {console.log(r.text().then(data => console.log("ciucou" + data)))})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
         remove_notify();
@@ -302,8 +301,8 @@ function reqComment(id, pagi)
     });
 }
 
-//.then(function(r) {console.log(r.text().then(data => console.log("ciucou" + data)))})
 //       Account   user //
+//.then(function(r) {console.log(r.text().then(data => console.log("ciucou" + data)))})
 function reqAccount(form)
 {
     fetch("http://127.0.0.1:8008/Server/account.php", { body: form, method: "post"})

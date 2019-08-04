@@ -44,6 +44,11 @@ class	Database
 			$datas = $req->fetchAll();
 		return ($datas);
 	}
+	
+	public function setquery($statement)
+	{
+		return ($req = $this->getPDO()->query($statement));
+	}
 
 	public function getprepare($statement, $attributes, $one = false)
 	{
@@ -57,16 +62,10 @@ class	Database
 
 	}
 
-	public function setquery($statement)
-	{
-		return ($req = $this->getPDO()->query($statement));
-	}
-
 	public function setprepare($statement, $attributes)
 	{
 		$req = $this->getPDO()->prepare($statement);
 		$req->execute($attributes);
-		return ($req->exec($req));
 	}
 }
 

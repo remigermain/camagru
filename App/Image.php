@@ -10,11 +10,16 @@ class Image
 
     public static function uploadImg($img, $cat)
     {
-        App::session();
+      App::session();
+      if (!APP::sessionExist())
+        Error::notAccess();
+      else
+      {
         $email_id = App::getDb()->getprepare("SELECT id FROM user WHERE email = ?", [$_SESSION['login']]);
         $cat = App::getDb()->getprepare("SELECT id FROM category WHERE id = ?", [$cat]);
         $val = array("email" => $email_id[0][0], "img" => $img, "date" => date("Y/m/d H:i"), "cat" => $cat);
         App::getDb()->setprepare("INSERT INTO image (`user_id`, `image`, `date`, category) VALUES(:email, :img, :date, :cat)", $val);
+      }
     }
     
     public static function getImgById($id)
@@ -40,7 +45,7 @@ class Image
     {
       if (!APP::sessionExist())
         Error::notAccess();
-      if (App::getDb()->setprepare("UPDATE image SET synopsis = :sys , title = :title  WHERE image.id = :id", array("id" => $id, "sys" => $synopsis, "title" => $title)))
+      else if (App::getDb()->setprepare("UPDATE image SET synopsis = :sys , title = :title  WHERE image.id = :id", array("id" => $id, "sys" => $synopsis, "title" => $title)))
         App::createJson("Modification success!");
       else
         Error::wrongRequest();
@@ -50,7 +55,7 @@ class Image
     {
       if (!APP::sessionExist())
         Error::notAccess();
-      if (App::getDb()->setprepare("UPDATE home INNER JOIN user ON home.id = user.id SET synopsis = :sys WHERE user.username = :id", array("id" => $_SESSION['username'], "sys" => $synopsis)))
+      else if (App::getDb()->setprepare("UPDATE home INNER JOIN user ON home.id = user.id SET synopsis = :sys WHERE user.username = :id", array("id" => $_SESSION['username'], "sys" => $synopsis)))
         App::createJson("Modification success!");
       else
         Error::wrongRequest();
@@ -61,18 +66,26 @@ class Image
     {
       if (!APP::sessionExist())
         Error::notAccess();
-      if (App::getDb()->setprepare("DELETE FROM image WHERE id = :id_image AND user_id = :user_id", array("id_image" => $id, "user_id" => $_SESSION['id'])))
-        App::createJson("Image as deleted");
       else
-        Error::wrongRequest();
+      {
+        $array = array("id_image" => $id, "user_id" => $_SESSION['id']);
+        if (App::getDb()->getprepare("SELECT COUNT(*) as count FROM image WHERE id = :id_image AND user_id = :user_id", $array, true)['count'])
+        {
+          App::getDb()->setprepare("DELETE FROM image WHERE id = :id_image AND user_id = :user_id", $array);
+          App::createJson("Image as deleted");
+        }
+        else
+          Error::wrongRequest();
+      }
     }
 
     public static function userLikeImage($id_image)
     {
-      if (!APP::sessionExist())
-        return (false);
-      $val = array("image_id" => $id_image, "user_username" => $_SESSION['username']);
-      return (App::getDb()->getprepare("SELECT COUNT(*) as bool FROM `like` INNER JOIN user ON user.id = `like`.`user_id` WHERE `like`.image_id = :image_id AND user.username = :user_username", $val, true)['bool']);
+      if (APP::sessionExist())
+      {
+        $val = array("image_id" => $id_image, "user_username" => $_SESSION['username']);
+        return (App::getDb()->getprepare("SELECT COUNT(*) as bool FROM `like` INNER JOIN user ON user.id = `like`.`user_id` WHERE `like`.image_id = :image_id AND user.username = :user_username", $val, true)['bool']);
+      }
     }
 
     public static function subSynopsis($sys)

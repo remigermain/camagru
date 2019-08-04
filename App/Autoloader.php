@@ -29,7 +29,7 @@ class	Autoloader
 		}
 	}
 
-	static function require_Page($page)
+	static function requirePage($page)
 	{
 		if (!file_exists("../Pages/" . $page . ".php"))
 		{

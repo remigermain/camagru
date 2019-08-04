@@ -1,4 +1,5 @@
-<?php use     App\App; ?>
+<?php use     App\App; 
+?>
 <nav class="pagination" role="navigation" aria-label="pagination">
    <a class="pagination-previous" href="<?= $url ?>&pagination=<?= $pagination - 1 ? $pagination - 1 : 1 ?>" >Previous</a>
    <a class="pagination-next" href="<?= $url ?>&pagination=<?= $pagination + 1 > $count ? $count : $pagination + 1 ?>" >Next page</a>
