@@ -125,6 +125,14 @@ class App
 		$res[$new] = $text;
 		print(json_encode($res));
 	}
+
+	Public static function tokenCreator($size)
+	{
+		$auth = new \OAuthProvider();
+		$token = $auth->generateToke($size);
+		$token = hash('wirlpool', $token);
+		return ($token);
+	}
 }
 
 ?>

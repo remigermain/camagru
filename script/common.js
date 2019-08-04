@@ -45,11 +45,11 @@ function reqLogout()
     form.append('submit', "logout");
     reqConnection(form);
 }
-//.then(function(r) {console.log(r.text().then(data => console.log("json print : \n" + data)))})
 
 function reqConnection(form)
 {
     fetch("http://127.0.0.1:8008/Server/connection.php", { body: form, method: "post"})
+    .then(function(r) {console.log(r.text().then(data => console.log("json print : \n" + data)))})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
         remove_notify();

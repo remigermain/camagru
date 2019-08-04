@@ -1,5 +1,10 @@
 <?php
 use App\App;
+use App\Connection;
+if (isset($_GET) && isset($_GET['token']) && isset($_GET['mail']))
+{
+  Connection::validToken($_GET['token'], $_GET['mail']);
+}
 ?>
 <!--  menu style -->
 <div class="hero-foot">

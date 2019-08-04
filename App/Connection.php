@@ -77,8 +77,9 @@ class Connection
                 "logo" => base64_encode(file_get_contents(App::getPath("vue/img/profil.png"))));
             APP::getDB()->setprepare("INSERT INTO home (synopsis, logo) VALUE(:sys, :logo)", $val);
             APP::getDB()->setquery("INSERT INTO notification (notiffollow, notifcomment, `notiflike`) VALUE(1, 1, 1)");
+            $token = App::tokenCreator(128);
+            Notification::mailRegister($_POST['email'], $token, $_POST['username']);
             App::createJson("account successfully created.");
-            Pages::page_Json("connection");
         }
     }
 
@@ -96,6 +97,18 @@ class Connection
             Notification::sendMail($mail, "[Camagru] Reset Password", $msg);
             App::createJson("Email sended to " . $mail . ".");
         }
+    }
+
+    public static function validToken($mail, $token)
+    {
+        $val = array("mail" => $mail, "token" => $token);
+        if (App::getDb()->getprepare("SELECT COUNT(*) as count FROM user WHERE user.mail = :mail AND user.token = :token", $val, true)['count'])
+        {
+            App::getDb()->setprepare("UPDATE user WHERE user.mail = :mail AND user.token = :token", $val);
+            return (true);
+        }
+        else
+            (false);
     }
 }
 

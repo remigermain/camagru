@@ -37,10 +37,16 @@ class Notification
         mail($mail, $sub, $msg, $val);
     }
 
-    public static function message($str)
+    public static function mailRegister($mail, $token, $login)
     {
-        print ($str);
-    }
+        $link = $_SERVER['HTTP_ORIGIN'] . "/Public/index.php?p=connection&token=\"" . $token . 
+                "&mail=" . $mail;
+        $msg = "<html>Hi " . $login . ", welcom to Camagru !<br><br>" .
+                "You need to valid account to login you. <br>" .
+                "<a href=\"" . $link .
+                "\">" . $link . "</a>" . $token . "</html>";
+        self::sendMail($mail, "Validation account", $msg);
+    }   
 }
 
 ?>
