@@ -48,7 +48,7 @@ App::session();
                           <!-- <i class="material-icons">account_circle</i> -->
                         </a>
                         <div class="navbar-item">
-                          <form class="container" id="formlogout" method="POST" action="/Server/connection.php">
+                          <form class="container" id="formlogout" method="POST" onsubmit="reqLogout(); return false;">
                             <div class="field">
                               <p class="control">
                                 <button class="button" id="submit" name="submit" value="logout">

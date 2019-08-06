@@ -32,12 +32,7 @@ class	Autoloader
 	static function requirePage($page)
 	{
 		if (!file_exists("../Pages/" . $page . ".php"))
-		{
-			$val['status'] = 1;
 			$page = "error";
-		}
-		else
-			$val['status'] = 0;
 		$val['title'] = $page;
 		$val['page'] = "../Pages/" . $page . ".php";
 		return ($val);

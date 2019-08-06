@@ -42,20 +42,23 @@ function reqRegister()
 function reqLogout()
 {
     var form = new FormData;
+
     form.append('submit', "logout");
     reqConnection(form);
+    console.log("dfdfdfdffd");
 }
 
 function reqConnection(form)
 {
     fetch("http://127.0.0.1:8008/Server/connection.php", { body: form, method: "post"})
-    .then(function(r) {console.log(r.text().then(data => console.log("json print : \n" + data)))})
+   // .then(function(r) {console.log(r.text().then(data => console.log("json print : \n" + data)))})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
         remove_notify();
         if (obj.body.redirect)
             window.location.href = obj.body.url;
-        create_notify(obj.body.msg, obj.body.status);
+        else
+            create_notify(obj.body.msg, obj.body.status);
     })
     .catch(function(error){
         remove_notify();
@@ -67,11 +70,12 @@ function reqConnection(form)
 function reverseLike(id)
 {
     const div = document.getElementById("like" + id);
-    var nbLike = 0;
-    if (document.getElementById("totalLike"))
-    nbLike = parseInt(document.getElementById("totalLike").innerHTML.substr(5));
     var heart = document.createElement('i');
     var check = document.createElement('i');
+    var nbLike = 0;
+
+    if (document.getElementById("totalLike"))
+        nbLike = parseInt(document.getElementById("totalLike").innerHTML.substr(5));
     heart.classList.add('material-icons');
     check.classList.add('material-icons');
     if (div.firstElementChild.innerHTML === "add")
@@ -87,9 +91,9 @@ function reverseLike(id)
         nbLike--;
     }
     while (div.firstChild)
-    div.removeChild(div.firstChild);
+        div.removeChild(div.firstChild);
     if (document.getElementById("totalLike"))
-    document.getElementById("totalLike").innerHTML = "Like " + nbLike;
+        document.getElementById("totalLike").innerHTML = "Like " + nbLike;
     div.append(check);
     div.append(heart);
 }

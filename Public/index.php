@@ -18,5 +18,4 @@ ob_start();
 require '../Pages/templates/header.php';
 require $val['page'];
 require '../Pages/templates/footer.php';
-print (ob_get_clean());
 ?>

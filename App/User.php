@@ -29,11 +29,11 @@ class User
 
     static Public function changeMail($new_mail)
     {
+        App::session();
         if (!App::sessionExist())
             Error::notAccess();
         else
         {
-            App::session();
             $val = array("new_mail" => $new_mail, "old_email" => $_SESSION['mail']);
             if (!App::getDb()->getprepare("SELECT user.email FROM user WHERE user.email = ?", [$new_mail]))
             {
@@ -48,11 +48,11 @@ class User
 
     static Public function changeusername($new_username)
     {
+        App::session();
         if (!App::sessionExist())
             Error::notAccess();
         else
         {
-            App::session();
             if (strlen($new_username) <= 6)
                 return (Error::createJson("username must be higher 6 character"));
             $val = array("new_username" => $new_username, "old_username" => $_SESSION['username']);
@@ -69,13 +69,13 @@ class User
 
     static Public function changePassword($old_pass, $new_pass, $conf_pass)
     {
+        App::session();
         if (!App::sessionExist())
             Error::notAccess();
         else
         {
             if ($new_pass !== $conf_pass)
                 return (Error::not_samePass());
-            App::session();
             $val = array("old_pass" => hash('whirlpool', $old_pass), "email" => $_SESSION['mail']);
             if (App::getDb()->getprepare("SELECT * FROM user WHERE email = :email AND pass = :old_pass", $val))
             {
@@ -90,11 +90,11 @@ class User
 
     static Public function changeLogo($img)
     {
+        App::session();
         if (!App::sessionExist())
             Error::notAccess();
         else
         {
-            App::session();
             $val = array("img" => $img, "email" => $_SESSION['mail']);
             if (App::getDb()->setprepare("UPDATE `home` INNER JOIN `user` ON home.id = user.id SET home.logo = :img WHERE user.email = :email", $val))
                 App::createJson("Profils image as changed!");
@@ -105,6 +105,7 @@ class User
 
     static public function changeNotify($follow, $comment, $like)
     {
+        App::session();
         if (!App::sessionExist())
             Error::notAccess();
         else
@@ -117,6 +118,7 @@ class User
 
     static Public function UserFollowUser($username, $username2)
     {
+        App::session();
         if (!App::sessionExist())
             Error::notAccess();
         else
@@ -130,11 +132,11 @@ class User
 
     static Public function userFollow($username)
     {
+        App::session();
         if (!App::sessionExist())
             Error::notAccess();
         else
         {
-            App::session();
             $id_follower = User::getUserId($username);
             if ($id_follower == $_SESSION['id'])
                 Error::stringError("You can't follow you !");
@@ -152,11 +154,11 @@ class User
 
     static Public function userLikeImage($id_image)
     {
+        App::session();
         if (!App::sessionExist())
             Error::notAccess();
         else
         {
-            App::session();
             $val = array("user_id" => $_SESSION['id'], "image_id" => $id_image);
             $ret = Image::userLikeImage($id_image);
             if ($ret)

@@ -49,18 +49,15 @@ if (APP::sessionExist())
             </div>
             <h1 class="tag subtitle is-4"><?= App::printString($val['title']) ?></h1>
             <div class="content"><?= App::printString($val['synopsis']) ?><br></div>
-
-
-            <?php $like = Image::userLikeImage($_GET['id']); {?>
+            <?php $like = Image::userLikeImage($_GET['id']);
+            {?>
                 <button id="like<?= $_GET['id'] ?>" class="button is-outlined is-danger" onclick="reqLike('<?= $_GET['id'] ?>')">
                 <?php if ($like) { ?>
                   <i class="material-icons">check</i><i class="material-icons">favorite</i>
                 <?php } else { ?>
                   <i class="material-icons">add</i><i class="material-icons">favorite_border</i>
                 <?php } ?></button>
-                <?php } ?>
-
-
+            <?php } ?>
             <div class="field is-grouped is-grouped-multiline">
               <div class="control">
                 <!--  tag -->
@@ -138,5 +135,3 @@ if (APP::sessionExist())
   <!-- pagination -->
   <?php $url = "../Public/index.php?p=image&id=". $_GET['id']; require '../Pages/pagination.php'; ?>
 </div>
-
-

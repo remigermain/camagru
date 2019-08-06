@@ -6,8 +6,8 @@ class Pages
 {
     public static function page_Json($url)
     {
-        $json = json_encode(array("redirect" => "1", "url" => "http://127.0.0.1:8008/Public/index.php?" . $url));
-        print($json);
+        $val = array("redirect" => "1", "url" => "http://127.0.0.1:8008/Public/index.php?p=" . $url);
+        print(json_encode($val));
     }
 
     public static function page_Header($url)

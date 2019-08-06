@@ -43,6 +43,7 @@ class Image
 
     public static function updateImage($id, $synopsis, $title)
     {
+      App::session();
       if (!APP::sessionExist())
         Error::notAccess();
       else if (App::getDb()->setprepare("UPDATE image SET synopsis = :sys , title = :title  WHERE image.id = :id", array("id" => $id, "sys" => $synopsis, "title" => $title)))
@@ -53,6 +54,7 @@ class Image
 
     public static function updateHome($synopsis)
     {
+      App::session();
       if (!APP::sessionExist())
         Error::notAccess();
       else if (App::getDb()->setprepare("UPDATE home INNER JOIN user ON home.id = user.id SET synopsis = :sys WHERE user.username = :id", array("id" => $_SESSION['username'], "sys" => $synopsis)))
@@ -64,6 +66,7 @@ class Image
 
     public static function removeImage($id)
     {
+      App::session();
       if (!APP::sessionExist())
         Error::notAccess();
       else
@@ -81,6 +84,7 @@ class Image
 
     public static function userLikeImage($id_image)
     {
+      App::session();
       if (APP::sessionExist())
       {
         $val = array("image_id" => $id_image, "user_username" => $_SESSION['username']);

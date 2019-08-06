@@ -3,7 +3,17 @@ use App\App;
 use App\Connection;
 if (isset($_GET) && isset($_GET['token']) && isset($_GET['mail']))
 {
-  Connection::validToken($_GET['token'], $_GET['mail']);
+  if (Connection::validToken($_GET['token'], $_GET['mail']))
+  {
+  ?>
+    <script> create_notify("Account valided !", 1); </script>
+  <?php }
+  else
+  {
+    ?>
+      <script> create_notify("Invalid Token Or mail !", 0); </script>
+    <?php
+  }
 }
 ?>
 <!--  menu style -->
@@ -29,10 +39,10 @@ if (isset($_GET) && isset($_GET['token']) && isset($_GET['mail']))
       <h2 class="subtitle">logout, see you soon !</h2>
     </div>
   </section>
-  <form class="container" id="formlogout" method="POST">
+  <form class="container" id="formlogout" method="POST" onsubmit="reqLogout(); return false;">
     <div class="field">
       <p class="control">
-        <button class="button" id="submit" name="submit" value="logout" onsubmit="reqLogout(); return false;">Logout</button>
+        <button class="button" id="submit" name="submit" value="logout" >Logout</button>
       </p>
     </div>
   </form>

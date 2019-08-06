@@ -36,7 +36,7 @@ class Connection
             $_SESSION['mail'] = $_POST['email'];
             $_SESSION['username'] = static::getusername($_POST['email'])['username'];
             $_SESSION['id'] = static::getIdusername($_POST['email'])['id'];
-            Pages::page_Json("p=home");
+            Pages::page_Json("user_home&user=" . $_SESSION['username']);
         }
         else if ($val)
             Error::user_validMail();
@@ -51,7 +51,7 @@ class Connection
         unset($_SESSION['username']);
         unset($_SESSION['id']);
         session_destroy();
-        Pages::page_Header("home");
+        Pages::page_Json("home");
     }
 
     public static function register($valid = "0")
@@ -102,13 +102,11 @@ class Connection
     public static function validToken($mail, $token)
     {
         $val = array("mail" => $mail, "token" => $token);
-        if (App::getDb()->getprepare("SELECT COUNT(*) as count FROM user WHERE user.mail = :mail AND user.token = :token", $val, true)['count'])
-        {
-            App::getDb()->setprepare("UPDATE user WHERE user.mail = :mail AND user.token = :token", $val);
-            return (true);
-        }
+        if (App::getDb()->getprepare("SELECT COUNT(*) as count FROM user WHERE user.email = :mail AND user.token = :token", $val, true)['count'])
+            App::getDb()->setprepare("UPDATE user WHERE user.mail = :mail AND user.valid = `1` AND user.token = `null`", $val);
         else
-            (false);
+            return (false);
+        return (true);
     }
 }
 
