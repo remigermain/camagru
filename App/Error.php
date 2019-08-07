@@ -11,7 +11,7 @@ class Error
 		App::createJson("Request error", 0);
 	}
 	
-	public static function serveur()
+	public static function server()
     {
 		App::createJson("Internal server error", 0);
     }

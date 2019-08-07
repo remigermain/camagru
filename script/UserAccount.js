@@ -38,3 +38,12 @@ function UserNotif()
     Pass.style.display = "none";
     Notif.style.display = "block";
 }
+
+profilLogo
+
+var loadProfil = function(event) {
+    var output = document.getElementById('profilLogo');
+    var fileName = document.getElementById('fileToUpload');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    fileName.innerHTML = event.target.files[0].name + event.target.files[0].lastModified;
+  };

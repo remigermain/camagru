@@ -22,48 +22,88 @@ $title = $_SESSION['username'] . " upload pictures";
         <h2 class="subtitle">Upload or take picture from camera images !</h2>
       </div>
     </section>    
-    <div class="box">
-      <form class="container" action="/Server/upload.php" method="post" enctype="multipart/form-data">
-        <div class="buttons is-centered"><h3 class="title">Load image form local.</h3></div>
-        <div class="file is-warning is-boxed is-centered">
-          <label class="file-label">
-            <input class="file-input" type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg,image/png"required>
-              <span class="file-cta"><span class="file-icon">
-              <i class="material-icons">cloud_upload</i></span>
-            <span class="file-label">Open file...</span>
-          </label>
+    <!--  upload -->
+    <form class="columns is-multiline" onsubmit="uploadImg(); return false;">
+      <div class="column box">
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Pictures</p>
+            <!-- select -->
+            <div class="field">
+              <div class="control has-icons-left">
+                <div class="select is-rounded">
+                  <select id="selectSource">
+                    <option selected>Upload form local</option>
+                    <option>Take form camera</option>
+                  </select>
+                </div>
+                <div class="icon is-small is-left">
+                  <i class="material-icons">monochrome_photos</i>
+                </div>
+              </div>
+            </div>
+          </header>
+          <div class="modal-card-body">
+            <!-- upload previeuw -->
+            <img id="imgInp">
+            <!-- camera previeuw -->
+            <canvas id='canvas' width='100' height='100'></canvas> 
+            </div>
+          <div class="modal-card-body">
+            <!-- upload -->
+            <div class="file is-info has-name" id="displayUpload">
+              <label class="file-label">
+                <input id="imageUpload" onchange="loadFile(event)" class="file-input" type="file" name="resume" accept="image/jpeg,image/png" required>
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fas fa-upload"></i>
+                  </span>
+                  <span id="uploadImage" lass="file-label"> Upload from local. &emsp;<i class="material-icons">cloud_upload</i>
+                  </span>
+                </span>
+                <span id="fileName" class="file-name">No files</span>
+              </label>
+            </div>
+          </div>
+          <!-- camera -->
+          <div class="file is-info has-name" id="displayCamera" style="display: none;">
+            <label class="file-label">
+              <button onchange="loadFile(event)" class="file-input" type="file" name="resume">
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+                <span id="uploadImage" lass="file-label"> Upload from local. &emsp;<i class="material-icons">cloud_upload</i>
+                </span>
+              </span>
+              <span id="fileName" class="file-name">No files</span>
+            </label>
+          </div>
         </div>
-        <br />
-        <div class="file is-warning is-boxed is-centered">
-          <label class="file-label">
-            <input class="file-input" type="submit" name="submit" value="submit" id="fileToUpload">
-              <span class="file-cta"><span class="file-icon">
-              <i class="material-icons">cloud_upload</i></span>
-            <span class="file-label">send</span>
-          </label>
-        </div>
-      </form>
-    </div>
-    <div class="box">
-      <video class="video" id="video" width="640" height="480" autoplay></video>
-      <canvas id="canvas" width="20" height="20"></canvas>
-      <div class="file is-warning is-boxed is-centered">
-        <label class="file-label">
-          <input class="file-input" type="file" name="fileToUpload" id="fileToUpload">
-            <span class="file-cta"><span class="file-icon">
-            <i class="material-icons">monochrome_photos</i></span>
-          <span class="file-label">Take photos..</span>
-        </label>
+        <!-- end -->
       </div>
-      <br />
-      <div class="file is-warning is-boxed is-centered">
-          <label class="file-label">
-            <input class="file-input" type="submit" name="submit" value="submit" id="fileToUpload">
-              <span class="file-cta"><span class="file-icon">
-              <i class="material-icons">cloud_upload</i></span>
-            <span class="file-label">send</span>
-          </label>
+      <!-- information image -->
+      <div class="column box">
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Information</p>
+          </header>
+          <section class="modal-card-body">
+            <h1 class="subtitle is-4">Title</h1>
+            <input id="title" type="textarea" class="textarea" value="" required>
+            <h1 class="subtitle is-4">Synopsis</h1>
+            <textarea id="synopsys" type="textarea" class="textarea" required></textarea>
+          </section>
         </div>
+      </div>
+    <!--  camera -->
+  </div>
+</div>
+<div class="columns">
+  <div class="column is-full">
+    <div class="modal-card-foot">
+      <button class="button is-link" >Save changes</button>
+      <button class="button" aria-label="close" >Cancel</button>
     </div>
   </div>
 </div>
@@ -76,5 +116,5 @@ $title = $_SESSION['username'] . " upload pictures";
       </div>
     </section>
   </div>
-</div>
+</form>
 <script src="../script/image.js"></script>

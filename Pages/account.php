@@ -35,12 +35,12 @@ $title = "Account profils";
       </div>
       <div class="buttons is-centered">
         <div class="image is-128x128">
-          <img class="is-rounded" src="data:image/jpeg;base64, <?= $info['logo'] ?>" >
+          <img id="profilLogo" class="is-rounded" src="data:image/jpeg;base64, <?= $info['logo'] ?>" >
         </div>
       </div>
       <div class="file is-warning is-centered">
         <label class="file-label">
-          <input class="file-input" type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg,image/png">
+          <input class="file-input" onchange="loadProfil(event)" type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg,image/png">
           <span class="button is-link is-hovered">
             <span class="file-icon">
             <i class="material-icons">cloud_upload</i>

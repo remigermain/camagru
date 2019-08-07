@@ -8,13 +8,13 @@ use       App\Image;
 
 class User
 {
-    static Public function getUserInfo($login)
+    static Public function getUserInfo($username)
     {
-        $info = App::getDb()->getprepare("SELECT * FROM `user` INNER JOIN `home` ON home.id = user.id WHERE user.username = ?", [$login], true);
-        $follower = App::getDb()->getprepare("SELECT COUNT(*) as follower FROM follower INNER JOIN user ON user.id = follower.user_id WHERE user.username = ?", [$login], true);
-        $like = App::getDb()->getprepare("SELECT COUNT(*) as `like` FROM `favorite` INNER JOIN image ON `favorite`.`image_id` = image.id INNER JOIN user ON user.id = image.user_id WHERE user.username = ?", [$login], true);
-        $image_nb = App::getDb()->getprepare("SELECT COUNT(*) as `image_nb` FROM `image` INNER JOIN user ON user.id = image.user_id WHERE user.username = ?", [$login], true);
-        $notif = App::getDb()->getprepare("SELECT * FROM `notification` WHERE id = ?", [static::getUserId($login)], true) ;
+        $info = App::getDb()->getprepare("SELECT * FROM `user` INNER JOIN `home` ON home.id = user.id WHERE user.username = ?", [$username], true);
+        $follower = App::getDb()->getprepare("SELECT COUNT(*) as follower FROM follower INNER JOIN user ON user.id = follower.user_id WHERE user.username = ?", [$username], true);
+        $like = App::getDb()->getprepare("SELECT COUNT(*) as `like` FROM `favorite` INNER JOIN image ON `favorite`.`image_id` = image.id INNER JOIN user ON user.id = image.user_id WHERE user.username = ?", [$username], true);
+        $image_nb = App::getDb()->getprepare("SELECT COUNT(*) as `image_nb` FROM `image` INNER JOIN user ON user.id = image.user_id WHERE user.username = ?", [$username], true);
+        $notif = App::getDb()->getprepare("SELECT * FROM `notification` WHERE id = ?", [static::getUserId($username)], true) ;
         $info['nb_image'] = intval($image_nb['image_nb']);
         $info['follower'] = intval($follower['follower']);
         $info['like'] = intval($like['like']);

@@ -190,9 +190,9 @@ function reqDelete(id)
         remove_notify();
         create_notify(obj.body.msg, obj.body.status);
         if (document.getElementById('totalImage'))
-            document.getElementById('totalImage').innerHTML = "Image " + parseInt(document.getElementById('totalImage').innerHTML.substr(5) - 1);
+        document.getElementById('totalImage').innerHTML = "Image " + parseInt(document.getElementById('totalImage').innerHTML.substr(5) - 1);
         if (div)
-            div.remove();
+        div.remove();
     })
     .catch(function(error){
         remove_notify();
@@ -205,11 +205,12 @@ function reqDelete(id)
 function reqHome()
 {
     var form = new FormData;
-
+    
     form.append('submit', "home");
     form.append('sys', document.getElementById("newhomeSynopsis").value);
-
+    
     fetch(window.location.origin + "/Server/edit_info_image.php", { body: form, method: "post"})
+  //  .then(function(r) {console.log(r.text().then(data => console.log("json print : \n" + data)))})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
         remove_notify();
@@ -368,4 +369,33 @@ function reqUserPass()
     form.append('newpassword', document.getElementById('newpassword').value);
     form.append('confpassword', document.getElementById('confpassword').value);
     reqAccount(form);
+}
+
+function reqUpload(form)
+{
+    fetch(window.location.origin + "/Server/upload.php", { body: form, method: "post"})
+    .then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    .then(function(obj) {
+        remove_notify();
+        if (obj.body.status != -1)
+            create_notify(obj.body.msg, obj.body.status);
+    })
+   .catch(function(error){
+        remove_notify();
+        console.log(error)
+    });
+}
+
+function uploadImg()
+{
+    var form = new FormData;
+    const file = document.getElementById('imageUpload').files[0];
+
+    form.append('submit', 'upload');
+    form.append('title', document.getElementById('title').value);
+    form.append('synopsys', document.getElementById('synopsys').value);
+    form.append('fileToUpload', file);
+    if (file)
+        form.append('image', file.name);
+    reqUpload(form);
 }

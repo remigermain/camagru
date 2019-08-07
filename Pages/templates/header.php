@@ -27,11 +27,13 @@ App::session();
                   </a>
               </div>
               <div class="navbar-menu">
-                  <div class="navbar-start" style="flex-grow: 1; justify-content: center;" >
-                      <div class="navbar-item field " >
-                          <input class="input is-rounded" type="text" placeholder="search">
-                      </div>
+                <div class="navbar-start" style="flex-grow: 1; justify-content: center; margin: 5px;" >
+                  <div class="control">
+                    <input class="input is-info" type="text" placeholder="Normal input">
                   </div>
+                  <button class="button is-link is-outlined"><i class="material-icons">search</i></button>
+                </div>
+              </div>
                   <div class="navbar-end">
                   <?php
                     if (App::sessionExist())

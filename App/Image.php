@@ -8,17 +8,16 @@ use       App\App;
 class Image
 {
 
-    public static function uploadImg($img, $cat)
+    public static function uploadImg($img, $cat, $title, $synopsis)
     {
       App::session();
       if (!APP::sessionExist())
         Error::notAccess();
       else
       {
-        $email_id = App::getDb()->getprepare("SELECT id FROM user WHERE email = ?", [$_SESSION['login']]);
         $cat = App::getDb()->getprepare("SELECT id FROM category WHERE id = ?", [$cat]);
-        $val = array("email" => $email_id[0][0], "img" => $img, "date" => date("Y/m/d H:i"), "cat" => $cat);
-        if (App::getDb()->setprepare("INSERT INTO image (`user_id`, `image`, `date`, category) VALUES(:email, :img, :date, :cat)", $val))
+        $val = array("id" => $_SESSION['id'], "img" => $img, "date" => date("Y/m/d H:i"), "cat" => $cat[0]['id'], "title" => $title, "synopsis" => $synopsis);
+        if (App::getDb()->setprepare("INSERT INTO image (`user_id`, `image`, `date`, category, title, synopsis) VALUES(:id, :img, :date, :cat, :title, :synopsis)", $val))
         {
           $info = User::getUserInfo(Image::getImgById($id_image)['username']);
           Notification::newImage($info['username'], $info['email'], $id_image);
@@ -64,10 +63,14 @@ class Image
       App::session();
       if (!APP::sessionExist())
         Error::notAccess();
-      else if (App::getDb()->setprepare("UPDATE home INNER JOIN user ON home.id = user.id SET synopsis = :sys WHERE user.username = :id", array("id" => $_SESSION['username'], "sys" => $synopsis)))
-        App::createJson("Modification success!");
       else
-        Error::server();
+      {
+        $val = array("sys" => $synopsis, "id" => $_SESSION['id']);
+        if (App::getDb()->setprepare("UPDATE home INNER JOIN user ON home.id = user.id SET synopsis = :sys WHERE user.id = :id", $val))
+          App::createJson("Modification success!");
+        else
+          Error::server();
+      }
     }
 
 
@@ -81,12 +84,13 @@ class Image
         $array = array("id_image" => $id, "user_id" => $_SESSION['id']);
         if (App::getDb()->getprepare("SELECT COUNT(*) as count FROM image WHERE id = :id_image AND user_id = :user_id", $array, true)['count'])
         {
-          if (App::getDb()->setprepare("DELETE FROM image WHERE id = :id_image AND user_id = :user_id", $array));
-              return (Error::server());
-          App::createJson("Image as deleted");
+          if (App::getDb()->setprepare("DELETE FROM image WHERE id = :id_image AND user_id = :user_id", $array))
+            App::createJson("Image as deleted");
+          else
+            Error::server();
         }
         else
-          return (Error::server());
+          Error::server();
       }
     }
 
