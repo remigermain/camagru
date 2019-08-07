@@ -29,7 +29,7 @@ class	Autoloader
 		}
 	}
 
-	static function requirePage($page)
+	static function router($page)
 	{
 		if (!file_exists("../Pages/" . $page . ".php"))
 			$page = "error";

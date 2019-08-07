@@ -56,7 +56,7 @@ CREATE TABLE `comment` (
   `image` int(11) DEFAULT NULL,
   `date` date NOT NULL,
   `comment` longtext,
-  `like` int(11) DEFAULT NULL,
+  `favorite` int(11) DEFAULT NULL,
   `not_like` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -160,10 +160,10 @@ INSERT INTO `image` (`id`, `user_id`, `image`, `date`, `title`, `synopsis`, `cat
 -- --------------------------------------------------------
 
 --
--- Structure de la table `like`
+-- Structure de la table `favorite`
 --
 
-CREATE TABLE `like` (
+CREATE TABLE `favorite` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `image_id` int(11) DEFAULT NULL
@@ -229,9 +229,9 @@ ALTER TABLE `image`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `like`
+-- Index pour la table `favorite`
 --
-ALTER TABLE `like`
+ALTER TABLE `favorite`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -275,9 +275,9 @@ ALTER TABLE `image`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT pour la table `like`
+-- AUTO_INCREMENT pour la table `favorite`
 --
-ALTER TABLE `like`
+ALTER TABLE `favorite`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

@@ -71,15 +71,18 @@ class Connection
                 "pass" => hash('whirlpool', $_POST['password']),
                 "creation_date" => date("Y/m/d H:i"),
                 "valid" => $valid);
-            APP::getDB()->setprepare("INSERT INTO user (username, email, pass, creation_date, valid) VALUE(:username, :email, :pass, :creation_date, :valid)", $val);
+            if (!APP::getDB()->setprepare("INSERT INTO user (username, email, pass, creation_date, valid) VALUE(:username, :email, :pass, :creation_date, :valid)", $val))
+               return (Error::server());
             $val = array(
                 "sys" => "No synopis",
                 "logo" => base64_encode(file_get_contents(App::getPath("vue/img/profil.png"))));
-            APP::getDB()->setprepare("INSERT INTO home (synopsis, logo) VALUE(:sys, :logo)", $val);
-            APP::getDB()->setquery("INSERT INTO notification (notiffollow, notifcomment, `notiflike`) VALUE(1, 1, 1)");
+            if (!APP::getDB()->setprepare("INSERT INTO home (synopsis, logo) VALUE(:sys, :logo)", $val))
+                return (Error::server());
+            if (!APP::getDB()->setquery("INSERT INTO notification (notiffollow, notifcomment, `notiflike`, notifimage) VALUE(1, 1, 1, 1)"))
+                return (Error::server());
+            App::createJson("account successfully created.");
             $token = App::tokenCreator(128);
             Notification::mailRegister($_POST['email'], $token, $_POST['username']);
-            App::createJson("account successfully created.");
         }
     }
 
@@ -92,7 +95,8 @@ class Connection
         {
             $pass = APP::generatePassword();
             $val = array("new_pass" => hash('whirlpool', $pass), "email" => $mail);
-            App::getDB()->setprepare("UPDATE user SET user.pass = :new_pass WHERE user.email = :email", $val);
+            if (App::getDB()->setprepare("UPDATE user SET user.pass = :new_pass WHERE user.email = :email", $val))
+                return(Error::server());
             $msg = "Hi ". $ret['username'] . ", " . "<br />Your new password is ". $pass . "<br /><br />Camagru.";
             Notification::sendMail($mail, "[Camagru] Reset Password", $msg);
             App::createJson("Email sended to " . $mail . ".");
@@ -102,11 +106,11 @@ class Connection
     public static function validToken($mail, $token)
     {
         $val = array("mail" => $mail, "token" => $token);
-        if (App::getDb()->getprepare("SELECT COUNT(*) as count FROM user WHERE user.email = :mail AND user.token = :token", $val, true)['count'])
-            App::getDb()->setprepare("UPDATE user WHERE user.mail = :mail AND user.valid = `1` AND user.token = `null`", $val);
+        if (App::getDb()->getprepare("SELECT COUNT(*) as count FROM user WHERE user.email = :mail AND user.token = :token", $val, true)['count'] &&
+            App::getDb()->setprepare("UPDATE user WHERE user.mail = :mail AND user.valid = `1` AND user.token = `null`", $val))
+            return (true);
         else
             return (false);
-        return (true);
     }
 }
 

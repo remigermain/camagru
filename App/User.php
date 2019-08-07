@@ -10,16 +10,16 @@ class User
 {
     static Public function getUserInfo($login)
     {
-        $info = App::getDb()->getprepare("SELECT * FROM user INNER JOIN home ON home.id = user.id WHERE user.username = ?", [$login], true);
+        $info = App::getDb()->getprepare("SELECT * FROM `user` INNER JOIN `home` ON home.id = user.id WHERE user.username = ?", [$login], true);
         $follower = App::getDb()->getprepare("SELECT COUNT(*) as follower FROM follower INNER JOIN user ON user.id = follower.user_id WHERE user.username = ?", [$login], true);
-        $like = App::getDb()->getprepare("SELECT COUNT(*) as `like` FROM `like` INNER JOIN image ON `like`.`image_id` = image.id INNER JOIN user ON user.id = image.user_id WHERE user.username = ?", [$login], true);
+        $like = App::getDb()->getprepare("SELECT COUNT(*) as `like` FROM `favorite` INNER JOIN image ON `favorite`.`image_id` = image.id INNER JOIN user ON user.id = image.user_id WHERE user.username = ?", [$login], true);
         $image_nb = App::getDb()->getprepare("SELECT COUNT(*) as `image_nb` FROM `image` INNER JOIN user ON user.id = image.user_id WHERE user.username = ?", [$login], true);
-        $notif = App::getDb()->getprepare("SELECT * FROM notification WHERE id = ?", [static::getUserId($login)], true) ;
-        $info['nb_image'] = $image_nb['image_nb'];
-        $info['follower'] = $follower['follower'];
-        $info['like'] = $like['like'];
+        $notif = App::getDb()->getprepare("SELECT * FROM `notification` WHERE id = ?", [static::getUserId($login)], true) ;
+        $info['nb_image'] = intval($image_nb['image_nb']);
+        $info['follower'] = intval($follower['follower']);
+        $info['like'] = intval($like['like']);
         $info['notif'] = $notif;
-        return ($info);
+       return ($info);
     }
 
     static Public function getUserId($username)
@@ -37,7 +37,8 @@ class User
             $val = array("new_mail" => $new_mail, "old_email" => $_SESSION['mail']);
             if (!App::getDb()->getprepare("SELECT user.email FROM user WHERE user.email = ?", [$new_mail]))
             {
-                App::getDb()->setprepare("UPDATE `user` SET email = :new_mail WHERE email = :old_email", $val);
+                if (!App::getDb()->setprepare("UPDATE `user` SET email = :new_mail WHERE email = :old_email", $val))
+                    return (Error::server());
                 $_SESSION['mail'] = $new_mail;
                 App::createJson("Mail has changed.");
             }
@@ -58,7 +59,8 @@ class User
             $val = array("new_username" => $new_username, "old_username" => $_SESSION['username']);
             if (!App::userExist($new_username))
             {
-                App::getDb()->setprepare("UPDATE `user` SET username = :new_username WHERE username = :old_username", $val);
+                if (!App::getDb()->setprepare("UPDATE `user` SET username = :new_username WHERE username = :old_username", $val))
+                    return (Error::server());
                 $_SESSION['username'] = $new_username;
                 App::createJson("Username has changed.");
             }
@@ -80,7 +82,8 @@ class User
             if (App::getDb()->getprepare("SELECT * FROM user WHERE email = :email AND pass = :old_pass", $val))
             {
                 $val = array("old_pass" => hash('whirlpool', $old_pass), "new_pass" => hash('whirlpool', $new_pass), "email" => $_SESSION['mail']);
-                App::getDb()->setprepare("UPDATE `user` SET pass = :new_pass WHERE email = :email AND pass = :old_pass", $val);
+                if (App::getDb()->setprepare("UPDATE `user` SET pass = :new_pass WHERE email = :email AND pass = :old_pass", $val))
+                    return (Error::server());
                 App::createJson("Password has changed.");
             }
             else
@@ -99,20 +102,22 @@ class User
             if (App::getDb()->setprepare("UPDATE `home` INNER JOIN `user` ON home.id = user.id SET home.logo = :img WHERE user.email = :email", $val))
                 App::createJson("Profils image as changed!");
             else
-                Error::wrongRequest();
+                Error::server();
         }
     }
 
-    static public function changeNotify($follow, $comment, $like)
+    static public function changeNotify($follow, $comment, $like, $image)
     {
         App::session();
         if (!App::sessionExist())
             Error::notAccess();
         else
         {
-            $val = array("follow" => $follow, "comment" => $comment, "nlike" => $like, "id" => static::getUserId($_SESSION['username']));
-            APP::getDB()->setprepare("UPDATE notification SET notiffollow = :follow , notifcomment = :comment , notiflike = :nlike WHERE id = :id", $val);
-            App::createJson("Notification as changed!");
+            $val = array("follow" => $follow, "comment" => $comment, "nlike" => $like, "id" => $_SESSION['id'], "image" => $image);
+            if (APP::getDB()->setprepare("UPDATE notification SET notiffollow = :follow , notifcomment = :comment , notiflike = :nlike , notifimage = :image WHERE id = :id", $val))
+                App::createJson("Modification success!");
+            else
+                Error::server();
         }
     }
 
@@ -144,10 +149,23 @@ class User
                 $val = array("follower" => $_SESSION['id'], "user_id" => $id_follower);
                 $ret = App::getDb()->getprepare("SELECT COUNT(*) as count FROM `follower` WHERE user_id = :user_id AND follower = :follower", $val, true)['count'];
                 if (intval($ret))
-                    App::getDb()->setprepare("DELETE FROM follower WHERE user_id = :user_id AND follower = :follower", $val);
+                {
+                    if (App::getDb()->setprepare("DELETE FROM follower WHERE user_id = :user_id AND follower = :follower", $val))
+                        App::createJson("Modification success!");
+                    else
+                        Error::server();
+                }
                 else
-                    App::getDb()->setprepare("INSERT INTO follower (user_id, follower) VALUES(:user_id, :follower)", $val);
-                App::createJson("Modification success!");
+                {
+                    if (App::getDb()->setprepare("INSERT INTO follower (user_id, follower) VALUES(:user_id, :follower)", $val))
+                    {
+                        $info = User::getUserInfo(Image::getImgById($id_image)['username']);
+                        Notification::newFollow($info['username'], $info['email'], $id_image);
+                        App::createJson("Modification success!");
+                    }
+                    else
+                        Error::server();
+                }
             }
         }
     }
@@ -160,11 +178,18 @@ class User
         else
         {
             $val = array("user_id" => $_SESSION['id'], "image_id" => $id_image);
-            $ret = Image::userLikeImage($id_image);
-            if ($ret)
-                App::getDb()->setprepare("DELETE FROM `like` WHERE user_id = :user_id AND image_id = :image_id", $val);
+            if (Image::userLikeImage($id_image))
+            {
+                if (!App::getDb()->setprepare("DELETE FROM `favorite` WHERE user_id = :user_id AND image_id = :image_id", $val))
+                    return (Error::server());
+            }
             else
-                App::getDb()->setprepare("INSERT INTO `like` (user_id, image_id) VALUES(:user_id, :image_id)", $val);
+            {
+                if (!App::getDb()->setprepare("INSERT INTO `favorite` VALUES(:user_id, :image_id)", $val))
+                    return (Error::server());
+                $info = User::getUserInfo(Image::getImgById($id_image)['username']);
+                Notification::newLike($info['username'], $info['email'], $id_image);
+            }
             App::createJson("Modification success!");
         }
     }

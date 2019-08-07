@@ -1,6 +1,7 @@
 function remove_notify()
 {
   const notif = document.getElementById('notify');
+
   if (notif)
     notif.remove();
 }
@@ -8,6 +9,7 @@ function remove_notify()
 function create_close()
 {
     const close = document.createElement('button');
+
     close.setAttribute('onClick', "this.parentNode.remove()")
     close.setAttribute("class", "delete");
     return (close);
@@ -17,12 +19,13 @@ function create_notify(msg, type)
 {
     const div = document.createElement('div');
     const close = create_close();
+
     div.classList.add("notification");
     div.setAttribute('id', "notify");
     if (type != 1)
     {
         var error = document.createElement('strong');
-        error.textContent = "Error: ";
+        error.textContent = "Error : ";
         div.append(error);
         div.classList.add("is-danger");
     }
@@ -31,4 +34,6 @@ function create_notify(msg, type)
     div.append(msg);
     div.append(close);
     document.getElementById('notif').prepend(div);
+    if (type != 1)
+        window.scrollTo(0, 0);
 }

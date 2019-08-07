@@ -47,7 +47,8 @@ class	Database
 	
 	public function setquery($statement)
 	{
-		return ($req = $this->getPDO()->query($statement));
+		$req = $this->getPDO()->query($statement);
+		return ($req->rowCount());
 	}
 
 	public function getprepare($statement, $attributes, $one = false)
@@ -66,6 +67,7 @@ class	Database
 	{
 		$req = $this->getPDO()->prepare($statement);
 		$req->execute($attributes);
+		return ($req->rowCount());
 	}
 }
 

@@ -1,17 +1,17 @@
 <!--  page  -->
 <?php
- use App\Image;
- use App\App;
- use App\Error;
- use App\User;
- 
- if (!isset($_GET['user']) || !APP::userExist($_GET['user']))
-  Error::notFound();
- $title = $_GET['user'] . "  home";
- $val = Image::getUserImg($_GET['user']);
- $info = User::getUserInfo($_GET['user']);
- $follow = 0;
- if (App::sessionExist() && User::userFollowUser($_SESSION['username'], $_GET['user']))
+  use App\Image;
+  use App\App;
+  use App\Error;
+  use App\User;
+  
+  if (!isset($_GET['user']) || !APP::userExist($_GET['user']))
+    Error::notFound();
+  $title = $_GET['user'] . "  home";
+  $val = Image::getUserImg($_GET['user']);
+  $info = User::getUserInfo($_GET['user']);
+  $follow = 0;
+  if (App::sessionExist() && User::userFollowUser($_SESSION['username'], $_GET['user']))
     $follow = 1;
   $count = App::calculPage($val, 8);
   $pagination = App::paginationInit($count, 8);

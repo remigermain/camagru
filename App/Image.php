@@ -18,7 +18,14 @@ class Image
         $email_id = App::getDb()->getprepare("SELECT id FROM user WHERE email = ?", [$_SESSION['login']]);
         $cat = App::getDb()->getprepare("SELECT id FROM category WHERE id = ?", [$cat]);
         $val = array("email" => $email_id[0][0], "img" => $img, "date" => date("Y/m/d H:i"), "cat" => $cat);
-        App::getDb()->setprepare("INSERT INTO image (`user_id`, `image`, `date`, category) VALUES(:email, :img, :date, :cat)", $val);
+        if (App::getDb()->setprepare("INSERT INTO image (`user_id`, `image`, `date`, category) VALUES(:email, :img, :date, :cat)", $val))
+        {
+          $info = User::getUserInfo(Image::getImgById($id_image)['username']);
+          Notification::newImage($info['username'], $info['email'], $id_image);
+          App::createJson("upload success!");
+        }
+        else
+          Error::server();
       }
     }
     
@@ -49,7 +56,7 @@ class Image
       else if (App::getDb()->setprepare("UPDATE image SET synopsis = :sys , title = :title  WHERE image.id = :id", array("id" => $id, "sys" => $synopsis, "title" => $title)))
         App::createJson("Modification success!");
       else
-        Error::wrongRequest();
+        Error::server();
     }
 
     public static function updateHome($synopsis)
@@ -60,7 +67,7 @@ class Image
       else if (App::getDb()->setprepare("UPDATE home INNER JOIN user ON home.id = user.id SET synopsis = :sys WHERE user.username = :id", array("id" => $_SESSION['username'], "sys" => $synopsis)))
         App::createJson("Modification success!");
       else
-        Error::wrongRequest();
+        Error::server();
     }
 
 
@@ -74,11 +81,12 @@ class Image
         $array = array("id_image" => $id, "user_id" => $_SESSION['id']);
         if (App::getDb()->getprepare("SELECT COUNT(*) as count FROM image WHERE id = :id_image AND user_id = :user_id", $array, true)['count'])
         {
-          App::getDb()->setprepare("DELETE FROM image WHERE id = :id_image AND user_id = :user_id", $array);
+          if (App::getDb()->setprepare("DELETE FROM image WHERE id = :id_image AND user_id = :user_id", $array));
+              return (Error::server());
           App::createJson("Image as deleted");
         }
         else
-          Error::wrongRequest();
+          return (Error::server());
       }
     }
 
@@ -88,8 +96,9 @@ class Image
       if (APP::sessionExist())
       {
         $val = array("image_id" => $id_image, "user_username" => $_SESSION['username']);
-        return (App::getDb()->getprepare("SELECT COUNT(*) as bool FROM `like` INNER JOIN user ON user.id = `like`.`user_id` WHERE `like`.image_id = :image_id AND user.username = :user_username", $val, true)['bool']);
+        return (App::getDb()->getprepare("SELECT COUNT(*) as bool FROM `favorite` INNER JOIN user ON user.id = `favorite`.`user_id` WHERE `favorite`.image_id = :image_id AND user.username = :user_username", $val, true)['bool']);
       }
+      return (NULL);
     }
 
     public static function subSynopsis($sys)

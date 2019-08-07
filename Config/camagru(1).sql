@@ -56,7 +56,7 @@ CREATE TABLE `comment` (
   `image` int(11) DEFAULT NULL,
   `date` date NOT NULL,
   `comment` longtext,
-  `like` int(11) DEFAULT NULL,
+  `favorite` int(11) DEFAULT NULL,
   `not_like` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -64,7 +64,7 @@ CREATE TABLE `comment` (
 -- Déchargement des données de la table `comment`
 --
 
-INSERT INTO `comment` (`id`, `user_id`, `image`, `date`, `comment`, `like`, `not_like`) VALUES
+INSERT INTO `comment` (`id`, `user_id`, `image`, `date`, `comment`, `favorite`, `not_like`) VALUES
 (1, 4, 9, '0000-00-00', 'La Chine est un pays tres peuple dâ€™Asie de lâ€™est. Son territoire immense presente des paysages varies : prairies, deserts, montagnes, lacs, rivieres et plus de 14 000 km de littoral. Pekin, la capitale a lâ€™architecture moderne, conserve egalement des sites historiques, comme le palais de la Cite interdite et la place Tian Anmen. Shanghai est l\'un des plus grands centres financiers mondiaux et comporte de nombreux gratte-ciels. Lâ€™emblematique Grande Muraille de Chine partage le nord du pays dâ€™est en ouest.', NULL, NULL),
 (2, 2, 9, '0000-00-00', 'La Chine est un pays tres peuple dâ€™Asie de lâ€™est. Son territoire immense presente des paysages varies : prairies, deserts, montagnes, lacs, rivieres et plus de 14 000 km de littoral. Pekin, la capitale a lâ€™architecture moderne, conserve egalement des sites historiques, comme le palais de la Cite interdite et la place Tian Anmen. Shanghai est l\'un des plus grands centres financiers mondiaux et comporte de nombreux gratte-ciels. Lâ€™emblematique Grande Muraille de Chine partage le nord du pays dâ€™est en ouest.', NULL, NULL),
 (3, 3, 9, '0000-00-00', 'La Chine est un pays tres peuple dâ€™Asie de lâ€™est. Son territoire immense presente des paysages varies : prairies, deserts, montagnes, lacs, rivieres et plus de 14 000 km de littoral. Pekin, la capitale a lâ€™architecture moderne, conserve egalement des sites historiques, comme le palais de la Cite interdite et la place Tian Anmen. Shanghai est l\'un des plus grands centres financiers mondiaux et comporte de nombreux gratte-ciels. Lâ€™emblematique Grande Muraille de Chine partage le nord du pays dâ€™est en ouest.', NULL, NULL),
@@ -191,38 +191,38 @@ INSERT INTO `image` (`id`, `user_id`, `image`, `date`, `title`, `synopsis`, `cat
 -- --------------------------------------------------------
 
 --
--- Structure de la table `like`
+-- Structure de la table `favorite`
 --
 
-CREATE TABLE `like` (
+CREATE TABLE `favorite` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `image_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `like`
+-- Déchargement des données de la table `favorite`
 --
 
-INSERT INTO `like` (`id`, `user_id`, `image_id`) VALUES
-(51, 2, 3),
-(31, 4, 21),
-(22, 4, 7),
-(4, 3, 7),
-(29, 4, 4),
-(60, 2, 19),
-(26, 4, 22),
-(37, 4, 23),
-(25, 4, 2),
-(34, 4, 24),
-(35, 4, 6),
-(23, 4, 13),
-(36, 4, 20),
-(53, 2, 21),
-(54, 2, 8),
-(55, 2, 22),
-(56, 2, 23),
-(57, 2, 24);
+INSERT INTO `favorite` (`user_id`, `image_id`) VALUES
+(2, 3),
+(4, 21),
+(4, 7),
+(4, 7),
+(4, 4),
+(2, 19),
+(4, 22),
+(4, 23),
+(4, 2),
+(4, 24),
+(4, 6),
+(4, 13),
+(4, 20),
+(2, 21),
+(2, 8),
+(2, 22),
+(2, 23),
+(2, 24);
 
 -- --------------------------------------------------------
 
@@ -236,7 +236,8 @@ CREATE TABLE `user` (
   `pass` varchar(200) DEFAULT NULL,
   `email` longtext,
   `creation_date` date NOT NULL,
-  `valid` int(1) DEFAULT NULL
+  `valid` int(1) DEFAULT NULL,
+  `tokens` longtext NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -288,9 +289,9 @@ ALTER TABLE `image`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `like`
+-- Index pour la table `favorite`
 --
-ALTER TABLE `like`
+ALTER TABLE `favorite`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -334,9 +335,9 @@ ALTER TABLE `image`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT pour la table `like`
+-- AUTO_INCREMENT pour la table `favorite`
 --
-ALTER TABLE `like`
+ALTER TABLE `favorite`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --

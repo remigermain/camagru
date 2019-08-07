@@ -53,7 +53,7 @@ $title = "Account profils";
       <div class="field">
         <label class="label">New username</label>
           <p class="control has-icons-left has-icons-right">
-            <input class="input" id="username" pattern="[a-zA-Z0-9].{6,31}" type="text" name="username" placeholder="Username" value="<?= $_SESSION['username'] ?>"">
+            <input class="input" id="username" pattern="[a-zA-Z0-9].{6,31}" type="text" name="username" placeholder="Username" value="<?= $_SESSION['username'] ?>"" required>
             <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
             <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
           </p>
@@ -63,7 +63,7 @@ $title = "Account profils";
       <div class="field">
         <label class="label">Email</label>
           <p class="control has-icons-left has-icons-right">
-            <input class="input" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" type="email" name="email" placeholder="Email" value="<?= $_SESSION['mail'] ?>">
+            <input class="input" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" type="email" name="email" placeholder="Email" value="<?= $_SESSION['mail'] ?>" required>
             <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
             <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
           </p>
@@ -118,6 +118,18 @@ $title = "Account profils";
       </div>
       <h2 class="subititle" style="opacity: 0.5;">When User Like pictures of you.</h2>
       <br />
+      <!-- Image -->
+      <div class="file is-warning is-boxed">
+        <div class="control">
+          <label class="radio">
+            <input id="NotifImage" type="checkbox" name="answer" onclick="reqUserNotif()" value="true" <?php if($info['notif']['notifimage']) print("checked") ?>>
+            <span class="title is-6"> Users you follow post a pictures.</span>
+          </label>
+        </div>
+      </div>
+      <h2 class="subititle" style="opacity: 0.5;">When your follow user post a pictures</h2>
+      <br />
+    <!-- ENd notif -->
     </div>
   </div>
   <!-- password -->

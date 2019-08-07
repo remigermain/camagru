@@ -9,6 +9,11 @@ class Error
     public static function wrongRequest()
     {
 		App::createJson("Request error", 0);
+	}
+	
+	public static function serveur()
+    {
+		App::createJson("Internal server error", 0);
     }
     
     Public static function notFound()

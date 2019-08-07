@@ -7,8 +7,10 @@ class App
 {
 	const DB_NAME = 'camagru';
 	const DB_USER = 'root';
-	const DB_PASS = 'rootpass';
-	const DB_HOST = '172.18.0.2';
+//	const DB_PASS = 'rootpass';
+	const DB_PASS = 'root';
+	//const DB_HOST = '172.18.0.2';
+	const DB_HOST = 'localhost';
 
 	private static $database;
 	private static $title = 'camagru';
@@ -55,9 +57,14 @@ class App
 		self::$title = $title;
 	}
 
+	public static function path()
+	{
+		return ("http://" . $_SERVER['REMOTE_ADDR'] . "/");
+	}
+
 	Public static function getPath($file)
 	{
-		return ("/var/www/html/" . $file);
+		return (self::path() . $file);
 	}
 
 	Public static function printString($file)
@@ -122,6 +129,8 @@ class App
 	{
 		$res['status'] = $status;
 		$res['msg'] = $msg;
+		if (substr($msg, -1 != "."))
+			$res['msg'] .= ".";
 		$res[$new] = $text;
 		print(json_encode($res));
 	}

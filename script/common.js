@@ -13,6 +13,7 @@
 function reqForgotpassword()
 {
     var form = new FormData;
+
     form.append('submit', "forgot");
     form.append('email', document.getElementById("email_forgot").value);
     reqConnection(form);
@@ -22,6 +23,7 @@ function reqForgotpassword()
 function reqLogin()
 {
     var form = new FormData;
+
     form.append('submit', "login");
     form.append('email', document.getElementById("email").value);
     form.append('password', document.getElementById("password").value);
@@ -31,6 +33,7 @@ function reqLogin()
 function reqRegister()
 {
     var form = new FormData;
+
     form.append('submit', "register");
     form.append('username', document.getElementById("username").value);
     form.append('email', document.getElementById("regemail").value);
@@ -50,7 +53,7 @@ function reqLogout()
 
 function reqConnection(form)
 {
-    fetch("http://127.0.0.1:8008/Server/connection.php", { body: form, method: "post"})
+    fetch(window.location.origin + "/Server/connection.php", { body: form, method: "post"})
    // .then(function(r) {console.log(r.text().then(data => console.log("json print : \n" + data)))})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
@@ -104,8 +107,9 @@ function reverseFollow(id)
     const div = document.getElementById("follow");
     var check = document.createElement('i');
     var nbFollow = 0;
+
     if (document.getElementById("totalFollow"))
-    nbFollow = parseInt(document.getElementById("totalFollow").innerHTML.substr(9));
+        nbFollow = parseInt(document.getElementById("totalFollow").innerHTML.substr(9));
     check.classList.add('material-icons');
     if (div.firstElementChild.innerHTML === "add")
     {
@@ -131,9 +135,11 @@ function reverseFollow(id)
 function reqFollow(id)
 {
     var form = new FormData;
+
     form.append('submit', 'follow');
     form.append('id', id);
-    fetch("http://127.0.0.1:8008/Server/follow_like.php", { body: form, method: "post"})
+
+    fetch(window.location.origin + "/Server/follow_like.php", { body: form, method: "post"})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
         remove_notify();
@@ -151,9 +157,11 @@ function reqFollow(id)
 function reqLike(id)
 {
     var form = new FormData;
+
     form.append('submit', 'like');
     form.append('id', id);
-    fetch("http://127.0.0.1:8008/Server/follow_like.php", { body: form, method: "post"})
+
+    fetch(window.location.origin + "/Server/follow_like.php", { body: form, method: "post"})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
         remove_notify();
@@ -166,17 +174,17 @@ function reqLike(id)
         console.log(error)
     });
 }
-//.then(function(r) {console.log(r.text().then(data => console.log("json print : \n" + data)))})
 
 //          delete image   //
 function reqDelete(id)
 {
     var div = document.getElementById("base" + id)
     var form = new FormData;
+
     form.append('id', id);
     form.append('submit', "delete");
     
-    fetch("http://127.0.0.1:8008/Server/edit_info_image.php", { body: form, method: "post"})
+    fetch(window.location.origin + "/Server/edit_info_image.php", { body: form, method: "post"})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
         remove_notify();
@@ -197,10 +205,11 @@ function reqDelete(id)
 function reqHome()
 {
     var form = new FormData;
+
     form.append('submit', "home");
     form.append('sys', document.getElementById("newhomeSynopsis").value);
 
-    fetch("http://127.0.0.1:8008/Server/edit_info_image.php", { body: form, method: "post"})
+    fetch(window.location.origin + "/Server/edit_info_image.php", { body: form, method: "post"})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
         remove_notify();
@@ -219,6 +228,7 @@ function reqHome()
 function reqModify(id)
 {
     var form = new FormData;
+
     form.append('submit', "image");
     form.append('id', id);
     if (document.getElementById("sys" + id))
@@ -226,7 +236,7 @@ function reqModify(id)
     if (document.getElementById("title" + id))
         form.append('title', document.getElementById("title" + id).value);
 
-    fetch("http://127.0.0.1:8008/Server/edit_info_image.php", { body: form, method: "post"})
+    fetch(window.location.origin + "/Server/edit_info_image.php", { body: form, method: "post"})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
         remove_notify();
@@ -289,11 +299,12 @@ function create_comment(obj, id, pagi, username)
 function reqComment(id, pagi)
 {
     var form = new FormData;
+
     form.append('submit', "comment");
     form.append('id', id);
     form.append('comment', document.getElementById("comment").value);
 
-    fetch("http://127.0.0.1:8008/Server/follow_like.php", { body: form, method: "post"})
+    fetch(window.location.origin + "/Server/follow_like.php", { body: form, method: "post"})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
         remove_notify();
@@ -306,10 +317,10 @@ function reqComment(id, pagi)
 }
 
 //       Account   user //
-//.then(function(r) {console.log(r.text().then(data => console.log("ciucou" + data)))})
 function reqAccount(form)
 {
-    fetch("http://127.0.0.1:8008/Server/account.php", { body: form, method: "post"})
+    fetch(window.location.origin + "/Server/account.php", { body: form, method: "post"})
+  //  .then(function(r) {console.log(r.text().then(data => console.log("json print : \n" + data)))})
     .then(r =>  r.json().then(data => ({status: r.status, body: data})))
     .then(function(obj) {
         remove_notify();
@@ -330,6 +341,7 @@ function reqUserNotif()
     form.append('follow', Number(document.getElementById("NotifFollow").checked));
     form.append('comment', Number(document.getElementById("NotifComment").checked));
     form.append('like', Number(document.getElementById("NotifLike").checked));
+    form.append('image', Number(document.getElementById("NotifImage").checked));
     reqAccount(form);
 }
 
