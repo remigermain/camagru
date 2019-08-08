@@ -1,9 +1,10 @@
 <?php
   use App\Image;
   use App\App;
+  $val = NULL;
   if (isset($_GET) && isset($_GET['cat']))
     $val = Image::getAllImgByCat($_GET['cat']);
-  else
+  if (!count($val))
     $val = Image::getAllImg();
   
   $count = App::calculPage($val, 8);
@@ -60,7 +61,7 @@
                   <div class="control">
                     <div class="tags has-addons">
                       <div class="tag"><time datetime="2016-1-1"><?= App::printString($key2['date']) ?></time></div>
-                      <a class="tag is-link" href="../Public/index.php?cat=<?= App::printString($key2['category']) ?>"><?= App::printString($key2['category']) ?></a>
+                      <a class="tag is-link" href="../Public/index.php?cat=<?= App::printString($key2['category']) ?>">#<?= App::printString($key2['category']) ?></a>
                       <a class="tag is-light">Tag</a>
                     </div>
                   </div>

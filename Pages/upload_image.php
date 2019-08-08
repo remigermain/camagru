@@ -2,8 +2,9 @@
 use App\App;
 use App\Error;
 use App\Image;
+use App\Pages;
 if (!App::sessionExist())
-    Error::notAccess();
+  Pages::page_Header("home");
 $title = $_SESSION['username'] . " upload pictures";
 $val = Image::getCategory();
 ?>

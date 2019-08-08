@@ -8,7 +8,7 @@ APP::getPath(NULL);
 
 $page = 'home';
 if (isset($_GET) && isset($_GET['p']))
-$page = $_GET['p'];
+    $page = $_GET['p'];
 
 $val = Autoloader::router($page);
 $title = $val['title'];
