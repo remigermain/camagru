@@ -28,10 +28,12 @@ App::session();
               </div>
               <div class="navbar-menu">
                 <div class="navbar-start" style="flex-grow: 1; justify-content: center; margin: 5px;" >
-                  <div class="control">
-                    <input class="input is-info" type="text" placeholder="Normal input">
+                  <div class="control has-icons-right">
+                    <input id="sugestionInput" class="input is-info" type="text" placeholder="Search">
+                    <span class="icon is-right">
+                      <i class="material-icons">search</i>
+                    </span>
                   </div>
-                  <button class="button is-link is-outlined"><i class="material-icons">search</i></button>
                 </div>
               </div>
                   <div class="navbar-end">
@@ -71,4 +73,11 @@ App::session();
     </header>
     <!--  notification -->
     <div><div class="container column" id="notif"></div></div>
+    <div class="container"><div class="columns is-multiline" id="sugestionDiv"></div></div>
+    <script>
+    const text = document.getElementById('sugestionInput')
+    text.onkeyup = function () {
+      sugestion(text.value);
+    };
+    </script>
   

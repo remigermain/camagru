@@ -63,7 +63,7 @@ if (APP::sessionExist())
                 <!--  tag -->
                 <div class="tags has-addons">
                   <div class="tag"><time datetime="2016-1-1"><?= APP::printString($val['date']) ?></time></div>
-                  <a class="tag is-link"><?= APP::printString($val['category']) ?></a>
+                  <a class="tag is-link" href="../Public/index.php?cat=<?= App::printString($key2['category']) ?>"><?= App::printString($key2['category']) ?></a>
                   <a class="tag is-light">Tag</a>
                 </div>
               </div>

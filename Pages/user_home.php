@@ -115,7 +115,7 @@
                           <!--  tag -->
                           <div class="tags has-addons">
                             <div class="tag"><time datetime="2016-1-1"><?= App::printString($key2['date']) ?></time></div>
-                            <a class="tag is-link"><?= App::printString($key2['category']) ?></a>
+                            <a class="tag is-link" href="../Public/index.php?cat=<?= App::printString($key2['category']) ?>"><?= App::printString($key2['category']) ?></a>
                             <a class="tag is-light">Tag</a>
                           </div>
                         </div>

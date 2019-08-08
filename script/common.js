@@ -390,12 +390,173 @@ function uploadImg()
 {
     var form = new FormData;
     const file = document.getElementById('imageUpload').files[0];
+    var cat = document.getElementsByName("categoryId");
 
+    let check1 = 0;
+    for(i = 0 ; i < cat.length ; i++)
+    {
+        if(cat[i].checked)
+        {
+            check1++;
+            break;
+        }
+    }
+    if (check1)
+        cat = cat[i].value;
+    else
+        cat = 0;
+    console.log(i);
     form.append('submit', 'upload');
+    form.append('cat', cat);
     form.append('title', document.getElementById('title').value);
     form.append('synopsys', document.getElementById('synopsys').value);
     form.append('fileToUpload', file);
     if (file)
         form.append('image', file.name);
     reqUpload(form);
+}
+
+function createSugestion_User(name, image)
+{
+    const div = document.createElement('div');
+    const link = document.createElement('a');
+    const img = document.createElement('img');
+
+    link.innerHTML = "@" + name;
+    link.setAttribute("href", window.location.origin + "/Public/index.php?p=user_home&user=" + name);
+
+    const figureImg = document.createElement('figure');
+    figureImg.classList.add("image");
+    figureImg.classList.add("is-48x48");
+
+    img.setAttribute("src", "data:image/jpeg;base64," + image);
+    img.classList.add("is-rounded");
+    img.setAttribute("href", window.location.origin + "/Public/index.php?p=user_home&user=" + name);
+    figureImg.append(img);
+
+    div.append(figureImg);
+    div.append(link);
+    div.classList.add("column");
+    return (div);
+}
+
+function createSugestion_Image(id, image)
+{
+    const div = document.createElement('div');
+    const link = document.createElement('a');
+    const img = document.createElement('img');
+
+    const figureImg = document.createElement('figure');
+    figureImg.classList.add("image");
+    figureImg.classList.add("is-96x96");
+    link.setAttribute("href", window.location.origin + "/Public/index.php?p=image&id=" + id);
+    
+    img.setAttribute("src", "data:image/jpeg;base64," + image);
+    figureImg.append(img);
+
+    link.append(figureImg);
+    div.append(link);
+    return (div);
+}
+
+function createSugestion_Category(name, image)
+{
+    const div = document.createElement('div');
+    const link = document.createElement('a');
+    const img = document.createElement('img');
+
+    link.innerHTML = "#" + name;
+    link.setAttribute("href", window.location.origin + "/Public/index.php?cat=" + name);
+
+    const figureImg = document.createElement('figure');
+    figureImg.classList.add("image");
+    figureImg.classList.add("is-2by1");
+
+    img.setAttribute("src", "data:image/jpeg;base64," + image);
+    img.classList.add("is-rounded");
+    img.setAttribute("href", window.location.origin + "/Public/index.php?cat=" + name);
+    figureImg.append(img);
+
+    div.append(figureImg);
+    div.append(link);
+    div.classList.add("column");
+    return (div);
+}
+
+function createSugestion_Help2(msg)
+{
+    const text = document.createElement('button');
+
+    text.innerHTML = msg;
+    text.classList.add("button");
+    text.classList.add("is-outlined");
+    text.classList.add("is-link");
+    return (text);
+}
+
+function createSugestion_help(div)
+{
+    const live = document.createElement("ul");
+
+    live.append(createSugestion_Help2("@Username"))
+    live.append(createSugestion_Help2("#Tag"))
+    live.append(createSugestion_Help2("image title"))
+    div.append(live);
+}
+
+function createSugestion(tab, submit)
+{
+    const sugestionDiv = document.getElementById('sugestionDiv');
+
+    while (sugestionDiv.firstChild)
+        sugestionDiv.firstChild.remove();
+    
+    let count = 0;
+    let finish = 10;
+
+    if (submit == "user")
+        finish = 5;
+    if (submit == "help")
+        createSugestion_help(sugestionDiv);
+    else
+    {
+        while (tab && tab[count] && count < finish)
+        {
+            if (submit == "user")
+                sugestionDiv.append(createSugestion_User(tab[count].username, tab[count].logo));
+            else if (submit == "category")
+                sugestionDiv.append(createSugestion_Category(tab[count].name, tab[count].image));
+            else
+                sugestionDiv.append(createSugestion_Image(tab[count].name, tab[count].image));
+            count++;
+        }
+    }
+}
+
+function reqSugestion(form)
+{
+    fetch(window.location.origin + "/Server/sugestion.php", { body: form, method: "post"})
+    //.then(function(r) {console.log(r.text().then(data => console.log("json print : \n" + data)))})
+    .then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    .then(function(obj) {
+        remove_notify();
+        if (obj.body.status == 0)
+            create_notify(obj.body.msg, obj.body.status);
+        else
+            createSugestion(obj.body.msg, obj.body.type);
+    })
+   .catch(function(error){
+        remove_notify();
+        console.log(error)
+    });
+}
+
+function sugestion(text)
+{
+    var form = new FormData;
+
+    form.append('submit', "sugestion");
+    form.append('sugestion', text);
+  //  console.log(text);
+    reqSugestion(form);
 }

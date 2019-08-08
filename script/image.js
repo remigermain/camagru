@@ -69,7 +69,7 @@ function clickSource()
     displayUpload.style.display = "none";
     displayImgUpload.style.display = "none";
     displayCamera.style.display = "block";
-    displayImgCamera.style.display = "block";
+  //  displayImgCamera.style.display = "block";
   }
   else
   {
@@ -78,7 +78,7 @@ function clickSource()
     displayUpload.style.display = "block";
     displayImgUpload.style.display = "block";
     displayImgCamera.style.display = "none";
-    displayCamera.style.display = "none";
+  //  displayCamera.style.display = "none";
   }
   buttonImage.append(iconImageButton);
 }

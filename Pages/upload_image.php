@@ -1,9 +1,11 @@
 <?php
 use App\App;
 use App\Error;
+use App\Image;
 if (!App::sessionExist())
     Error::notAccess();
 $title = $_SESSION['username'] . " upload pictures";
+$val = Image::getCategory();
 ?>
 <div class="hero-foot">
     <nav class="tabs">
@@ -48,7 +50,7 @@ $title = $_SESSION['username'] . " upload pictures";
             <img id="imgInp">
             <!-- camera previeuw -->
             <canvas id='canvas' width='100' height='100'></canvas> 
-            </div>
+          </div>
           <div class="modal-card-body">
             <!-- upload -->
             <div class="file is-info has-name" id="displayUpload">
@@ -89,21 +91,23 @@ $title = $_SESSION['username'] . " upload pictures";
             <p class="modal-card-title">Information</p>
           </header>
           <section class="modal-card-body">
-            <h1 class="subtitle is-4">Title</h1>
+            <h2 class="subtitle is-4">Title</h1>
             <input id="title" type="textarea" class="textarea" value="" required>
-            <h1 class="subtitle is-4">Synopsis</h1>
+            <h2 class="subtitle is-4">Synopsis</h1>
             <textarea id="synopsys" type="textarea" class="textarea" required></textarea>
+            <!-- category -->
+            <h2 class="subtitle is-4">Category</h1>
+            <div class="control" >
+              <?php foreach($val as $key => $key2) { ?>
+                <label class="radio"><input type="radio" name="categoryId" id="categoryId" value="<?= $key2['id'] ?>" <?php if ($key2['id'] == 0) print(checked) ?>><?= $key2['name'] ?></label>
+              <?php } ?>
+            </div>
           </section>
+          <button class="button is-link" >Save changes</button>
+          <button class="button" aria-label="close" >Cancel</button>
         </div>
       </div>
     <!--  camera -->
-  </div>
-</div>
-<div class="columns">
-  <div class="column is-full">
-    <div class="modal-card-foot">
-      <button class="button is-link" >Save changes</button>
-      <button class="button" aria-label="close" >Cancel</button>
     </div>
   </div>
 </div>
@@ -115,6 +119,25 @@ $title = $_SESSION['username'] . " upload pictures";
         <h2 class="subtitle">Edit, modify images !</h2>
       </div>
     </section>
+    <div class="modal-card-body">
+      <!-- upload previeuw -->
+      <img id="imgInp">
+      <!-- camera previeuw -->
+      <canvas id='canvas' width='100' height='100'></canvas> 
+    </div>
+    <div class="file is-info has-name" id="displayUpload">
+      <label class="file-label">
+        <input id="imageUpload" onchange="loadFile(event)" class="file-input" type="file" name="resume" accept="image/jpeg,image/png" required>
+        <span class="file-cta">
+          <span class="file-icon">
+            <i class="fas fa-upload"></i>
+          </span>
+          <span id="uploadImage" lass="file-label"> Upload from local. &emsp;<i class="material-icons">cloud_upload</i>
+          </span>
+        </span>
+        <span id="fileName" class="file-name">No files</span>
+      </label>
+    </div>
   </div>
 </form>
 <script src="../script/image.js"></script>

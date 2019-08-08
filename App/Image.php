@@ -47,6 +47,18 @@ class Image
       return (App::getDb()->getquery("SELECT user.id, user.username, image.id as image_id, image.title, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category = category.id ". $order));
     }
 
+    public static function getAllImgByCat($cat , $order = NULL)
+    {
+      if (!$order)
+        $order = "ORDER BY image.id DESC";
+      return (App::getDb()->getprepare("SELECT user.id, user.username, image.id as image_id, image.title, image.image, image.synopsis, image.date, home.logo, category.name as category FROM user INNER JOIN image ON user.id = image.user_id INNER JOIN home ON user.id = home.id INNER JOIN category ON image.category = category.id WHERE category.name = ? " . $order, [$cat]));
+    }
+
+    public static function getCategory()
+    {
+      return (App::getDb()->getquery("SELECT * FROM category "));
+    }
+
     public static function updateImage($id, $synopsis, $title)
     {
       App::session();
