@@ -15,7 +15,7 @@ class Comment
     {
         if (!App::sessionExist())
             Error::notAccess();
-        else
+        else if (Image::getImgById($id_image))
         {
             $val = array("user_id" => $_SESSION['id'], "id_image" => $id_image, "date" => date("Y/m/d H:i"), "comment" => $comment);
             if (App::getDb()->setprepare("INSERT INTO comment (user_id, `image`, `date`, comment) VALUES(:user_id, :id_image, :date, :comment)", $val))
@@ -27,6 +27,8 @@ class Comment
             else
                 Error::server();
         }
+        else
+            Error::server();
     }
 }
 

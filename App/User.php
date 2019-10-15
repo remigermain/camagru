@@ -19,7 +19,7 @@ class User
         $info['follower'] = intval($follower['follower']);
         $info['like'] = intval($like['like']);
         $info['notif'] = $notif;
-       return ($info);
+        return ($info);
     }
 
     static Public function getUserId($username)
@@ -29,10 +29,11 @@ class User
 
     static Public function changeMail($new_mail)
     {
+        $pattern = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i";
         App::session();
         if (!App::sessionExist())
             Error::notAccess();
-        else
+        else if (preg_match($pattern, $new_mail))
         {
             $val = array("new_mail" => $new_mail, "old_email" => $_SESSION['mail']);
             if (!App::getDb()->getprepare("SELECT user.email FROM user WHERE user.email = ?", [$new_mail]))
@@ -45,14 +46,17 @@ class User
             else
                 Error::mail_Exist($new_mail);
         }
+        else
+            Error::createJson("Wrong email!");
     }   
 
     static Public function changeusername($new_username)
     {
+        $pattern = "/^[a-zA-Z0-9]{6,31}$/i";
         App::session();
         if (!App::sessionExist())
             Error::notAccess();
-        else
+        else if (preg_match($pattern, $new_username))
         {
             if (strlen($new_username) <= 6)
                 return (Error::createJson("username must be higher 6 character"));
@@ -67,14 +71,17 @@ class User
             else
                 Error::username_Exist($new_username);
         }
+        else
+            Error::createJson("Wrong username!");
     }
 
     static Public function changePassword($old_pass, $new_pass, $conf_pass)
     {
+        $pattern = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,199}$/i";
         App::session();
         if (!App::sessionExist())
             Error::notAccess();
-        else
+        else if (preg_match($pattern, $new_pass))
         {
             if ($new_pass !== $conf_pass)
                 return (Error::not_samePass());
@@ -89,6 +96,8 @@ class User
             else
                 Error::createJson("Your old password not like this!");
         }
+        else
+            Error::createJson("Wrong password!");
     }
 
     static Public function changeLogo($img)
@@ -140,7 +149,7 @@ class User
         App::session();
         if (!App::sessionExist())
             Error::notAccess();
-        else
+        else if (App::userExist($username))
         {
             $id_follower = User::getUserId($username);
             if ($id_follower == $_SESSION['id'])
@@ -157,10 +166,10 @@ class User
                 }
                 else
                 {
-                    if (App::getDb()->setprepare("INSERT INTO follower (user_id, follower) VALUES(:user_id, :follower)", $val))
+                    if (App::getDb()->setprepare("INSERT INTO `follower` (`user_id`, `follower`) VALUES(:user_id, :follower)", $val))
                     {
-                        $info = User::getUserInfo(Image::getImgById($id_image)['username']);
-                        Notification::newFollow($info['username'], $info['email'], $id_image);
+                        $info = User::getUserInfo($username);
+                        Notification::newFollow($username, $info['email'], $_SESSION['id']);
                         App::createJson("Modification success!");
                     }
                     else
@@ -168,6 +177,8 @@ class User
                 }
             }
         }
+        else
+            Error::server();
     }
 
     static Public function userLikeImage($id_image)
@@ -175,23 +186,25 @@ class User
         App::session();
         if (!App::sessionExist())
             Error::notAccess();
-        else
+        else if (Image::getImgById($id_image))
         {
             $val = array("user_id" => $_SESSION['id'], "image_id" => $id_image);
             if (Image::userLikeImage($id_image))
             {
-                if (!App::getDb()->setprepare("DELETE FROM `favorite` WHERE user_id = :user_id AND image_id = :image_id", $val))
+                if (!App::getDb()->setprepare("DELETE FROM `favorite` WHERE `user_id` = :user_id AND `image_id` = :image_id", $val))
                     return (Error::server());
             }
             else
             {
-                if (!App::getDb()->setprepare("INSERT INTO `favorite` VALUES(:user_id, :image_id)", $val))
-                    return (Error::server());
+                if (!App::getDb()->setprepare("INSERT INTO `favorite` (`user_id`, `image_id`) VALUES(:user_id, :image_id)", $val))
+                    return (Error::server());          
                 $info = User::getUserInfo(Image::getImgById($id_image)['username']);
                 Notification::newLike($info['username'], $info['email'], $id_image);
             }
             App::createJson("Modification success!");
         }
+        else
+            Error::server();
     }
 }
 ?>

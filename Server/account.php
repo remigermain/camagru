@@ -22,7 +22,7 @@ if(isset($_POST["submit"]))
     {
         if ($_POST['username'] == $_SESSION['username'] &&
         $_POST['email'] == $_SESSION['mail'] && !isset($_POST['logo']))
-            print(json_encode(array("status" => -1)));
+            return print(json_encode(array("status" => -1)));
         if ($_POST['email'] !== $_SESSION['mail'])
             User::changeMail($_POST['email']);
         if ($_POST['username'] !== $_SESSION['username'])

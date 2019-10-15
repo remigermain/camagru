@@ -48,13 +48,13 @@ class Notification
         self::sendMail($mail,  $_SESSION['username'] . " have comment your image", $msg);
     }
 
-    public static function newFollow($username, $mail, $image_id)
+    public static function newFollow($username, $mail, $userid)
     {
         App::session();
-        $link = App::path() . "Public/index.php?p=user_home&id=" . $image_id;
+        $link = App::path() . "Public/index.php?p=user_home&id=" . $userid;
         $msg =  "<html>Hi " . $username . ", <br><br>" . $_SESSION['username'] . 
                 "</div>have follow you !<br>" .
-                "<a href=\"" . $link . "\">" . $_SESSION['usernamme'] . "home pages </a>Link</html>";
+                "<a href=\"" . $link . "\">" . $_SESSION['username'] . "home pages </a>Link</html>";
         self::sendMail($mail,  $_SESSION['username'] . " have follow you!", $msg);
     }
 

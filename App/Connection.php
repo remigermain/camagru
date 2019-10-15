@@ -56,6 +56,10 @@ class Connection
 
     public static function register($valid = "0")
     {
+        $pattern_email = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i";
+        $pattern_username = "/^[a-zA-Z0-9]{6,31}$/i";
+        $pattern_pass = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,199}$/i";
+
         $ret = static::find_user($_POST['email'], NULL, $_POST['username']);
         if ($_POST['password'] != $_POST['confpassword'])
             Error::not_samePass();
@@ -63,6 +67,12 @@ class Connection
             Error::user_Exist($_POST['username']);
         else if ($ret && $ret['email'] == $_POST['email'])
             Error::mail_Exist($_POST['email']);
+        else if (!preg_match($pattern_email, $_POST['email']))
+            Error::createJson("Wrong email!");
+        else if (!preg_match($pattern_username, $_POST['username']))
+            Error::createJson("Wrong username!");
+        else if (!preg_match($pattern_pass, $_POST['password']))
+            Error::createJson("Wrong password!");
         else
         {
             $val = array(
@@ -72,7 +82,7 @@ class Connection
                 "creation_date" => date("Y/m/d H:i"),
                 "valid" => $valid);
             if (!APP::getDB()->setprepare("INSERT INTO user (username, email, pass, creation_date, valid) VALUE(:username, :email, :pass, :creation_date, :valid)", $val))
-               return (Error::server());
+                return (Error::server());
             $val = array(
                 "sys" => "No synopis",
                 "logo" => base64_encode(file_get_contents(App::getPath("vue/img/profil.png"))));

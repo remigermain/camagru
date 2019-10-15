@@ -11,21 +11,31 @@ use App\App;
 if(isset($_POST) && isset($_POST["submit"]) && isset($_POST["sugestion"]))
 {
     $text = trim($_POST['sugestion']);
-    $new_text = "%" . substr($text, 1) . "%";
-    $type = "other";
-    $val = NULL;
-    if (strlen($text) <= 0 || (strlen($text) == 1 && ($text[0] == "@" || $text[0] == "#")))
-            $type = "help";
-    else if (substr($text, 0, 1) == "@")
+    if (strlen($text) <= 0)
+        return App::createJson(null, 1, "type", "help");
+    if ($text[0] == "@")
     {
-        $val = Sugestion::User($new_text);
         $type = "user";
+        $text = substr($text, 1);
     }
-    else if (substr($text, 0, 1) == "#")
+    else if ($text[0] == "#")
     {
-        $val = Sugestion::Category($new_text);
         $type = "category";
+        $text = substr($text, 1);
     }
+    else
+    {
+        $type = "other";
+        $mode = 0;
+    }
+    $new_text = "%" . str_replace("%", "\\%", $text) . "%";
+    $val = NULL;
+    if (strlen($text) <= 0)
+        $type = "help";
+    else if ($type == "user")
+        $val = Sugestion::User($new_text);
+    else if ($type == "category")
+        $val = Sugestion::Category($new_text);
     else
         $val = Sugestion::Title($new_text);
     App::createJson($val, 1, "type", $type);
